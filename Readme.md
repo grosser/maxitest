@@ -35,11 +35,11 @@ Development
  - fixes should go back to the original libraries
  - restrictive minitest dependency so nothing breaks by accident
  - ruby 1.9+
+ - `rake update` to update all vendored gems
  
 TODO
 ====
  - make ctrl+c fix it's own gem
- - rake tasks to auto-update vendored gems
 
 Author
 ======
