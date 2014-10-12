@@ -1,4 +1,4 @@
-Full featured Minitest
+Full featured Minitest without annoying problems.
 
 Install
 =======
@@ -21,7 +21,7 @@ Features
  - Ctrl+c stops tests and prints failures
  - print copy pastable rerun instructions on failure via [minitest-line](https://github.com/judofyr/minitest-line)
  - multiple before & after blocks
- - `around { |t| Dir.chdir(...) { t.call }` via [minitest-around](https://github.com/splattael/minitest-around)
+ - around blocks `around { |t| Dir.chdir(...) { t.call } }` via [minitest-around](https://github.com/splattael/minitest-around)
  - colors by default via [minitest-rg](https://github.com/blowmage/minitest-rg)
  - `mtest` executable to run test by line number and by folder via [testrbl](https://github.com/grosser/testrbl)
  - `let!`
@@ -40,6 +40,9 @@ Development
 TODO
 ====
  - make ctrl+c fix it's own gem
+ - implicit subject
+ - `before :all` / `after :all` / `around :all`
+ - minitest 4 version for those stuck on rails 3
 
 Author
 ======
