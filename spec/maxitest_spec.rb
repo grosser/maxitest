@@ -41,7 +41,11 @@ describe Maxitest do
       result.should_not include(focus) # ran 1 line, no need to reprint
     end
 
-    it "uses colors on tty"
+    it "uses colors on tty" do
+      simulate_tty do
+        sh("ruby spec/cases/line.rb", fail: true).should include "\e[31m#{expected_command}\e[0m"
+      end
+    end
   end
 
   private

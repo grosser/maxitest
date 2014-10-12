@@ -22,6 +22,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 =end
 
 # https://raw.githubusercontent.com/judofyr/minitest-line/master/lib/minitest/line_plugin.rb
+# HACKS: added https://github.com/judofyr/minitest-line/pull/5
 require 'pathname'
 
 module Minitest
@@ -86,7 +87,9 @@ module Minitest
         if file
           file = Pathname.new(file)
           file = file.relative_path_from(pwd) if file.absolute?
-          io.puts "ruby #{file} -l #{line}"
+          output = "ruby #{file} -l #{line}"
+          output = "\e[31m#{output}\e[0m" if $stdout.tty?
+          io.puts output
         end
       end
     end
