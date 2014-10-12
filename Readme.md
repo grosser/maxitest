@@ -21,9 +21,8 @@ Features
  - let!
  - multiple before & after blocks
  - around
- - context
  - Ctrl+c to stop tests and print output
- - print copy pasteable rerun instructions on failure
+ - print copy pastable rerun instructions on failure
  - colors by default
  - `mtest` executable to run test by line number and by folder
 
