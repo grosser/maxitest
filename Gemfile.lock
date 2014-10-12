@@ -2,12 +2,14 @@ PATH
   remote: .
   specs:
     maxitest (0.0.0)
+      minitest (~> 5.4.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
     bump (0.5.0)
     diff-lcs (1.2.5)
+    minitest (5.4.2)
     rake (10.3.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
