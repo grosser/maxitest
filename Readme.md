@@ -18,14 +18,28 @@ require "maxitest/autorun"
 
 Features
 ========
- - let!
+ - Ctrl+c stops tests and prints failures
+ - print copy pastable rerun instructions on failure via [minitest-line](https://github.com/judofyr/minitest-line)
  - multiple before & after blocks
- - around
- - Ctrl+c to stop tests and print output
- - print copy pastable rerun instructions on failure
- - colors by default
- - `mtest` executable to run test by line number and by folder
+ - `around { |t| Dir.chdir(...) { t.call }` via [minitest-around](https://github.com/splattael/minitest-around)
+ - colors by default via [minitest-rg](https://github.com/blowmage/minitest-rg)
+ - `mtest` executable to run test by line number and by folder via [testrbl](https://github.com/grosser/testrbl)
+ - `let!`
  - `order_dependent!` to make your tests run in given order
+ - `context` for more expression
+
+Development
+===========
+ - everything vendored into 1 gem to avoid dependency madness
+ - tested via rspec to avoid messing up our own tests by accident
+ - fixes should go back to the original libraries
+ - restrictive minitest dependency so nothing breaks by accident
+ - ruby 1.9+
+ 
+TODO
+====
+ - make ctrl+c fix it's own gem
+ - rake tasks to auto-update vendored gems
 
 Author
 ======
