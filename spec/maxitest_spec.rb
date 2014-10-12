@@ -23,6 +23,10 @@ describe Maxitest do
     sh("ruby spec/cases/context.rb").should include "\n2 runs, 2 assertions"
   end
 
+  it "supports let!" do
+    sh("ruby spec/cases/let_bang.rb").should include "\n1 runs, 1 assertions"
+  end
+
   private
 
   def simulate_tty
