@@ -58,6 +58,10 @@ describe Maxitest do
     output.should include "Expected: true\n  Actual: false" # not hide other errors
   end
 
+  it "supports order_dependent" do
+    sh("ruby spec/cases/order_dependent.rb").should include "5 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
+  end
+
   private
 
   def simulate_tty

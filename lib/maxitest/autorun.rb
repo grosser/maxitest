@@ -46,3 +46,7 @@ module Maxitest
 end
 
 Signal.trap(:SIGINT) { Maxitest.interrupt }
+
+class << Minitest::Test
+  alias_method :order_dependent!, :i_suck_and_my_tests_are_order_dependent!
+end
