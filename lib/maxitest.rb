@@ -1,0 +1,2 @@
+module Maxitest
+end
