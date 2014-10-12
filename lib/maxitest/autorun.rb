@@ -6,6 +6,9 @@ if $stdout.tty?
   Minitest::RG.rg!
 end
 
+require "maxitest/vendor/line"
+Minitest.extensions << "line"
+
 require "minitest/autorun"
 require "maxitest/vendor/around"
 
