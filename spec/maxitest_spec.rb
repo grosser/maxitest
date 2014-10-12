@@ -48,6 +48,16 @@ describe Maxitest do
     end
   end
 
+  it "stops on ctrl+c and prints errors" do
+    t = Thread.new { sh("ruby spec/cases/cltr_c.rb", fail: true) }
+    sleep 2 # let thread start
+    kill_process_with_name("spec/cases/cltr_c.rb")
+    output = t.value
+    output.should include "4 runs, 1 assertions, 1 failures, 1 errors, 2 skips" # failed, error from interrupt (so you see a backtrace), rest skipped
+    output.should include "Maxitest::Interrupted: Execution interrupted by user" # let you know what happened
+    output.should include "Expected: true\n  Actual: false" # not hide other errors
+  end
+
   private
 
   def simulate_tty
@@ -61,5 +71,13 @@ describe Maxitest do
     result = `#{command} #{"2>&1" unless options[:keep_output]}`
     raise "#{options[:fail] ? "SUCCESS" : "FAIL"} #{command}\n#{result}" if $?.success? == !!options[:fail]
     result
+  end
+
+  # copied from https://github.com/grosser/parallel/blob/master/spec/parallel_spec.rb#L10-L15
+  def kill_process_with_name(file, signal='INT')
+    running_processes = `ps -f`.split("\n").map{ |line| line.split(/\s+/) }
+    pid_index = running_processes.detect { |p| p.include?("UID") }.index("UID") + 1
+    parent_pid = running_processes.detect { |p| p.include?(file) and not p.include?("sh") }[pid_index]
+    `kill -s #{signal} #{parent_pid}`
   end
 end

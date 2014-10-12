@@ -25,6 +25,7 @@ Features
  - print copy pastable rerun instructions on failure
  - colors by default
  - `mtest` executable to run test by line number and by folder
+ - `order_dependent!` to make your tests run in given order
 
 Author
 ======
