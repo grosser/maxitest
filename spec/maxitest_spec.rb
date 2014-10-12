@@ -62,6 +62,20 @@ describe Maxitest do
     sh("ruby spec/cases/order_dependent.rb").should include "5 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
   end
 
+  describe "mtest" do
+    it "runs a single file" do
+      sh("mtest spec/cases/mtest/a_test.rb").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
+    end
+
+    it "runs a folder" do
+      sh("mtest spec/cases/mtest").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+    end
+
+    it "runs multiple files" do
+      sh("mtest spec/cases/mtest/a_test.rb spec/cases/mtest/c.rb").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+    end
+  end
+
   private
 
   def simulate_tty

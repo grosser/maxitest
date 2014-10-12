@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require 'optparse'
+
+$LOAD_PATH << File.join(File.dirname(__FILE__), '..', 'lib')
+require 'maxitest/vendor/testrbl'
+
+class << Maxitest::Testrbl
+  def line_pattern_option(file, line)
+    [file, "-l", line]
+  end
+end
+Maxitest::Testrbl.run_from_cli(ARGV)
