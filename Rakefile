@@ -20,9 +20,6 @@ task :update do
       if url.include?("testrbl.rb")
         # nest under Maxitest to avoid collision
         code = "module Maxitest\n#{code.gsub(/^/, "  ").gsub(/^\s+$/, "")}\nend"
-      elsif url.include?("line_plugin.rb")
-        # add red failure lines -- https://github.com/judofyr/minitest-line/pull/5
-        code.sub!(%{io.puts "ruby \#{file} -l \#{line}"}, %{output = "ruby \#{file} -l \#{line}"\n          output = "\\e[31m\#{output}\\e[0m" if $stdout.tty?\n          io.puts output})
       end
 
       "#{url}\n# BEGIN #{do_not_modify}\n#{code.strip}\n#END #{do_not_modify}"
