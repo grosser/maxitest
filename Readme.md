@@ -22,7 +22,7 @@ Features
  - print copy pastable rerun instructions on failure via [minitest-line](https://github.com/judofyr/minitest-line)
  - multiple before & after blocks
  - around blocks `around { |t| Dir.chdir(...) { t.call } }` via [minitest-around](https://github.com/splattael/minitest-around)
- - colors by default via [minitest-rg](https://github.com/blowmage/minitest-rg)
+ - red-green test output via [minitest-rg](https://github.com/blowmage/minitest-rg)
  - `mtest` executable to run test by line number and by folder via [testrbl](https://github.com/grosser/testrbl)
  - `let!`
  - `order_dependent!` to make your tests run in given order
