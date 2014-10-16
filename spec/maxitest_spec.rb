@@ -29,7 +29,7 @@ describe Maxitest do
 
   describe "line" do
     let(:focus) { "Focus on failing tests:" }
-    let(:expected_command) { "ruby spec/cases/line.rb -l 8" }
+    let(:expected_command) { "mtest spec/cases/line.rb:8" }
 
     it "prints line numbers on failed" do
       sh("ruby spec/cases/line.rb", fail: true).should include "#{focus}\n#{expected_command}"
@@ -37,6 +37,12 @@ describe Maxitest do
 
     it "can run with line numbers" do
       result = sh(expected_command, fail: true)
+      result.should include("1 runs, 1 assertions, 1 failures, 0 errors, 0 skips")
+      result.should_not include(focus) # ran 1 line, no need to reprint
+    end
+
+    it "can run with -l line numbers" do
+      result = sh("ruby spec/cases/line.rb -l 8", fail: true)
       result.should include("1 runs, 1 assertions, 1 failures, 0 errors, 0 skips")
       result.should_not include(focus) # ran 1 line, no need to reprint
     end

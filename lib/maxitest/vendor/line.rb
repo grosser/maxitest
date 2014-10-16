@@ -90,7 +90,7 @@ module Minitest
         if file
           file = Pathname.new(file)
           file = file.relative_path_from(pwd) if file.absolute?
-          output = "ruby #{file} -l #{line}"
+          output = "mtest #{file}:#{line}"
           output = "\e[31m#{output}\e[0m" if $stdout.tty?
           io.puts output
         end
