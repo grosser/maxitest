@@ -27,6 +27,7 @@ Features
  - `let!`
  - `order_dependent!` to make your tests run in given order
  - `context` for more expression
+ - implicit subject via `require 'maxitest/implicit_subject'`
 
 Development
 ===========
@@ -40,7 +41,6 @@ Development
 TODO
 ====
  - make ctrl+c fix it's own gem
- - implicit subject
  - `before :all` / `after :all` / `around :all`
  - minitest 4 version for those stuck on rails 3
 
