@@ -68,6 +68,15 @@ describe Maxitest do
     sh("ruby spec/cases/order_dependent.rb").should include "5 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
   end
 
+  it "has pending" do
+    result = sh("ruby spec/cases/pending.rb -v", :fail => true)
+    result.should include "LocalJumpError: no block given"
+    result.should include "RuntimeError: Fixed"
+    result.should include "Skipped, no message given"
+    result.should include "Skipping with a reason"
+    result.should include "5 runs, 4 assertions, 0 failures, 2 errors, 2 skips"
+  end
+
   describe "mtest" do
     it "runs a single file" do
       sh("mtest spec/cases/mtest/a_test.rb").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"

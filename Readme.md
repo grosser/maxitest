@@ -27,6 +27,7 @@ Features
  - `let!`
  - `order_dependent!` to make your tests run in given order
  - `context` for more expression
+ - `pending { assert false }` is skip when it fails, but fails when it passes
  - implicit subject via `require 'maxitest/implicit_subject'`
 
 Development
