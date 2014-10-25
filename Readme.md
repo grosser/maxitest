@@ -1,4 +1,4 @@
-Full featured Minitest without annoying problems.
+Minitest + all the features you always wanted.
 
 Install
 =======
@@ -38,7 +38,7 @@ Development
  - restrictive minitest dependency so nothing breaks by accident
  - ruby 1.9+
  - `rake update` to update all vendored gems
- 
+
 TODO
 ====
  - make ctrl+c fix it's own gem

@@ -2,7 +2,7 @@ name = "maxitest"
 require "./lib/#{name.gsub("-","/")}/version"
 
 Gem::Specification.new name, Maxitest::VERSION do |s|
-  s.summary = "Full featured Minitest without annoying problems."
+  s.summary = "Minitest + all the features you always wanted"
   s.authors = ["Michael Grosser"]
   s.email = "michael@grosser.it"
   s.homepage = "https://github.com/grosser/#{name}"
