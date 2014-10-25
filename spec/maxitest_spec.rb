@@ -41,6 +41,11 @@ describe Maxitest do
       result.should_not include(focus) # ran 1 line, no need to reprint
     end
 
+    it "can describe with line numbers" do
+      result = sh("mtest spec/cases/line.rb:12")
+      result.should include("2 runs, 2 assertions, 0 failures, 0 errors, 0 skips")
+    end
+
     it "can run with -l line numbers" do
       result = sh("ruby spec/cases/line.rb -l 8", fail: true)
       result.should include("1 runs, 1 assertions, 1 failures, 0 errors, 0 skips")

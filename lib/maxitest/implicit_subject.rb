@@ -10,4 +10,4 @@ module Maxitest
   end
 end
 
-Object.include Maxitest::ImplicitSubject # Minitest hacks Kernel -> we need to use alias method or go into Object
+Object.send(:include, Maxitest::ImplicitSubject) # Minitest hacks Kernel -> we need to use alias method or go into Object
