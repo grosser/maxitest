@@ -59,14 +59,27 @@ describe Maxitest do
     end
   end
 
-  it "stops on ctrl+c and prints errors" do
-    t = Thread.new { sh("ruby spec/cases/cltr_c.rb", fail: true) }
-    sleep 2 # let thread start
-    kill_process_with_name("spec/cases/cltr_c.rb")
-    output = t.value
-    output.should include "4 runs, 1 assertions, 1 failures, 1 errors, 2 skips" # failed, error from interrupt (so you see a backtrace), rest skipped
-    output.should include "Maxitest::Interrupted: Execution interrupted by user" # let you know what happened
-    output.should include "Expected: true\n  Actual: false" # not hide other errors
+  describe "Interrupts" do
+    it "stops on ctrl+c and prints errors" do
+      t = Thread.new { sh("ruby spec/cases/cltr_c.rb", fail: true) }
+      sleep 2 # let thread start
+      kill_process_with_name("spec/cases/cltr_c.rb")
+      output = t.value
+      output.should include "4 runs, 1 assertions, 1 failures, 1 errors, 2 skips" # failed, error from interrupt (so you see a backtrace), rest skipped
+      output.should include "Maxitest::Interrupted: Execution interrupted by user" # let you know what happened
+      output.should include "Expected: true\n  Actual: false" # not hide other errors
+    end
+
+    it "allows Interrupts to be catched normally" do
+      output = sh("ruby spec/cases/catch_interrupt.rb")
+      output.should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
+    end
+
+    it "stops on escaped Interrupt" do
+      output = sh("ruby spec/cases/raise_interrupt.rb", fail: true)
+      output.should_not include "runs, "
+      output.should include "Interrupt (Interrupt)"
+    end
   end
 
   it "supports order_dependent" do
