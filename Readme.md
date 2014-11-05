@@ -1,5 +1,21 @@
 Minitest + all the features you always wanted.
 
+![Failure](https://dl.dropboxusercontent.com/u/2670385/Web/maxitest-failure.png)
+
+Features
+========
+ - **Ctrl+c** stops tests and prints failures
+ - **pastable rerun snippet** for failures
+ - multiple before & after blocks
+ - **around** blocks `around { |t| Dir.chdir(...) { t.call } }`
+ - **red-green** output
+ - `mtest` executable to **run by line number** and by folder
+ - `let!`
+ - `order_dependent!` to make your tests run in given order
+ - `context` for more expression
+ - `pending { assert false }` is skip when it fails, but fails when it passes
+ - implicit subject via `require 'maxitest/implicit_subject'`
+
 Install
 =======
 
@@ -15,21 +31,6 @@ require "maxitest/autorun"
 
 ... normal tests ...
 ```
-
-Features
-========
- - Ctrl+c stops tests and prints failures
- - print copy pastable rerun instructions on failure via [minitest-line](https://github.com/judofyr/minitest-line)
- - multiple before & after blocks
- - around blocks `around { |t| Dir.chdir(...) { t.call } }` via [minitest-around](https://github.com/splattael/minitest-around)
- - red-green test output via [minitest-rg](https://github.com/blowmage/minitest-rg)
- - `mtest` executable to run test by line number and by folder via [testrbl](https://github.com/grosser/testrbl)
- - `let!`
- - `order_dependent!` to make your tests run in given order
- - `context` for more expression
- - `pending { assert false }` is skip when it fails, but fails when it passes
- - implicit subject via `require 'maxitest/implicit_subject'`
-
 Development
 ===========
  - everything vendored into 1 gem to avoid dependency madness
@@ -47,6 +48,11 @@ TODO
 
 Author
 ======
+ - running by line number from [minitest-line](https://github.com/judofyr/minitest-line)
+ - around from [minitest-around](https://github.com/splattael/minitest-around)
+ - mtest from [testrbl](https://github.com/grosser/testrbl)
+ - red-green from [minitest-rg](https://github.com/blowmage/minitest-rg)
+
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
 License: MIT<br/>
