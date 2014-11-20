@@ -42,7 +42,7 @@ Development
 
 TODO
 ====
- - make ctrl+c fix it's own gem
+ - make ctrl+c fix its own gem
  - `before :all` / `after :all` / `around :all`
  - minitest 4 version for those stuck on rails 3
 
