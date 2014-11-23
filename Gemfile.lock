@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    maxitest (1.0.0)
+    maxitest (1.0.1)
       minitest (>= 5.0.0, < 5.5.0)
 
 GEM
@@ -9,7 +9,7 @@ GEM
   specs:
     bump (0.5.0)
     diff-lcs (1.2.5)
-    minitest (5.4.2)
+    minitest (5.4.3)
     rake (10.3.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
