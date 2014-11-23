@@ -2,10 +2,9 @@
 module Maxitest
   module ImplicitSubject
     def describe(*args, &block)
-      super(*args) do
-        let(:subject) { args.first.new } if args.first.is_a?(Class)
-        instance_exec(&block)
-      end
+      klass = super
+      klass.let(:subject) { args.first.new } if args.first.is_a?(Class)
+      klass
     end
   end
 end

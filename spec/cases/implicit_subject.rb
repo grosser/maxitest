@@ -7,8 +7,13 @@ describe String do
   end
 
   describe Array do
+    def other_method
+      true
+    end
+
     it "has nested implicit subject" do
       subject.must_equal []
+      other_method.must_equal true
     end
   end
 
