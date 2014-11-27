@@ -15,6 +15,7 @@ Features
  - `context` for more expression
  - `pending { assert false }` is skip when it fails, but fails when it passes
  - implicit subject via `require 'maxitest/implicit_subject'`
+ - `xit` to skip test (also does not call setup or teardown)
 
 Install
 =======

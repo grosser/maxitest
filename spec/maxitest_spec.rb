@@ -95,6 +95,12 @@ describe Maxitest do
     result.should include "5 runs, 4 assertions, 0 failures, 2 errors, 2 skips"
   end
 
+  it "does not call xit specs" do
+    result = sh("ruby spec/cases/xit.rb -v")
+    result.should include "(no tests defined)"
+    result.should include "3 runs, 1 assertions, 0 failures, 0 errors, 2 skips"
+  end
+
   describe "mtest" do
     it "runs a single file" do
       sh("mtest spec/cases/mtest/a_test.rb").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"

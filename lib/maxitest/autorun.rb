@@ -14,6 +14,7 @@ require "maxitest/vendor/around"
 require "maxitest/trap"
 require "maxitest/let_bang"
 require "maxitest/pending"
+require "maxitest/xit"
 
 Minitest::Spec::DSL.send(:alias_method, :context, :describe)
 
