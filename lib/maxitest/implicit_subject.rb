@@ -3,7 +3,9 @@ module Maxitest
   module ImplicitSubject
     def describe(*args, &block)
       klass = super
-      klass.let(:subject) { args.first.new } if args.first.is_a?(Class)
+      if args.first.is_a?(Class) && !klass.instance_methods(false).include?(:subject)
+        klass.let(:subject) { args.first.new }
+      end
       klass
     end
   end

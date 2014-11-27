@@ -1,6 +1,12 @@
 require "./spec/cases/helper"
 require "maxitest/implicit_subject"
 
+class DoNotCallMe
+  def initialize
+    raise "WRONG"
+  end
+end
+
 describe String do
   it "has implicit subject" do
     subject.must_equal ""
@@ -32,6 +38,14 @@ describe String do
       it "does not overwrite subject" do
         subject.must_equal({})
       end
+    end
+  end
+
+  describe DoNotCallMe do
+    let(:subject) { 1 }
+
+    it "can overwrite" do
+      subject.must_equal 1
     end
   end
 end
