@@ -8,12 +8,6 @@ GEM
   remote: https://rubygems.org/
   specs:
     bump (0.5.0)
-    byebug (3.5.1)
-      columnize (~> 0.8)
-      debugger-linecache (~> 1.2)
-      slop (~> 3.6)
-    columnize (0.8.9)
-    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
     minitest (5.4.3)
     rake (10.3.2)
@@ -29,7 +23,6 @@ GEM
     rspec-mocks (3.1.1)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.0)
-    slop (3.6.0)
     wwtd (0.5.5)
 
 PLATFORMS
@@ -37,7 +30,6 @@ PLATFORMS
 
 DEPENDENCIES
   bump
-  byebug
   maxitest!
   rake
   rspec
