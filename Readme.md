@@ -10,6 +10,7 @@ Features
  - **around** blocks `around { |t| Dir.chdir(...) { t.call } }`
  - **red-green** output
  - `mtest` executable to **run by line number** and by folder
+ - full backtrace for errors and assertions with verbose (`-v`)
  - `let!`
  - `order_dependent!` to make your tests run in given order
  - `context` for more expression

@@ -6,6 +6,8 @@ if $stdout.tty?
   Minitest::RG.rg!
 end
 
+require "maxitest/verbose_backtraces"
+
 require "maxitest/vendor/line"
 Minitest.extensions << "line"
 
