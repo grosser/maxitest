@@ -19,7 +19,7 @@ end
 Minitest.extensions << 'maxitest_verbose_backtrace'
 Minitest.extend Maxitest::VerboseBacktrace
 
-Minitest::Assertion.class_eval do
+module Maxitest::VerboseAssertion
   def message
     if Maxitest::VerboseBacktrace.verbose
       "#{self.class}: #{super}\n    #{backtrace.join "\n    "}"
@@ -28,3 +28,5 @@ Minitest::Assertion.class_eval do
     end
   end
 end
+
+Minitest::Assertion.send(:include, Maxitest::VerboseAssertion)
