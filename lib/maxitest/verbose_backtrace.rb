@@ -1,3 +1,5 @@
+
+module Maxitest ; end
 module Maxitest::VerboseBacktrace
   class NullFilter
     def self.filter(backtrace)
