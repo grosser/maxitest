@@ -1,18 +1,20 @@
-module Maxitest::VerboseBacktrace
-  class NullFilter
-    def self.filter(backtrace)
-      backtrace
+module Maxitest
+  module VerboseBacktrace
+    class NullFilter
+      def self.filter(backtrace)
+        backtrace
+      end
     end
-  end
 
-  class << self
-    attr_accessor :verbose
-  end
+    class << self
+      attr_accessor :verbose
+    end
 
-  def plugin_maxitest_verbose_backtrace_init(options)
-    return unless options[:verbose]
-    Maxitest::VerboseBacktrace.verbose = true
-    Minitest.backtrace_filter = Maxitest::VerboseBacktrace::NullFilter
+    def plugin_maxitest_verbose_backtrace_init(options)
+      return unless options[:verbose]
+      Maxitest::VerboseBacktrace.verbose = true
+      Minitest.backtrace_filter = Maxitest::VerboseBacktrace::NullFilter
+    end
   end
 end
 
