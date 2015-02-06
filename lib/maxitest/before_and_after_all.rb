@@ -1,6 +1,6 @@
 module Maxitest
   def self.before_all_ran
-    @before_all_ran ||= []
+    @before_all_ran ||= {}
   end
 end
 
@@ -12,9 +12,13 @@ Minitest::Spec::DSL.class_eval do
       id = rand(99999999999999)
       before_without_all(*args[1..-1]) do
         ran = Maxitest.before_all_ran
-        unless ran.include?(id)
-          ran << id
+        if variables = ran[id]
+          variables.each { |k,v,| instance_variable_set(k,v) }
+        else
+          old_variables = instance_variables
           instance_exec(&block)
+          new_variables = instance_variables - old_variables - [:@_memoized]
+          ran[id] = new_variables.map { |k| [k, instance_variable_get(k)] }
         end
       end
     else
