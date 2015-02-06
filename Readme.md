@@ -11,6 +11,7 @@ Features
  - **red-green** output
  - `mtest` executable to **run by line number** and by folder
  - full backtrace for errors and assertions with verbose (`-v`)
+ - `before :all` + `after :all` with `require 'maxitest/before_and_after_all'`
  - `let!`
  - `order_dependent!` to make your tests run in given order
  - `context` for more expression
