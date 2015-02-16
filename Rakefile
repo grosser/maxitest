@@ -3,10 +3,12 @@ require "bundler/gem_tasks"
 require "bump/tasks"
 require "wwtd/tasks"
 
+desc "Run all tests"
 task :default do
   sh "rspec spec/"
 end
 
+desc "Update all dependencies"
 task :update do
   require "open-uri"
 
