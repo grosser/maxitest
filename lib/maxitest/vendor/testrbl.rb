@@ -148,24 +148,28 @@ module Maxitest
     def self.test_pattern_from_match(method, test_name)
       regex = Regexp.escape(test_name).gsub("\\ "," ").gsub(INTERPOLATION, ".*")
 
-      regex = case method
-      when "should"
-        optional_test_name = "(?:\(.*\))?"
-        "#{method} #{regex}\. #{optional_test_name}$"
-      when "describe"
-        "#{test_name}(::)?"
-      when "test"
+      regex = if method == "test"
         # test "xxx -_ yyy"
         # test-unit:     "test: xxx -_ yyy"
         # activesupport: "test_xxx_-__yyy"
         "^test(: |_)#{regex.gsub(" ", ".")}$"
-      when "it"
+      elsif method == "describe" || (method == "context" && !via_shoulda?)
+        "#{test_name}(::)?"
+      elsif method == "should" && via_shoulda?
+        optional_test_name = "(?:\(.*\))?"
+        "#{method} #{regex}\. #{optional_test_name}$"
+      elsif ["it", "should"].include?(method) # minitest aliases for shoulda
         "#test_\\d+_#{test_name}$"
       else
         regex
       end
 
       regex.gsub("'", ".")
+    end
+
+    def self.via_shoulda?
+      return @via_shoulda if defined?(@via_shoulda)
+      @via_shoulda = !File.exist?("Gemfile.lock") || File.read("Gemfile.lock").include?(" shoulda-context ")
     end
   end
 end
