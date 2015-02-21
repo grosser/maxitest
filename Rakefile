@@ -25,6 +25,9 @@ task :update do
       elsif url.include?("line_plugin.rb")
         # replace ruby with mtest
         code.sub!(%{output = "ruby \#{file} -l \#{line}"}, %{output = "mtest \#{file}:\#{line}"})
+
+        # https://github.com/judofyr/minitest-line/pull/11
+        code.sub!("target_file = target_file()", "target_file = $0")
       end
 
       "#{url}\n# BEGIN #{do_not_modify}\n#{code.strip}\n#END #{do_not_modify}"

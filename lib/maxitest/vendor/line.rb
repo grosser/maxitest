@@ -32,7 +32,7 @@ module Minitest
   module Line
     class << self
       def tests_with_lines
-        target_file = target_file()
+        target_file = $0
         methods_with_lines(target_file).concat describes_with_lines(target_file)
       end
 
