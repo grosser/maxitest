@@ -15,8 +15,10 @@ require "minitest/autorun"
 require "maxitest/vendor/around"
 require "maxitest/trap"
 require "maxitest/let_bang"
+require "maxitest/let_all"
 require "maxitest/pending"
 require "maxitest/xit"
+require "maxitest/static_class_order"
 
 Minitest::Spec::DSL.send(:alias_method, :context, :describe)
 

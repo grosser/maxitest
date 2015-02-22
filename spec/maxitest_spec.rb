@@ -27,6 +27,14 @@ describe Maxitest do
     sh("ruby spec/cases/let_bang.rb").should include "\n1 runs, 1 assertions"
   end
 
+  it "supports let_all" do
+    sh("ruby spec/cases/let_all.rb")
+  end
+
+  it "can use static_class_order" do
+    sh("ruby spec/cases/static_class_order.rb").should include("\n0\n.0n\n.1\n.1n\n.2\n.2n\n.3\n.3n\n.4\n.4n\n.\n")
+  end
+
   describe "line" do
     let(:focus) { "Focus on failing tests:" }
     let(:expected_command) { "mtest spec/cases/line.rb:8" }

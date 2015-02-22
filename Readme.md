@@ -12,7 +12,9 @@ Features
  - `mtest` executable to **run by line number** and by folder
  - full backtrace for errors and assertions with verbose (`-v`)
  - `let!`
+ - `let_all` execute once for all tests in a class and it's subclasses
  - `order_dependent!` to make your tests run in given order
+ - `Maxitest.static_class_order = true` no longer sort tests class/sub-classes in random order
  - `context` for more expression
  - `pending { assert false }` is skip when it fails, but fails when it passes
  - implicit subject via `require 'maxitest/implicit_subject'`
