@@ -50,7 +50,7 @@ module Minitest
 
       def methods_with_lines(target_file)
         runnables.flat_map do |runnable|
-          rname = Class.instance_method(:name).bind(runnable).call
+          rname = runnable.name
           runnable.runnable_methods.map do |name|
             file, line = runnable.instance_method(name).source_location
             next unless file == target_file
