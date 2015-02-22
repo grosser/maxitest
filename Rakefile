@@ -24,10 +24,13 @@ task :update do
         code = "module Maxitest\n#{code.gsub(/^/, "  ").gsub(/^\s+$/, "")}\nend"
       elsif url.include?("line_plugin.rb")
         # replace ruby with mtest
-        code.sub!(%{output = "ruby \#{file} -l \#{line}"}, %{output = "mtest \#{file}:\#{line}"})
+        raise unless code.sub!(%{output = "ruby \#{file} -l \#{line}"}, %{output = "mtest \#{file}:\#{line}"})
 
         # https://github.com/judofyr/minitest-line/pull/11
-        code.sub!("target_file = target_file()", "target_file = $0")
+        raise unless code.sub!("target_file = target_file()", "target_file = $0")
+
+        # https://github.com/judofyr/minitest-line/pull/12
+        raise unless code.sub!("Class.instance_method(:name).bind(runnable).call", "runnable.name")
       end
 
       "#{url}\n# BEGIN #{do_not_modify}\n#{code.strip}\n#END #{do_not_modify}"
