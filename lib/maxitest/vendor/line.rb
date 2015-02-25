@@ -38,16 +38,6 @@ module Minitest
 
       private
 
-      def target_file
-        runnables.each do |r|
-          r.runnable_methods.each do |m|
-            file, line = r.instance_method(m).source_location
-            return file if file
-          end
-        end
-        nil
-      end
-
       def methods_with_lines(target_file)
         runnables.flat_map do |runnable|
           rname = runnable.name
