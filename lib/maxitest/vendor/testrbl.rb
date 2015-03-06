@@ -10,7 +10,7 @@ module Maxitest
       /^(\s+)def\s+(test_)([a-z_\d]+)\s*(?:#.*)?$/
     ]
 
-    OPTION_WITH_ARGUMENT = ["-I", "-r", "-n", "-e"]
+    OPTION_WITH_ARGUMENT = ["-I", "-r", "-n", "-e", "--seed"]
     INTERPOLATION = /\\\#\\\{.*?\\\}/
 
     def self.run_from_cli(argv)
@@ -27,8 +27,13 @@ module Maxitest
         if files.size == 1 and File.file?(files.first)
           run(ruby + load_options + files + options)
         elsif options.none? { |arg| arg =~ /^-n/ }
+          seed = if seed = options.index("--seed")
+            ["--"] + options.slice!(seed, 2)
+          else
+            []
+          end
           files = files.map { |f| File.directory?(f) ? all_test_files_in(f) : f }.flatten
-          run(ruby + load_options + files.map { |f| "-r#{f}" } + options + ["-e", ""])
+          run(ruby + load_options + files.map { |f| "-r#{f}" } + options + ["-e", ""] + seed)
         else # pass though
           # no bundle exec: projects with mini and unit-test do not run well via bundle exec testrb
           run ["testrb"] + argv
