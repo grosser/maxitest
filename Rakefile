@@ -24,7 +24,7 @@ task :update do
         code = "module Maxitest\n#{code.gsub(/^/, "  ").gsub(/^\s+$/, "")}\nend"
       elsif url.include?("line_plugin.rb")
         # replace ruby with mtest
-        raise unless code.sub!(%{output = "ruby \#{file} -l \#{line}"}, %{output = "mtest \#{file}:\#{line}"})
+        raise unless code.sub!(%{output = "ruby \#{file} -l \#{line}"}, %{output = "mtest -I \#{file.to_s.split('/').first} \#{file}:\#{line}"})
       end
 
       "#{url}\n# BEGIN #{do_not_modify}\n#{code.strip}\n#END #{do_not_modify}"

@@ -37,7 +37,7 @@ describe Maxitest do
 
   describe "line" do
     let(:focus) { "Focus on failing tests:" }
-    let(:expected_command) { "mtest spec/cases/line.rb:8" }
+    let(:expected_command) { "mtest -I spec spec/cases/line.rb:8" }
 
     it "prints line numbers on failed" do
       sh("ruby spec/cases/line.rb", fail: true).should include "#{focus}\n#{expected_command}"

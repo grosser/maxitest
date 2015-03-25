@@ -108,7 +108,7 @@ module Minitest
         if file
           file = Pathname.new(file)
           file = file.relative_path_from(pwd) if file.absolute?
-          output = "mtest #{file}:#{line}"
+          output = "mtest -I #{file.to_s.split('/').first} #{file}:#{line}"
           output = "\e[31m#{output}\e[0m" if $stdout.tty?
           io.puts output
         end
