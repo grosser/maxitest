@@ -74,7 +74,7 @@ describe Maxitest do
       kill_process_with_name("spec/cases/cltr_c.rb")
       output = t.value
       output.should include "4 runs, 1 assertions, 1 failures, 1 errors, 2 skips" # failed, error from interrupt (so you see a backtrace), rest skipped
-      output.should include "Maxitest::Interrupted: Execution interrupted by user" # let you know what happened
+      output.should include "Interrupt:" # let you know what happened
       output.should include "Expected: true\n  Actual: false" # not hide other errors
     end
 
@@ -83,10 +83,10 @@ describe Maxitest do
       output.should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
     end
 
-    it "stops on escaped Interrupt" do
+    it "catches directly raised Interrupt" do
       output = sh("ruby spec/cases/raise_interrupt.rb", fail: true)
-      output.should_not include "runs, "
-      output.should include "Interrupt (Interrupt)"
+      output.should include "runs, "
+      output.should include "Interrupt: Interrupt"
     end
   end
 
