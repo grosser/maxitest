@@ -1,0 +1,38 @@
+PATH
+  remote: ../
+  specs:
+    maxitest (1.5.0)
+      minitest (>= 5.0.0, < 5.8.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    bump (0.5.2)
+    diff-lcs (1.2.5)
+    minitest (5.7.0)
+    rake (10.4.2)
+    rspec (3.2.0)
+      rspec-core (~> 3.2.0)
+      rspec-expectations (~> 3.2.0)
+      rspec-mocks (~> 3.2.0)
+    rspec-core (3.2.3)
+      rspec-support (~> 3.2.0)
+    rspec-expectations (3.2.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-mocks (3.2.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.2.0)
+    rspec-support (3.2.2)
+    wwtd (0.9.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bump
+  maxitest!
+  minitest (~> 5.7.0)
+  rake
+  rspec
+  wwtd
