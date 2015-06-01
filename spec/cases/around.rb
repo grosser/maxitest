@@ -6,10 +6,10 @@ describe "2" do
   before { calls << 1 }
   around { |test| calls << 2; test.call }
   around { |test| calls << 3; test.call }
-  after  { calls.must_equal [1,2,3,4] }
+  after  { calls.must_equal [2,3,1,4] }
   after  { calls << 4 }
 
   it "is ordered" do
-    calls.must_equal [1,2,3]
+    calls.must_equal [2, 3, 1]
   end
 end

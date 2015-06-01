@@ -53,7 +53,6 @@ TODO
 Author
 ======
  - running by line number from [minitest-line](https://github.com/judofyr/minitest-line)
- - around from [minitest-around](https://github.com/splattael/minitest-around)
  - mtest from [testrbl](https://github.com/grosser/testrbl)
  - red-green from [minitest-rg](https://github.com/blowmage/minitest-rg)
 
