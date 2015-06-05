@@ -25,6 +25,52 @@ task :update do
       elsif url.include?("line_plugin.rb")
         # replace ruby with mtest
         raise unless code.sub!(%{output = "ruby \#{file} -l \#{line}"}, %{output = "mtest \#{file}:\#{line}"})
+      elsif url.include?("hooks.rb")
+        # - rewrite hooks to have rspec/rack/rails style around callbacks
+        # - allow calling around/before/after multiple times
+        raise unless code.sub!(/ +def around\(.*  end\s*/m, <<-RUBY.gsub(/^        /, ""))
+          def around(type=nil, &inside)
+            method = type == :all ? :around_all : :around
+            include(Module.new do
+              define_method(method) do |&block|
+                super() { instance_exec(block, &inside) }
+              end
+            end)
+          end
+
+          # If type is :all, set the before_all hook instead of the before hook.
+          def before(type=nil, &block)
+            if type == :all
+              include(Module.new do
+                define_method(:before_all) do
+                  super()
+                  instance_exec(&block)
+                end
+              end)
+              nil
+            else
+              include Module.new { define_method(:setup) { super(); instance_exec(&block) } }
+            end
+          end
+
+          # If type is :all, set the after_all hook instead of the after hook.
+          def after(type=nil, &block)
+            if type == :all
+              include(Module.new do
+                define_method(:after_all) do
+                  instance_exec(&block)
+                  super()
+                end
+              end)
+              nil
+            else
+              include Module.new { define_method(:teardown) { instance_exec(&block); super() } }
+            end
+          end
+        RUBY
+
+        # make hooks work everywhere
+        raise unless code.sub!(/ +def self.included\(.*?\n  end\s+/m, "")
       end
 
       "#{url}\n# BEGIN #{do_not_modify}\n#{code.strip}\n#END #{do_not_modify}"
