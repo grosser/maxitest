@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    maxitest (1.5.1)
-      minitest (>= 5.0.0, < 5.8.0)
+    maxitest (1.5.2)
+      minitest (>= 5.0.0, < 5.9.0)
 
 GEM
   remote: https://rubygems.org/
@@ -42,3 +42,6 @@ DEPENDENCIES
   rake
   rspec
   wwtd
+
+BUNDLED WITH
+   1.10.5
