@@ -4,6 +4,8 @@ rvm:
   - 2.0.0
   - 2.1.2
 gemfile:
+  - gemfiles/58.gemfile
+  - gemfiles/57.gemfile
   - gemfiles/56.gemfile
   - gemfiles/55.gemfile
   - gemfiles/54.gemfile
