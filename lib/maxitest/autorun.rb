@@ -12,7 +12,11 @@ require "maxitest/vendor/line"
 Minitest.extensions << "line"
 
 require "minitest/autorun"
-require "maxitest/vendor/around"
+require "maxitest/vendor/hooks"
+Minitest::Test.send(:prepend, Minitest::Hooks)
+class << Minitest::Spec
+  prepend Minitest::Hooks::ClassMethods
+end
 require "maxitest/trap"
 require "maxitest/let_bang"
 require "maxitest/let_all"

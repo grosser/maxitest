@@ -8,6 +8,7 @@ Features
  - **pastable rerun snippet** for failures
  - multiple before & after blocks
  - **around** blocks `around { |t| Dir.chdir(...) { t.call } }`
+ - `before/after/around :all` blocks
  - **red-green** output
  - `mtest` executable to **run by line number** and by folder
  - full backtrace for errors and assertions with verbose (`-v`)
@@ -46,14 +47,14 @@ Development
 
 TODO
 ====
- - make ctrl+c fix its own gem
- - `before :all` / `after :all` / `around :all`
- - minitest 4 version for those stuck on rails 3
+ - around hooks are run before any other hooks ... afaik only fixable via Fibers which leads to threading issues ... see https://github.com/splattael/minitest-around/pull/11
+ - `before :all` / `after :all` / `around :all` are called once per subclass but should not https://github.com/jeremyevans/minitest-hooks/issues/8
+ - `before :all` / `after :all` / `around :all` are called for empty classes but should not https://github.com/jeremyevans/minitest-hooks/issues/7
 
 Author
 ======
  - running by line number from [minitest-line](https://github.com/judofyr/minitest-line)
- - around from [minitest-around](https://github.com/splattael/minitest-around)
+ - hooks from [minitest-hooks](https://github.com/jeremyevans/minitest-hooks)
  - mtest from [testrbl](https://github.com/grosser/testrbl)
  - red-green from [minitest-rg](https://github.com/blowmage/minitest-rg)
 
