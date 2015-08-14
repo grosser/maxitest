@@ -29,6 +29,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 module MiniTest
 
   def self.plugin_rg_options opts, options # :nodoc:
+    opts.on "--rg", "Add red/green to test output." do
+      RG.rg!
+    end
   end
 
   def self.plugin_rg_init options # :nodoc:
@@ -36,13 +39,13 @@ module MiniTest
       io = RG.new options[:io]
 
       self.reporter.reporters.grep(Minitest::Reporter).each do |rep|
-        rep.io = io
+        rep.io = io if rep.io.tty?
       end
     end
   end
 
   class RG
-    VERSION = "5.1.0"
+    VERSION = "5.2.0"
 
     COLORS = {
       '.' => "\e[32m.\e[0m",
