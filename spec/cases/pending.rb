@@ -17,6 +17,12 @@ describe 2 do
     end
   end
 
+  it "pends exceptions" do
+    pending "Skipping with exception" do
+      raise "Oh noes"
+    end
+  end
+
   it "pends without text" do
     pending do
       2.must_equal 3

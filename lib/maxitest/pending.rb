@@ -1,11 +1,17 @@
 module Maxitest
   module Pending
     def pending(reason=nil)
-      yield
-    rescue Minitest::Assertion
-      skip reason
-    else
-      raise "Fixed"
+      if block_given?
+        begin
+          yield
+        rescue StandardError, Minitest::Assertion
+          skip reason
+        else
+          raise "Fixed"
+        end
+      else
+        raise ArgumentError, "Need a block to execute"
+      end
     end
   end
 end

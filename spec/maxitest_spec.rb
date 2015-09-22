@@ -96,11 +96,11 @@ describe Maxitest do
 
   it "has pending" do
     result = sh("ruby spec/cases/pending.rb -v", :fail => true)
-    result.should include "LocalJumpError: no block given"
-    result.should include "RuntimeError: Fixed"
-    result.should include "Skipped, no message given"
-    result.should include "Skipping with a reason"
-    result.should include "5 runs, 4 assertions, 0 failures, 2 errors, 2 skips"
+    result.should include "ArgumentError: Need a block to execute" # fails without block
+    result.should include "RuntimeError: Fixed" # shows fixed when pending failed
+    result.should include "Skipped, no message given" # skip without message
+    result.should include "Skipping with a reason" # skip with message
+    result.should include "6 runs, 4 assertions, 0 failures, 2 errors, 3 skips"
   end
 
   it "does not call xit specs" do
