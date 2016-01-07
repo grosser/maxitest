@@ -2,7 +2,8 @@ bundler_args: ""
 rvm:
   - 1.9.3
   - 2.0.0
-  - 2.1.2
+  - 2.1.7
+  - 2.2.4
 gemfile:
   - gemfiles/58.gemfile
   - gemfiles/57.gemfile
@@ -13,3 +14,4 @@ gemfile:
   - gemfiles/52.gemfile
   - gemfiles/51.gemfile
   - gemfiles/50.gemfile
+before_install: gem i bundler
