@@ -5,11 +5,11 @@ Minitest + all the features you always wanted.
 Features
 ========
  - **Ctrl+c** stops tests and prints failures
- - **pastable rerun snippet** for failures
+ - **pastable rerun snippet** for failures (disabled/integrated on rails 5)
  - multiple before & after blocks
  - **around** blocks `around { |t| Dir.chdir(...) { t.call } }`
- - **red-green** output
- - `mtest` executable to **run by line number** and by folder
+ - **red-green** output  (disabled/integrated on rails 5)
+ - `mtest` executable to **run by line number** and by folder  (disabled/integrated on rails 5)
  - full backtrace for errors and assertions with verbose (`-v`)
  - `let!`
  - `let_all` execute once for all tests in a class and it's subclasses
