@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    maxitest (1.5.7)
+    maxitest (2.0.0)
       minitest (>= 5.0.0, < 5.9.0)
 
 GEM
@@ -44,4 +44,4 @@ DEPENDENCIES
   wwtd
 
 BUNDLED WITH
-   1.11.2
+   1.12.3
