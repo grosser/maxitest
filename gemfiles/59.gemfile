@@ -1,0 +1,3 @@
+source "https://rubygems.org"
+gemspec :path=>"../"
+gem "minitest", "~> 5.9.0"
