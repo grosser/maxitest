@@ -67,7 +67,7 @@ Minitest::Spec::DSL.class_eval do
       end
       fib.resume(self, lambda { Fiber.yield })
     end
-    after  { fib.resume unless fib == :failed }
+    after  { fib.resume if fib && fib != :failed }
   end
 
   # Minitest does not support multiple before/after blocks

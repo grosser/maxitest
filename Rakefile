@@ -26,7 +26,7 @@ task :update do
       elsif url.end_with?("line_plugin.rb")
         # replace ruby with mtest
         raise unless code.sub!(%{output = "ruby \#{file} -l \#{line}"}, %{output = "mtest \#{file}:\#{line}"})
-      elsif url.end_with?('around.rb')
+      elsif url.end_with?('around/spec.rb')
         # do not fail with resume for nill class when before was never called
         # for example when putting <% raise %> into a fixture file
         raise unless code.sub!(%{fib.resume unless fib == :failed}, %{fib.resume if fib && fib != :failed})

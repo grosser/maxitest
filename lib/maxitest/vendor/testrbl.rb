@@ -10,7 +10,7 @@ module Maxitest
       /^(\s+)def\s+(test_)([a-z_\d]+)\s*(?:#.*)?$/
     ]
 
-    OPTION_WITH_ARGUMENT = ["-I", "-r", "-n", "-e", "--seed", "-s"]
+    OPTION_WITH_ARGUMENT = ["-I", "-r", "-n", "--name", "-e", "--exclude", "-s", "--seed"]
     INTERPOLATION = /\\\#\\\{.*?\\\}/
 
     class << self
