@@ -19,6 +19,7 @@ Features
  - `pending { assert false }` is skip when it fails, but fails when it passes
  - implicit subject via `require 'maxitest/implicit_subject'`
  - `xit` to skip test (also does not call setup or teardown)
+ - `require 'maxitest/timeout'` to make hanging tests fail after `Maxitest.timeout` seconds
 
 Install
 =======

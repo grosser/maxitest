@@ -35,6 +35,47 @@ describe Maxitest do
     sh("ruby spec/cases/static_class_order.rb").should include("\n0\n.0n\n.1\n.1n\n.2\n.2n\n.3\n.3n\n.4\n.4n\n.\n")
   end
 
+  it "supports order_dependent" do
+    sh("ruby spec/cases/order_dependent.rb").should include "5 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
+  end
+
+  it "has pending" do
+    result = sh("ruby spec/cases/pending.rb -v", :fail => true)
+    result.should include "ArgumentError: Need a block to execute" # fails without block
+    result.should include "RuntimeError: Fixed" # shows fixed when pending failed
+    result.should include "Skipped, no message given" # skip without message
+    result.should include "Skipping with a reason" # skip with message
+    result.should include "6 runs, 4 assertions, 0 failures, 2 errors, 3 skips"
+  end
+
+  it "does not call xit specs" do
+    result = sh("ruby spec/cases/xit.rb -v")
+    result.should include "(no tests defined)"
+    result.should include "3 runs, 1 assertions, 0 failures, 0 errors, 2 skips"
+  end
+
+  describe "timeout" do
+    it "times out long running tests" do
+      result = sh("ruby spec/cases/timeout.rb -v", fail: true)
+
+      # 1 test takes too long and fails with a nice error message
+      result.should include "Maxitest::Timeout::TestCaseTimeout: Test took too long to finish, aborting"
+
+      # results look normal
+      result.should include ", 1 errors,"
+    end
+
+    it "does not time out when disabled" do
+      result = sh("DISABLE=1 ruby spec/cases/timeout.rb -v")
+
+      # 1 test takes too long and fails with a nice error message
+      result.should include "DID NOT TIME OUT"
+
+      # results look normal
+      result.should include "3 runs"
+    end
+  end
+
   describe "line" do
     let(:focus) { "Focus on failing tests:" }
     let(:expected_command) { "mtest spec/cases/line.rb:8" }
@@ -88,25 +129,6 @@ describe Maxitest do
       output.should include "runs, "
       output.should include "Interrupt: Interrupt"
     end
-  end
-
-  it "supports order_dependent" do
-    sh("ruby spec/cases/order_dependent.rb").should include "5 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
-  end
-
-  it "has pending" do
-    result = sh("ruby spec/cases/pending.rb -v", :fail => true)
-    result.should include "ArgumentError: Need a block to execute" # fails without block
-    result.should include "RuntimeError: Fixed" # shows fixed when pending failed
-    result.should include "Skipped, no message given" # skip without message
-    result.should include "Skipping with a reason" # skip with message
-    result.should include "6 runs, 4 assertions, 0 failures, 2 errors, 3 skips"
-  end
-
-  it "does not call xit specs" do
-    result = sh("ruby spec/cases/xit.rb -v")
-    result.should include "(no tests defined)"
-    result.should include "3 runs, 1 assertions, 0 failures, 0 errors, 2 skips"
   end
 
   describe "mtest" do
