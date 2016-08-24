@@ -52,8 +52,8 @@ module Minitest
 
       def describes_with_lines(target_file)
         runnables.map do |runnable|
-          next unless caller = runnable.instance_variable_get(:@minitest_line_caller)
-          next unless line = caller.detect { |line| line.include?(target_file) }
+          next unless caller = runnable.instance_variable_defined?(:@minitest_line_caller) && runnable.instance_variable_get(:@minitest_line_caller)
+          next unless line = caller.detect { |l| l.include?(target_file) }
           ["/#{Regexp.escape(runnable.name)}/", line[/:(\d+):in/, 1].to_i]
         end.compact
       end

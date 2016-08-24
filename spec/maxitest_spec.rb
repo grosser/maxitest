@@ -5,6 +5,13 @@ describe Maxitest do
     Maxitest::VERSION.should =~ /^[\.\da-z]+$/
   end
 
+  it "does not add extra output" do
+    result = sh("ruby spec/cases/plain.rb")
+    result.sub!(/seed \d+/, 'seed X')
+    result.gsub!(/\d+\.\d+/, 'X')
+    result.should == "Run options: --seed X\n\n# Running:\n\n..\n\nFinished in Xs, X runs/s, X assertions/s.\n\n2 runs, 2 assertions, 0 failures, 0 errors, 0 skips\n"
+  end
+
   it "runs via ruby" do
     sh("ruby spec/cases/plain.rb").should include "\n2 runs, 2 assertions"
   end
