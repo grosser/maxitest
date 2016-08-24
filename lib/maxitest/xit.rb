@@ -3,7 +3,7 @@ Minitest::Spec::DSL.class_eval do
     describe "skip" do
       def setup; end
       def teardown; end
-      it *args
+      it(*args)
     end
   end
 end

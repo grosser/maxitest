@@ -1,4 +1,5 @@
 require 'bundler/setup'
+$VERBOSE = true
 if ENV['SIMULATE_TTY']
   def $stdout.tty?
     true

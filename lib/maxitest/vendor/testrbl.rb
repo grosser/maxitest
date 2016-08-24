@@ -117,9 +117,21 @@ module Maxitest
       end
 
       def changed_files
-        changed_files = `git status -s`.split("\n").map { |l| l.strip.split(/\s+/, 2)[1] }
-        raise "Failed: #{changed_files}" unless $?.success?
+        changed_files = sh("git status -s").split("\n").map { |l| l.strip.split(/\s+/, 2)[1] }
+
+        if changed_files.empty?
+          # user wants to test last commit and not current diff
+          changed_files = sh("git show --name-only").split("\n\n").last.split("\n")
+        end
+
+        # we only want test files that were added or changed (not deleted)
         changed_files.select { |f| f =~ /_(test|spec)\.rb$/ && File.exist?(f) }
+      end
+
+      def sh(command)
+        result = `#{command}`
+        raise "Failed: #{command} -> #{result}" unless $?.success?
+        result
       end
 
       def ruby
