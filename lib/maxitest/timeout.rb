@@ -18,14 +18,7 @@ module Maxitest
         super
       else
         super do
-          rescued = false
-          begin
-            ::Timeout.timeout(Maxitest.timeout || 5, TestCaseTimeout, &block)
-          rescue TestCaseTimeout => e
-            raise e if rescued
-            rescued = true
-            retry
-          end
+          ::Timeout.timeout(Maxitest.timeout || 5, TestCaseTimeout, &block)
         end
       end
     end
