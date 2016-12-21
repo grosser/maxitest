@@ -1,5 +1,8 @@
 require "minitest"
 
+# make minitest look for plugins before we manually add our own
+Minitest.load_plugins
+
 disabled_for_rails = begin
   require 'rails/version'
   Rails::VERSION::MAJOR >= 5

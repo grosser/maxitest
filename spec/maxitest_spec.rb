@@ -46,6 +46,13 @@ describe Maxitest do
     sh("ruby spec/cases/order_dependent.rb").should include "5 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
   end
 
+  it "does not interfere with other plugins" do
+    result = sh("ruby -I spec/plugins spec/cases/plain.rb")
+    result.should include "Initializing tracing plugin ..."
+    result.should include "Processing options ..."
+    result.should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+  end
+
   it "has pending" do
     result = sh("ruby spec/cases/pending.rb -v", :fail => true)
     result.should include "ArgumentError: Need a block to execute" # fails without block
