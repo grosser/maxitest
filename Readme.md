@@ -1,6 +1,6 @@
 Minitest + all the features you always wanted.
 
-![Failure](https://dl.dropboxusercontent.com/u/2670385/Web/maxitest-failure.png)
+![Failure](assets/failure.png?raw=true)
 
 Features
 ========
