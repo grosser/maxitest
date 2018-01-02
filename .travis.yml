@@ -1,12 +1,16 @@
 bundler_args: ""
 branches:
   only: master
+before_install: gem update --system # https://github.com/travis-ci/travis-ci/issues/8978
 rvm:
-  - 2.0.0
-  - 2.1.7
-  - 2.2.4
-  - 2.3.1
+  - 2.0
+  - 2.1
+  - 2.2
+  - 2.3
+  - 2.4
+  - 2.5
 gemfile:
+  - gemfiles/511.gemfile
   - gemfiles/510.gemfile
   - gemfiles/59.gemfile
   - gemfiles/58.gemfile

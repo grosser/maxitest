@@ -16,9 +16,6 @@ describe 2 do
   end
 
   it "really does ..." do
-    puts ">>>>>>>>#{__FILE__}:#{__LINE__}>>>>>>>>"
-    puts caller
-    puts "<<<<<<<<#{__FILE__}:#{__LINE__-2}<<<<<<<<"
     sleep 10
   end
 end
