@@ -10,7 +10,14 @@ Minitest::Test.class_eval do
   alias_method :run_without_stop, :run
   def run
     if Maxitest.interrupted
-      self.failures = [Minitest::Skip.new("Maxitest::Interrupted")]
+      # only things with class `Minitest::Skip` get counted as skips
+      # we need to raise and capture to get a skip with a backtrace
+      skip = begin
+        raise Minitest::Skip, "Maxitest::Interrupted"
+      rescue Minitest::Skip
+        $!
+      end
+      self.failures = [skip]
       self
     else
       run_without_stop
