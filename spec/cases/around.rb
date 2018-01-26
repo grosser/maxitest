@@ -13,3 +13,13 @@ describe "2" do
     calls.must_equal [1,2,3]
   end
 end
+
+class AroundTest < Minitest::Test
+  def around
+    yield
+  end
+
+  def test_things
+    assert 1
+  end
+end

@@ -18,7 +18,7 @@ Minitest::Test.class_eval do
         $!
       end
       self.failures = [skip]
-      self
+      defined?(Minitest::Result) ? Minitest::Result.from(self) : self
     else
       run_without_stop
     end
