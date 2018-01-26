@@ -23,7 +23,7 @@ describe Maxitest do
   end
 
   it "supports around" do
-    sh("ruby spec/cases/around.rb").should include "\n1 runs, 2 assertions"
+    sh("ruby spec/cases/around.rb").should include "\n2 runs, 3 assertions"
   end
 
   it "supports context" do
@@ -194,7 +194,8 @@ describe Maxitest do
   def kill_process_with_name(file, signal='INT')
     running_processes = `ps -f`.split("\n").map{ |line| line.split(/\s+/) }
     pid_index = running_processes.detect { |p| p.include?("UID") }.index("UID") + 1
-    parent_pid = running_processes.detect { |p| p.include?(file) and not p.include?("sh") }[pid_index]
-    `kill -s #{signal} #{parent_pid}`
+    parent = running_processes.detect { |p| p.include?(file) and not p.include?("sh") }
+    raise "Unable to find parent in #{running_processes} with #{file}" unless parent
+    `kill -s #{signal} #{parent.fetch(pid_index)}`
   end
 end
