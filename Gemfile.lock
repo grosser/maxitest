@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    maxitest (2.5.0)
+    maxitest (2.6.0)
       minitest (>= 5.0.0, < 5.12.0)
 
 GEM
@@ -15,7 +15,7 @@ GEM
     columnize (0.9.0)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
-    minitest (5.11.2)
+    minitest (5.11.3)
     rake (10.3.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
