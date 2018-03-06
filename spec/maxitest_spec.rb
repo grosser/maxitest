@@ -72,6 +72,16 @@ describe Maxitest do
       result.should include ", 1 errors,"
     end
 
+    it "times out after custom interval" do
+      result = sh("CUSTOM=1 ruby spec/cases/timeout.rb -v", fail: true)
+
+      # 1 test takes too long and fails with a nice error message
+      result.should include "Maxitest::Timeout::TestCaseTimeout: Test took too long to finish, aborting"
+
+      # results look normal
+      result.should include ", 1 errors,"
+    end
+
     it "does not time out when disabled" do
       result = sh("DISABLE=1 ruby spec/cases/timeout.rb -v")
 

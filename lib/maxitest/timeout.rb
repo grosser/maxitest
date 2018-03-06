@@ -9,16 +9,18 @@ module Maxitest
   module Timeout
     class TestCaseTimeout < StandardError
       def message
-        "Test took too long to finish, aborting. To use a debugger, set Maxitest.timeout = false at the top of the test file."
+        "Test took too long to finish, aborting. To use a debugger, def maxitest_timeout;false;end in the test file."
       end
     end
 
     def capture_exceptions(*, &block)
-      if Maxitest.timeout == false
+      # NOTE: having a default def maxitest_timeout would break using let(:maxitest_timeout)
+      timeout = (defined?(maxitest_timeout) ? maxitest_timeout : Maxitest.timeout || 5)
+      if timeout == false
         super
       else
         super do
-          ::Timeout.timeout(Maxitest.timeout || 5, TestCaseTimeout, &block)
+          ::Timeout.timeout(timeout, TestCaseTimeout, &block)
         end
       end
     end
