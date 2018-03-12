@@ -93,6 +93,24 @@ describe Maxitest do
     end
   end
 
+  describe "extra threads" do
+    if  Minitest::VERSION.start_with?("5.0")
+      it "complains" do
+        sh("ruby spec/cases/threads.rb -v", fail: true).should include "Upgrade above minitest 5.0"
+      end
+    else
+      it "fails on extra and passes on regular" do
+        result = sh("ruby spec/cases/threads.rb -v", fail: true)
+        result.gsub(/\d\.\d+/, "0.0").should include <<-OUT.gsub(/^\s+/, "")
+          threads#test_0001_is fine without extra threads = 0.0 s = .
+          threads#test_0002_fails on extra threads = 0.0 s = F
+          threads#test_0003_can kill extra threads = 0.0 s = .
+          threads#test_0004_can wait for extra threads = 0.0 s = .
+        OUT
+      end
+    end
+  end
+
   describe "line" do
     let(:focus) { "Focus on failing tests:" }
     let(:expected_command) { "mtest spec/cases/line.rb:8" }
