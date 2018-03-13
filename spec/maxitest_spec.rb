@@ -69,7 +69,7 @@ describe Maxitest do
       result.should include "Maxitest::Timeout::TestCaseTimeout: Test took too long to finish, aborting"
 
       # results look normal
-      result.should include ", 1 errors,"
+      result.should include ", 2 errors,"
     end
 
     it "times out after custom interval" do
@@ -79,7 +79,7 @@ describe Maxitest do
       result.should include "Maxitest::Timeout::TestCaseTimeout: Test took too long to finish, aborting"
 
       # results look normal
-      result.should include ", 1 errors,"
+      result.should include ", 2 errors,"
     end
 
     it "does not time out when disabled" do
@@ -89,7 +89,7 @@ describe Maxitest do
       result.should include "DID NOT TIME OUT"
 
       # results look normal
-      result.should include "3 runs"
+      result.should include "4 runs"
     end
   end
 
