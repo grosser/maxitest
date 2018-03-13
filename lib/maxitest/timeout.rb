@@ -13,14 +13,16 @@ module Maxitest
       end
     end
 
-    def capture_exceptions(*, &block)
+    def run(*, &block)
       # NOTE: having a default def maxitest_timeout would break using let(:maxitest_timeout)
       timeout = (defined?(maxitest_timeout) ? maxitest_timeout : Maxitest.timeout || 5)
       if timeout == false
         super
       else
-        super do
-          ::Timeout.timeout(timeout, TestCaseTimeout, &block)
+        begin
+          ::Timeout.timeout(timeout, TestCaseTimeout) { super }
+        rescue TestCaseTimeout => e
+          failures << UnexpectedError.new(e)
         end
       end
     end

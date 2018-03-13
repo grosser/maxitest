@@ -20,4 +20,16 @@ describe 2 do
   it "y" do
     1
   end
+
+  describe "sum" do
+    before { sleep 0.04 }
+    after do
+      sleep 0.04
+      puts "DID NOT TIME OUT"
+    end
+
+    it "fails" do
+      sleep 0.04
+    end
+  end
 end
