@@ -20,6 +20,7 @@ Features
  - implicit subject via `require 'maxitest/implicit_subject'`
  - `xit` to skip test (also does not call setup or teardown)
  - `require 'maxitest/timeout'` to make hanging tests fail after `Maxitest.timeout` seconds
+ - `require 'maxitest/threads'` fail tests that leave extra threads running
 
 Install
 =======
