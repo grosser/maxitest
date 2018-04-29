@@ -1,7 +1,9 @@
 bundler_args: ""
 branches:
   only: master
-before_install: gem update --system # https://github.com/travis-ci/travis-ci/issues/8978
+before_install:
+  - gem update --system # https://github.com/travis-ci/travis-ci/issues/8978
+  - gem install bundler --no-ri --no-rdoc # ruby 2.5.1
 rvm:
   - 2.0
   - 2.1
