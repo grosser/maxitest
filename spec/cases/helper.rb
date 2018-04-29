@@ -5,4 +5,5 @@ if ENV['SIMULATE_TTY']
     true
   end
 end
+
 require 'maxitest/autorun'
