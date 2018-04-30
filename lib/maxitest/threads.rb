@@ -27,8 +27,9 @@ module Maxitest
       maxitest_extra_threads.map(&:kill).map(&:join)
     end
 
+    # if setup crashes we do not return anything to make the initial error visible
     def maxitest_extra_threads
-      Thread.list - @maxitest_threads_before
+      @maxitest_threads_before ? Thread.list - @maxitest_threads_before : []
     end
   end
 end
