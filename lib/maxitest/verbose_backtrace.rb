@@ -14,6 +14,7 @@ module Maxitest
       return unless options[:verbose]
       Maxitest::VerboseBacktrace.verbose = true
       Minitest.backtrace_filter = Maxitest::VerboseBacktrace::NullFilter
+      Rails.backtrace_cleaner.remove_silencers! if defined?(Rails) && Rails.respond_to?(:backtrace_cleaner)
     end
   end
 end
