@@ -105,6 +105,7 @@ module Minitest
       @failures.each do |res|
         result = (res.respond_to?(:source_location) ? res : res.method(res.name))
         file, line = result.source_location
+
         if file
           file = Pathname.new(file)
           file = file.relative_path_from(pwd) if file.absolute?

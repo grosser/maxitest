@@ -35,6 +35,6 @@ task :update do
       "#{url}\n# BEGIN #{do_not_modify}\n#{code.strip}\n#END #{do_not_modify}"
     end
 
-    File.write(file, parts.reject(&:empty?).join("\n\n"))
+    File.write(file, parts.reject(&:empty?).join("\n\n") << "\n")
   end
 end
