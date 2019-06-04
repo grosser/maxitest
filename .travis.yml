@@ -1,26 +1,39 @@
 bundler_args: ""
 branches:
   only: master
-before_install:
-  - gem update --system # https://github.com/travis-ci/travis-ci/issues/8978
-  - gem install bundler --no-ri --no-rdoc # ruby 2.5.1
 rvm:
-  - 2.0
-  - 2.1
-  - 2.2
-  - 2.3
-  - 2.4
-  - 2.5
+- 2.6
+- 2.5
+- 2.4
+- 2.3
+- 2.2
+- 2.1
+- 2.0
 gemfile:
-  - gemfiles/511.gemfile
-  - gemfiles/510.gemfile
-  - gemfiles/59.gemfile
-  - gemfiles/58.gemfile
-  - gemfiles/57.gemfile
-  - gemfiles/56.gemfile
-  - gemfiles/55.gemfile
-  - gemfiles/54.gemfile
-  - gemfiles/53.gemfile
-  - gemfiles/52.gemfile
-  - gemfiles/51.gemfile
-  - gemfiles/50.gemfile
+- gemfiles/511.gemfile
+- gemfiles/510.gemfile
+- gemfiles/59.gemfile
+- gemfiles/58.gemfile
+- gemfiles/57.gemfile
+- gemfiles/56.gemfile
+- gemfiles/55.gemfile
+- gemfiles/54.gemfile
+- gemfiles/53.gemfile
+- gemfiles/52.gemfile
+- gemfiles/51.gemfile
+- gemfiles/50.gemfile
+matrix:
+  exclude:
+  - rvm: 2.6
+    gemfile: gemfiles/50.gemfile
+  - rvm: 2.6
+    gemfile: gemfiles/51.gemfile
+  - rvm: 2.6
+    gemfile: gemfiles/52.gemfile
+  - rvm: 2.6
+    gemfile: gemfiles/53.gemfile
+  - rvm: 2.6
+    gemfile: gemfiles/54.gemfile
+  - rvm: 2.6
+    gemfile: gemfiles/55.gemfile
+before_install: ruby -e "Dir['{,gemfiles/**/}*emfile.lock'].each { |f| File.write(f, File.read(f).split('BUNDLED WITH').first)}"
