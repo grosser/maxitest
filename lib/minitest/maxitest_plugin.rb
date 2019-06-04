@@ -15,7 +15,7 @@ if defined?(Maxitest::ENABLE_PLUGINS) && Maxitest::ENABLE_PLUGINS
   unless disabled_for_rails # rails 5 add default red/green output
     require "maxitest/vendor/rg"
     Minitest.extensions << "rg"
-    Minitest::RG.rg!
+    Minitest::RG.rg! $stdout.tty?
   end
 
   unless disabled_for_rails # rails 5 breaks line support + has it's own line number runner

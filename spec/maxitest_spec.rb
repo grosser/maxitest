@@ -16,12 +16,6 @@ describe Maxitest do
     sh("ruby spec/cases/plain.rb").should include "\n2 runs, 2 assertions"
   end
 
-  it "is colorful on tty" do
-    simulate_tty do
-      sh("ruby spec/cases/plain.rb SIMULATE_TTY=1").should include "\e[32m2 runs, 2 assertions"
-    end
-  end
-
   it "supports around" do
     sh("ruby spec/cases/around.rb").should include "\n2 runs, 3 assertions"
   end
@@ -59,6 +53,28 @@ describe Maxitest do
     result = sh("ruby spec/cases/xit.rb -v")
     result.should include "(no tests defined)"
     result.should include "3 runs, 1 assertions, 0 failures, 0 errors, 2 skips"
+  end
+
+  describe "color" do
+    it "is color-less without tty" do
+      sh("ruby spec/cases/plain.rb").should include "\n2 runs, 2 assertions"
+    end
+
+    it "is colorful on tty" do
+      simulate_tty do
+        sh("ruby spec/cases/plain.rb").should include "\n\e[32m2 runs, 2 assertions"
+      end
+    end
+
+    it "is colorful without tty but --rg" do
+      sh("ruby spec/cases/plain.rb --rg").should include "\n\e[32m2 runs, 2 assertions"
+    end
+
+    it "is color-less with --no-rg and tty" do
+      simulate_tty do
+        sh("ruby spec/cases/plain.rb --no-rg").should include "\n2 runs, 2 assertions"
+      end
+    end
   end
 
   describe "timeout" do
