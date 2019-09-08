@@ -45,6 +45,10 @@ task :update do
           "reporter.reporters.grep(Minitest::Reporter).each do |rep|\n        rep.io = io if rep.io.tty?",
           "reporter.reporters.grep(Minitest::Reporter).each do |rep|\n        rep.io = io"
         )
+        raise unless code.sub!(
+          "MiniTest",
+          "Minitest",
+        )
       end
 
       "#{url}\n# BEGIN #{do_not_modify}\n#{code.strip}\n#END #{do_not_modify}"

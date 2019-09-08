@@ -18,8 +18,7 @@ if defined?(Maxitest::ENABLE_PLUGINS) && Maxitest::ENABLE_PLUGINS
     Minitest::RG.rg! $stdout.tty?
   end
 
-  unless disabled_for_rails # rails 5 breaks line support + has it's own line number runner
-    require "maxitest/vendor/line"
-    Minitest.extensions << "line"
-  end
+  # latest rails 5.2 has it's own line support but it does not work when just using ruby, so we need our own plugin
+  require "maxitest/vendor/line"
+  Minitest.extensions << "line"
 end
