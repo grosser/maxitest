@@ -47,12 +47,6 @@ Development
  - ruby 1.9+
  - `rake update` to update all vendored gems
 
-TODO
-====
- - make ctrl+c fix its own gem
- - `before :all` / `after :all` / `around :all`
- - minitest 4 version for those stuck on rails 3
-
 Author
 ======
  - running by line number from [minitest-line](https://github.com/judofyr/minitest-line)
