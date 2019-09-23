@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    maxitest (3.3.0)
+    maxitest (3.4.0)
       minitest (>= 5.0.0, < 5.13.0)
 
 GEM
