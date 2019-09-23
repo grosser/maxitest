@@ -6,7 +6,9 @@ describe Maxitest do
   end
 
   it "does not add extra output" do
-    result = sh("ruby spec/cases/plain.rb")
+    result = with_global_must do
+      sh("ruby spec/cases/plain.rb")
+    end
     result.sub!(/seed \d+/, 'seed X')
     result.gsub!(/\d+\.\d+/, 'X')
     result.should == "Run options: --seed X\n\n# Running:\n\n..\n\nFinished in Xs, X runs/s, X assertions/s.\n\n2 runs, 2 assertions, 0 failures, 0 errors, 0 skips\n"
@@ -109,6 +111,26 @@ describe Maxitest do
     end
   end
 
+  describe "global_must" do
+    let(:deprecated) { "DEPRECATED" }
+
+    if Minitest::VERSION.start_with?("5.12.")
+      it "complain when not used" do
+        sh("ruby spec/cases/plain.rb").should include deprecated
+      end
+    elsif Gem::Version.new(Minitest::VERSION) >= Gem::Version.new("5.13.0")
+      it "fails when not used" do
+        raise "TODO"
+      end
+    end
+
+    it "does not complain when used" do
+      with_global_must do
+        sh("ruby spec/cases/plain.rb").should_not include deprecated
+      end
+    end
+  end
+
   describe "extra threads" do
     if  Minitest::VERSION.start_with?("5.0")
       it "complains" do
@@ -116,7 +138,9 @@ describe Maxitest do
       end
     else
       it "fails on extra and passes on regular" do
-        result = sh("ruby spec/cases/threads.rb -v", fail: true)
+        result = with_global_must do
+          sh("ruby spec/cases/threads.rb -v", fail: true)
+        end
         result.gsub(/\d\.\d+/, "0.0").should include <<-OUT.gsub(/^\s+/, "")
           threads#test_0001_is fine without extra threads = 0.0 s = .
           threads#test_0002_fails on extra threads = 0.0 s = F
@@ -221,11 +245,24 @@ describe Maxitest do
 
   private
 
-  def simulate_tty
-    old, ENV['SIMULATE_TTY'] = ENV['SIMULATE_TTY'], 'true'
+  def simulate_tty(&block)
+    with_env SIMULATE_TTY: 'true', &block
+  end
+
+  def with_global_must(&block)
+    if Gem::Version.new(Minitest::VERSION) >= Gem::Version.new("5.12.0")
+      with_env GLOBAL_MUST: 'true', &block
+    else
+      yield
+    end
+  end
+
+  def with_env(h)
+    old = ENV.to_h
+    h.each { |k, v| ENV[k.to_s] = v}
     yield
   ensure
-    ENV['SIMULATE_TTY'] = old
+    ENV.replace old
   end
 
   def sh(command, options={})

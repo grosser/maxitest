@@ -10,6 +10,7 @@ rvm:
 - 2.1
 - 2.0
 gemfile:
+- gemfiles/512.gemfile
 - gemfiles/511.gemfile
 - gemfiles/510.gemfile
 - gemfiles/59.gemfile
@@ -36,4 +37,13 @@ matrix:
     gemfile: gemfiles/54.gemfile
   - rvm: 2.6
     gemfile: gemfiles/55.gemfile
+  # TODO: remove 512 excludes once https://github.com/seattlerb/minitest/issues/803 is fixed
+  - rvm: 2.3
+    gemfile: gemfiles/512.gemfile
+  - rvm: 2.2
+    gemfile: gemfiles/512.gemfile
+  - rvm: 2.1
+    gemfile: gemfiles/512.gemfile
+  - rvm: 2.0
+    gemfile: gemfiles/512.gemfile
 before_install: ruby -e "Dir['{,gemfiles/**/}*emfile.lock'].each { |f| File.write(f, File.read(f).split('BUNDLED WITH').first)}"
