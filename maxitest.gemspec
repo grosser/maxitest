@@ -10,7 +10,7 @@ Gem::Specification.new name, Maxitest::VERSION do |s|
   s.license = "MIT"
   s.executables = ["mtest"]
 
-  s.add_runtime_dependency "minitest", [">= 5.0.0", "< 5.12.0"]
+  s.add_runtime_dependency "minitest", [">= 5.0.0", "< 5.13.0"]
   s.required_ruby_version = '>= 2.0.0'
 
   s.add_development_dependency "bump"
