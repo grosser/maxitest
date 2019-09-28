@@ -21,7 +21,7 @@ Features
  - `xit` to skip test (also does not call setup or teardown)
  - `require 'maxitest/timeout'` to make hanging tests fail after `Maxitest.timeout` seconds
  - `require 'maxitest/threads'` fail tests that leave extra threads running
- - `require 'maxitest/global_must'` (before autorun) disable deprecation on global `must_*`
+ - `require 'maxitest/global_must'` (before autorun) disable deprecation on global `must_*` or [global_expectations](https://github.com/jeremyevans/minitest-global_expectations) gem
 
 Install
 =======

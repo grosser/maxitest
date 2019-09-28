@@ -37,9 +37,6 @@ matrix:
     gemfile: gemfiles/54.gemfile
   - rvm: 2.6
     gemfile: gemfiles/55.gemfile
-  # TODO: remove 512 excludes once https://github.com/seattlerb/minitest/issues/803 is fixed
-  - rvm: 2.3
-    gemfile: gemfiles/512.gemfile
   - rvm: 2.2
     gemfile: gemfiles/512.gemfile
   - rvm: 2.1
