@@ -37,8 +37,6 @@ matrix:
     gemfile: gemfiles/54.gemfile
   - rvm: 2.6
     gemfile: gemfiles/55.gemfile
-  - rvm: 2.2
-    gemfile: gemfiles/512.gemfile
   - rvm: 2.1
     gemfile: gemfiles/512.gemfile
   - rvm: 2.0
