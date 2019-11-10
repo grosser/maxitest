@@ -7,6 +7,7 @@ require "maxitest/let_all"
 require "maxitest/pending"
 require "maxitest/xit"
 require "maxitest/static_class_order"
+require "maxitest/shorted_backtrace"
 require "maxitest/vendor/line_describe" # not a plugin
 
 module Maxitest

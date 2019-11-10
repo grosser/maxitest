@@ -57,6 +57,15 @@ describe Maxitest do
     result.should include "3 runs, 1 assertions, 0 failures, 0 errors, 2 skips"
   end
 
+  it "shows short backtraces" do
+    sh("ruby spec/cases/raise.rb", fail: true).gsub(/:in .*/, "").should include <<-TEXT.gsub("       ", "")
+       TypeError: Timeout is not a module
+           lib/maxitest/timeout.rb:9
+           lib/maxitest/timeout.rb:4
+           spec/cases/raise.rb:11
+    TEXT
+  end
+
   describe "color" do
     it "is color-less without tty" do
       sh("ruby spec/cases/plain.rb").should include "\n2 runs, 2 assertions"
