@@ -10,6 +10,7 @@ rvm:
 - 2.1
 - 2.0
 gemfile:
+- gemfiles/514.gemfile
 - gemfiles/513.gemfile
 - gemfiles/512.gemfile
 - gemfiles/511.gemfile
@@ -46,4 +47,8 @@ matrix:
     gemfile: gemfiles/513.gemfile
   - rvm: 2.0
     gemfile: gemfiles/513.gemfile
+  - rvm: 2.1
+    gemfile: gemfiles/514.gemfile
+  - rvm: 2.0
+    gemfile: gemfiles/514.gemfile
 before_install: ruby -e "Dir['{,gemfiles/**/}*emfile.lock'].each { |f| File.write(f, File.read(f).split('BUNDLED WITH').first)}"
