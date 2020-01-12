@@ -123,13 +123,9 @@ describe Maxitest do
   describe "global_must" do
     let(:deprecated) { "DEPRECATED" }
 
-    if Minitest::VERSION.start_with?("5.12.")
+    if Gem::Version.new(Minitest::VERSION) >= Gem::Version.new("5.12.0")
       it "complain when not used" do
         sh("ruby spec/cases/plain.rb").should include deprecated
-      end
-    elsif Gem::Version.new(Minitest::VERSION) >= Gem::Version.new("5.13.0")
-      it "fails when not used" do
-        raise "TODO"
       end
     end
 

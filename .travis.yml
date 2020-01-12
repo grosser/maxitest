@@ -10,7 +10,7 @@ rvm:
 - 2.1
 - 2.0
 gemfile:
-- gemfiles/512.gemfile
+- gemfiles/513.gemfile
 - gemfiles/512.gemfile
 - gemfiles/511.gemfile
 - gemfiles/510.gemfile
