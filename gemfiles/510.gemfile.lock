@@ -1,8 +1,8 @@
 PATH
   remote: ..
   specs:
-    maxitest (2.4.0)
-      minitest (>= 5.0.0, < 5.12.0)
+    maxitest (3.6.0)
+      minitest (>= 5.0.0, < 5.15.0)
 
 GEM
   remote: https://rubygems.org/
@@ -38,4 +38,4 @@ DEPENDENCIES
   wwtd
 
 BUNDLED WITH
-   1.16.0
+   1.17.2

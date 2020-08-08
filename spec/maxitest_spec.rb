@@ -134,6 +134,14 @@ describe Maxitest do
         sh("ruby spec/cases/plain.rb").should_not include deprecated
       end
     end
+
+    if Gem::Version.new(Minitest::VERSION) >= Gem::Version.new("5.6.0")
+      it "fails when used in threads" do
+        with_global_must do
+          sh("ruby spec/cases/global_must.rb")
+        end
+      end
+    end
   end
 
   describe "extra threads" do
