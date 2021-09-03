@@ -58,7 +58,9 @@ describe Maxitest do
   end
 
   it "shows short backtraces" do
-    sh("ruby spec/cases/raise.rb", fail: true).gsub(/:in .*/, "").should include <<-TEXT.gsub("       ", "")
+    out = sh("ruby spec/cases/raise.rb", fail: true)
+    out.gsub!(/\n.*previous definition of Timeout.*/, "")
+    out.gsub!(/:in .*/, "").should include <<-TEXT.gsub("       ", "")
        TypeError: Timeout is not a module
            lib/maxitest/timeout.rb:9
            lib/maxitest/timeout.rb:4
