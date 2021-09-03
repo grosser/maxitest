@@ -1,0 +1,32 @@
+name: CI
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: [ '2.2', '2.3', '2.4', '2.5', '2.6', '2.7', '3.0' ] # recent minitest versions support ~>2.2
+        gemfile: [ '510', '511', '511', '512', '513', '514' ]
+        exclude:
+        - ruby: '3.0'
+          gemfile: '510'
+        - ruby: '3.0'
+          gemfile: '511'
+        - ruby: '3.0'
+          gemfile: '512'
+        - ruby: '3.0'
+          gemfile: '513'
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
+    steps:
+    - uses: actions/checkout@v2
+    - run: ruby -e "Dir['{,gemfiles/**/}*emfile.lock'].each { |f| File.write(f, File.read(f).split('BUNDLED WITH').first)}"
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - run: bundle exec rake

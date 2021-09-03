@@ -1,7 +1,6 @@
 require "bundler/setup"
 require "bundler/gem_tasks"
 begin; require "bump/tasks"; rescue LoadError;end # not available in tests for old ruby versions
-require "wwtd/tasks"
 
 desc "Run all tests"
 task :default do
@@ -55,5 +54,11 @@ task :update do
     end
 
     File.write(file, parts.reject(&:empty?).join("\n\n") << "\n")
+  end
+end
+
+task :bundle do
+  Bundler.with_original_env do
+    Dir["gemfiles/*.gemfile"].each { |gemfile| sh "BUNDLE_GEMFILE=#{gemfile} bundle" }
   end
 end

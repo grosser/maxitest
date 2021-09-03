@@ -30,7 +30,6 @@ GEM
       rspec-support (~> 3.1.0)
     rspec-support (3.1.0)
     slop (3.6.0)
-    wwtd (0.5.5)
 
 PLATFORMS
   ruby
@@ -41,7 +40,6 @@ DEPENDENCIES
   maxitest!
   rake
   rspec
-  wwtd
 
 BUNDLED WITH
-   1.17.3
+   2.2.16
