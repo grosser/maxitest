@@ -44,8 +44,8 @@ Development
  - tested via rspec to avoid messing up our own tests by accident
  - fixes should go back to the original libraries
  - restrictive minitest dependency so nothing breaks by accident
- - ruby 1.9+
- - `rake update` to update all vendored gems
+ - ruby >=2.2
+ - `rake bundle` to update all vendored gems
 
 Author
 ======
@@ -57,4 +57,4 @@ Author
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
 License: MIT<br/>
-[![Build Status](https://travis-ci.org/grosser/maxitest.png)](https://travis-ci.org/grosser/maxitest)
+[![CI](https://github.com/grosser/maxitest/actions/workflows/actions.yml/badge.svg?branch=master)](https://github.com/grosser/maxitest/actions/workflows/actions.yml?query=branch%3Amaster)
