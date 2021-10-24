@@ -5,9 +5,9 @@
 module Maxitest
   module Testrbl
     PATTERNS = [
-      /^(\s+)(should|test|it)\s+['"](.*)['"]\s+do\s*(?:#.*)?$/,
-      /^(\s+)(context|describe)\s+['"]?(.*?)['"]?\s+do\s*(?:#.*)?$/,
-      /^(\s+)def\s+(test_)([a-z_\d]+)\s*(?:#.*)?$/
+      /^(\s+)(should|test|it)(\s+|\s*\(\s*)['"](.*)['"](\s*\))?\s+do\s*(?:#.*)?$/,
+      /^(\s+)(context|describe)(\s+|\s*\(\s*)['"]?(.*?)['"]?(\s*\))?\s+do\s*(?:#.*)?$/,
+      /^(\s+)def(\s+)(test_)([a-z_\d]+)\s*(?:#.*)?$/
     ]
 
     OPTION_WITH_ARGUMENT = ["-I", "-r", "-n", "--name", "-e", "--exclude", "-s", "--seed"]
@@ -17,6 +17,7 @@ module Maxitest
       def run_from_cli(argv)
         files, options = partition_argv(argv)
         files.concat(changed_files) if options.delete("--changed")
+        files = ["test"] if files.empty?
         files = files.map { |f| localize(f) }
         load_options, options = partition_options(options)
 
@@ -157,7 +158,7 @@ module Maxitest
       def test_pattern_from_line(line)
         PATTERNS.each do |r|
           next unless line =~ r
-          whitespace, method, test_name = $1, $2, $3
+          whitespace, method, test_name = $1, $2, $4
           return [whitespace, test_pattern_from_match(method, test_name)]
         end
         nil
