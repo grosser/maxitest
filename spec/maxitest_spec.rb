@@ -258,6 +258,14 @@ describe Maxitest do
     end
   end
 
+  describe "parallel" do
+    it "can run in parallel" do
+      result = sh("MT_CPU=3 ruby spec/cases/parallel.rb -v")
+      result.should include "\n3 runs"
+      result.should include "Finished in 0.1"
+    end
+  end
+
   private
 
   def simulate_tty(&block)

@@ -1,3 +1,5 @@
+ENV["MT_CPU"] = "2" # so we get 3 threads total and not variation based on machines cpus
+require "maxitest/global_must"
 require "./spec/cases/helper"
 require "maxitest/threads"
 
@@ -5,7 +7,7 @@ describe "threads" do
   order_dependent!
 
   def assert_correct_threads
-    Thread.list.count.must_equal 3
+    Thread.list.count.must_equal 3, Thread.list
   end
 
   def create_thread
