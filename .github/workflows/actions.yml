@@ -9,16 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: [ '2.2', '2.3', '2.4', '2.5', '2.6', '2.7', '3.0' ] # recent minitest versions support ~>2.2
+        ruby: [ '2.6', '2.7', '3.0', '3.1' ] # recent minitest versions support >=2.6
         gemfile: [ '510', '511', '511', '512', '513', '514' ]
         exclude:
         - ruby: '3.0'
           gemfile: '510'
+        - ruby: '3.1'
+          gemfile: '510'
         - ruby: '3.0'
+          gemfile: '511'
+        - ruby: '3.1'
           gemfile: '511'
         - ruby: '3.0'
           gemfile: '512'
+        - ruby: '3.1'
+          gemfile: '512'
         - ruby: '3.0'
+          gemfile: '513'
+        - ruby: '3.1'
           gemfile: '513'
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
