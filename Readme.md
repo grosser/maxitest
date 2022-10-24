@@ -44,7 +44,7 @@ Development
  - tested via rspec to avoid messing up our own tests by accident
  - fixes should go back to the original libraries
  - restrictive minitest dependency so nothing breaks by accident
- - ruby >=2.2
+ - ruby >=2.6
  - `rake bundle` to update all vendored gems
 
 Author

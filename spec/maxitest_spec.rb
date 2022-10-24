@@ -137,13 +137,11 @@ describe Maxitest do
       end
     end
 
-    if Gem::Version.new(Minitest::VERSION) >= Gem::Version.new("5.6.0") && RUBY_VERSION >= "2.1.0"
-      it "fails when used in threads" do
+    it "fails when used in threads" do
         with_global_must do
           sh("ruby spec/cases/global_must.rb")
         end
       end
-    end
   end
 
   describe "extra threads" do
@@ -255,6 +253,14 @@ describe Maxitest do
       result.should include "1 run"
       result.should include "error_and_failure.rb:9"
       result.should include "minitest.rb"
+    end
+  end
+
+  describe "parallel" do
+    it "can run in parallel" do
+      result = sh("MT_CPU=3 ruby spec/cases/parallel.rb -v")
+      result.should include "\n3 runs"
+      result.should include "Finished in 0.1"
     end
   end
 
