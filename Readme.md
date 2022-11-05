@@ -38,6 +38,7 @@ require "maxitest/autorun"
 
 ... normal tests ...
 ```
+
 Development
 ===========
  - everything vendored into 1 gem to avoid dependency madness

@@ -220,6 +220,16 @@ describe Maxitest do
   end
 
   describe "mtest" do
+    it "shows version" do
+      sh("mtest -v").should == "#{Maxitest::VERSION}\n"
+      sh("mtest --version").should == "#{Maxitest::VERSION}\n"
+    end
+
+    it "shows help" do
+      sh("mtest -h").should include "Usage:"
+      sh("mtest --help").should include "Usage:"
+    end
+
     it "runs a single file" do
       sh("mtest spec/cases/mtest/a_test.rb").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
     end
