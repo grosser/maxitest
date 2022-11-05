@@ -1,6 +1,11 @@
 require "bundler/setup"
 require "bundler/gem_tasks"
-begin; require "bump/tasks"; rescue LoadError;end # not available in tests for old ruby versions
+
+begin
+  require "bump/tasks"
+  Bump.replace_in_default = Dir["gemfiles/**.lock"]
+rescue LoadError # not available in gemfiles/
+end
 
 desc "Run all tests"
 task :default do
