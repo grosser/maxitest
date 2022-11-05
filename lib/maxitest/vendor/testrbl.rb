@@ -15,6 +15,22 @@ module Maxitest
 
     class << self
       def run_from_cli(argv)
+        if argv == ["-v"] || argv == ["--version"]
+          puts Maxitest::VERSION
+          exit 0
+        end
+
+        if argv == ["-h"] || argv == ["--help"]
+          puts <<~EOF
+            test given file, folder or file:line
+            Usage: mtest foo_test.rb
+
+            -v to run without bracktrace cleaner
+            --changed to run all all tests in current `git diff` or `git show`
+          EOF
+          exit 0
+        end
+
         files, options = partition_argv(argv)
         files.concat(changed_files) if options.delete("--changed")
         files = ["test"] if files.empty?
