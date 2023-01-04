@@ -1,4 +1,6 @@
 Minitest + all the features you always wanted.
+[![CI](https://github.com/grosser/maxitest/actions/workflows/actions.yml/badge.svg?branch=master)](https://github.com/grosser/maxitest/actions/workflows/actions.yml?query=branch%3Amaster)
+[![Gem Version](https://badge.fury.io/rb/maxitest.svg)](https://badge.fury.io/rb/maxitest)
 
 ![Failure](assets/failure.png?raw=true)
 
@@ -58,4 +60,3 @@ Author
 [Michael Grosser](http://grosser.it)<br/>
 michael@grosser.it<br/>
 License: MIT<br/>
-[![CI](https://github.com/grosser/maxitest/actions/workflows/actions.yml/badge.svg?branch=master)](https://github.com/grosser/maxitest/actions/workflows/actions.yml?query=branch%3Amaster)

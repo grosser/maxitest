@@ -2,7 +2,7 @@ PATH
   remote: ..
   specs:
     maxitest (4.3.0)
-      minitest (>= 5.0.0, < 5.17.0)
+      minitest (>= 5.0.0, < 5.18.0)
 
 GEM
   remote: https://rubygems.org/
@@ -26,6 +26,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  ruby
 
 DEPENDENCIES
   maxitest!
