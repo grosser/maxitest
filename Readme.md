@@ -13,6 +13,7 @@ Features
  - **red-green** output  (disabled/integrated on rails 5)
  - `mtest` executable to **run by line number** and by folder  (disabled/integrated on rails 5)
  - full backtrace for errors and assertions with verbose (`-v`)
+ - `before :all` + `after :all` with `require 'maxitest/before_and_after_all'`
  - `let!`
  - `let_all` execute once for all tests in a class and it's subclasses
  - `order_dependent!` to make your tests run in given order
