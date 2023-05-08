@@ -10,7 +10,7 @@ Gem::Specification.new "maxitest", Maxitest::VERSION do |s|
   s.executables = ["mtest"]
 
   s.add_runtime_dependency "minitest", [">= 5.14.0", "< 5.19.0"]
-  s.required_ruby_version = '>= 3.0.6', '< 4'
+  s.required_ruby_version = '>= 3', '< 4' # mirroring minitest
 
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
