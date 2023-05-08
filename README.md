@@ -47,7 +47,7 @@ Development
  - tested via rspec to avoid messing up our own tests by accident
  - fixes should go back to the original libraries
  - restrictive minitest dependency so nothing breaks by accident
- - ruby >=2.6
+ - ruby >=3.0
  - `rake bundle` to update all vendored gems
 
 Author
@@ -57,6 +57,6 @@ Author
  - mtest from [testrbl](https://github.com/grosser/testrbl)
  - red-green from [minitest-rg](https://github.com/blowmage/minitest-rg)
 
-[Michael Grosser](http://grosser.it)<br/>
-michael@grosser.it<br/>
-License: MIT<br/>
+[Michael Grosser](http://grosser.it)  
+michael@grosser.it  
+License: MIT
