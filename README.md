@@ -57,6 +57,6 @@ Author
  - mtest from [testrbl](https://github.com/grosser/testrbl)
  - red-green from [minitest-rg](https://github.com/blowmage/minitest-rg)
 
-[Michael Grosser](http://grosser.it)  
-michael@grosser.it  
+[Michael Grosser](http://grosser.it)<br>
+michael@grosser.it<br>
 License: MIT
