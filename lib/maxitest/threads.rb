@@ -1,7 +1,5 @@
 # tests that leave extra threads running can break other tests in weird ways ... prevent that from happening
 
-raise "Upgrade above minitest 5.0 to use this feature" if Minitest::VERSION.start_with?("5.0")
-
 module Maxitest
   module Threads
     def setup

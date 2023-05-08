@@ -9,38 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: [ '2.6', '2.7', '3.0', '3.1', '3.2' ] # recent minitest versions support >=2.6
-        gemfile: [ '510', '511', '511', '512', '513', '514', '515', '516', '517', '518' ]
-        exclude:
-        - ruby: '3.0'
-          gemfile: '510'
-        - ruby: '3.1'
-          gemfile: '510'
-        - ruby: '3.2'
-          gemfile: '510'
-        - ruby: '3.0'
-          gemfile: '511'
-        - ruby: '3.1'
-          gemfile: '511'
-        - ruby: '3.2'
-          gemfile: '511'
-        - ruby: '3.0'
-          gemfile: '512'
-        - ruby: '3.1'
-          gemfile: '512'
-        - ruby: '3.2'
-          gemfile: '512'
-        - ruby: '3.0'
-          gemfile: '513'
-        - ruby: '3.1'
-          gemfile: '513'
-        - ruby: '3.2'
-          gemfile: '513'
+        ruby: [ '3.0', '3.1', '3.2' ]
+        gemfile: [ '514', '515', '516', '517', '518' ]
+
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
     steps:
     - uses: actions/checkout@v3
-    - run: ruby -e "Dir['{,gemfiles/**/}*emfile.lock'].each { |f| File.write(f, File.read(f).split('BUNDLED WITH').first)}"
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
