@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    maxitest (4.4.1)
+    maxitest (4.5.0)
       minitest (>= 5.0.0, < 5.19.0)
 
 GEM
@@ -15,7 +15,7 @@ GEM
     io-console (0.6.0)
     irb (1.6.4)
       reline (>= 0.3.0)
-    minitest (5.17.0)
+    minitest (5.18.0)
     rake (13.0.6)
     reline (0.3.3)
       io-console (~> 0.5)
