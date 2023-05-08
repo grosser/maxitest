@@ -1,4 +1,5 @@
 require "spec_helper"
+require 'open3'
 
 describe Maxitest do
   it "has a VERSION" do
@@ -11,7 +12,7 @@ describe Maxitest do
     end
     result.sub!(/seed \d+/, 'seed X')
     result.gsub!(/\d+\.\d+/, 'X')
-    result.should == "Run options: --seed X\n\n# Running:\n\n..\n\nFinished in Xs, X runs/s, X assertions/s.\n\n2 runs, 2 assertions, 0 failures, 0 errors, 0 skips\n"
+    result.should == "Run options: --seed X\n\n# Running:\n\n..\n\nFinished in Xs, X runs/s, X assertions/s.\n\n2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
   end
 
   it "runs via ruby" do
@@ -221,8 +222,8 @@ describe Maxitest do
 
   describe "mtest" do
     it "shows version" do
-      run_cmd("mtest -v").should == "#{Maxitest::VERSION}\n"
-      run_cmd("mtest --version").should == "#{Maxitest::VERSION}\n"
+      run_cmd("mtest -v").should == Maxitest::VERSION
+      run_cmd("mtest --version").should == Maxitest::VERSION
     end
 
     it "shows help" do
@@ -296,11 +297,18 @@ describe Maxitest do
     ENV.replace old
   end
 
-  def run_cmd(command, options={})
-    result = `#{command} #{"2>&1" unless options[:keep_output]}`
-    raise "#{options[:fail] ? "SUCCESS" : "FAIL"} #{command}\n#{result}" if $?.success? == !!options[:fail]
-    result
+  def run_cmd(command, options = {})
+    stdout, stderr, status = Open3.capture3(command)
+
+    unless options[:keep_output]
+      stdout += "\n" + stderr
+    end
+
+    raise "#{options[:fail] ? "SUCCESS" : "FAIL"} #{command}\n#{stdout}" if status.success? == !!options[:fail]
+
+    stdout.strip
   end
+
 
   # copied from https://github.com/grosser/parallel/blob/master/spec/parallel_spec.rb#L10-L15
   def kill_process_with_name(file, signal='INT')

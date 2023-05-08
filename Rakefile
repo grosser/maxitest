@@ -65,6 +65,6 @@ end
 task :bundle do
   extra = ENV["EXTRA"]
   Bundler.with_original_env do
-    Dir["gemfiles/*.gemfile"].each { |gemfile| sh "BUNDLE_GEMFILE=#{gemfile} bundle #{extra}" }
+    Dir["gemfiles/*.gemfile"].reverse.each { |gemfile| sh "BUNDLE_GEMFILE=#{gemfile} bundle #{extra}" }
   end
 end
