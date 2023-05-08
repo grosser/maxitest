@@ -1,5 +1,7 @@
 require "bundler/setup"
 require "bundler/gem_tasks"
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
 
 begin
   require "bump/tasks"
@@ -8,9 +10,7 @@ rescue LoadError # not available in gemfiles/
 end
 
 desc "Run all tests"
-task :default do
-  sh "rspec spec/"
-end
+task default: :spec
 
 desc "Update all dependencies"
 task :update do
@@ -65,6 +65,6 @@ end
 task :bundle do
   extra = ENV["EXTRA"]
   Bundler.with_original_env do
-    Dir["gemfiles/*.gemfile"].each { |gemfile| sh "BUNDLE_GEMFILE=#{gemfile} bundle #{extra}" }
+    Dir["gemfiles/*.gemfile"].reverse.each { |gemfile| sh "BUNDLE_GEMFILE=#{gemfile} bundle #{extra}" }
   end
 end
