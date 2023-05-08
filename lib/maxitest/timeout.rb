@@ -2,11 +2,13 @@
 require 'timeout'
 
 module Maxitest
+  puts "DEFINE #{defined? Maxitest::Timeout}"
   class << self
     attr_accessor :timeout
   end
+end
 
-  module Timeout
+module Maxitest::Timeout
     class TestCaseTimeout < StandardError
       def message
         "Test took too long to finish, aborting. To use a debugger, def maxitest_timeout;false;end in the test file."
@@ -30,5 +32,3 @@ module Maxitest
 end
 
 Minitest::Test.send :prepend, Maxitest::Timeout
-
-
