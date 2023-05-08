@@ -1,8 +1,9 @@
 # tests sometimes hang locally or on ci and with this we can actually debug the cause instead of just hanging forever
 require 'timeout'
 
+puts defined?(Maxitest::Timeout)
+
 module Maxitest
-  puts "DEFINE #{defined? Maxitest::Timeout}"
   class << self
     attr_accessor :timeout
   end
@@ -28,7 +29,6 @@ module Maxitest::Timeout
         end
       end
     end
-  end
 end
 
 Minitest::Test.send :prepend, Maxitest::Timeout
