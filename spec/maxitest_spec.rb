@@ -55,7 +55,7 @@ describe Maxitest do
   it "does not call xit specs" do
     result = run_cmd("ruby spec/cases/xit.rb -v")
     result.should include "(no tests defined)"
-    result.should include "3 runs, 1 assertions, 0 failures, 0 errors, 2 skips"
+    result.should include "4 runs, 3 assertions, 0 failures, 0 errors, 2 skips"
   end
 
   it "shows short backtraces" do

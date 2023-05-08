@@ -1,9 +1,19 @@
-Minitest::Spec::DSL.class_eval do
-  def xit(*args, &block)
-    describe "skip" do
-      def setup; end
-      def teardown; end
-      it(*args)
+# frozen_string_literal: true
+
+module Maxitest
+  module XitMethod
+    def xit(*args)
+      describe 'skip' do
+        define_method(:setup) {}
+        define_method(:teardown) {}
+        it(*args)
+      end
+    end
+
+    def self.included(base)
+      base.extend(self)
     end
   end
 end
+
+Minitest::Spec::DSL.include(Maxitest::XitMethod)

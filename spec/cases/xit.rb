@@ -1,6 +1,10 @@
 require "./spec/cases/helper"
 
 describe 2 do
+  it 'should include the xit module' do
+    assert_includes MiniTest::Spec::DSL.included_modules, Maxitest::XitMethod
+  end
+
   xit "is even" do
     2.even?.must_equal true
   end
