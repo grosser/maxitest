@@ -9,6 +9,7 @@ module Maxitest
         cache.first
       end
     end
+
     def self.included(base)
       base.extend(self)
     end

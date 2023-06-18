@@ -19,10 +19,6 @@ describe Maxitest do
     run_cmd("ruby spec/cases/plain.rb").should include "\n2 runs, 2 assertions"
   end
 
-  it "supports around" do
-    run_cmd("ruby spec/cases/around.rb").should include "\n2 runs, 3 assertions"
-  end
-
   it "supports context" do
     run_cmd("ruby spec/cases/context.rb").should include "\n2 runs, 2 assertions"
   end
@@ -73,6 +69,38 @@ describe Maxitest do
     TEXT
 
     output_in.should include 'spec/cases/raise.rb:11'
+  end
+
+  describe "before/after/around" do
+    it "works" do
+      out = run_cmd("ruby spec/cases/hook_all.rb")
+      out.should include "Running:\n\nALL\nT1\n.T2\n.ALL-SUB\nTS1\n.TS2\n.\n\nFinished"
+    end
+
+    it "fails when using unsupported type" do
+      with_env HOOK_TYPE: "foo" do
+        out = run_cmd("ruby spec/cases/hook_all.rb", fail: true)
+        out.should include "only :each and :all are supported (ArgumentError)"
+      end
+    end
+
+    it "informs user about missing after :all" do
+      with_env HOOK_METHOD: "after" do
+        out = run_cmd("ruby spec/cases/hook_all.rb --seed 123", fail: true)
+        out.should include ":all is not supported in after (ArgumentError)"
+      end
+    end
+
+    it "supports around" do
+      run_cmd("ruby spec/cases/around.rb").should include "\n2 runs, 3 assertions"
+    end
+
+    it "informs user about missing around :all" do
+      with_env HOOK_TYPE: "all" do
+        out = run_cmd("ruby spec/cases/around.rb", fail: true)
+        out.should include "only :each or no argument is supported (ArgumentError)"
+      end
+    end
   end
 
   describe "color" do
@@ -314,7 +342,6 @@ describe Maxitest do
 
     stdout.strip
   end
-
 
   # copied from https://github.com/grosser/parallel/blob/master/spec/parallel_spec.rb#L10-L15
   def kill_process_with_name(file, signal='INT')
