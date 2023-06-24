@@ -31,9 +31,12 @@ task :update do
         # replace ruby with mtest
         raise unless code.sub!(%{output = "ruby \#{file} -l \#{line}"}, %{output = "mtest \#{file}:\#{line}"})
       elsif url.end_with?('/around/spec.rb')
-        # do not fail with resume for nill class when before was never called
+        # do not fail with resume for nil class when before was never called
         # for example when putting <% raise %> into a fixture file
         raise unless code.sub!(%{fib.resume unless fib == :failed}, %{fib.resume if fib && fib != :failed})
+
+        # make `after :all` blow up to avoid confusion
+        raise unless code.sub!(%{fib = nil}, %{raise ArgumentError, "only :each or no argument is supported" if args != [] && args != [:each]\n    fib = nil})
       elsif url.end_with?('/rg_plugin.rb')
         # support disabling/enabling colors
         # https://github.com/blowmage/minitest-rg/pull/15

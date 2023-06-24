@@ -9,6 +9,7 @@ Features
  - **Ctrl+c** stops tests and prints failures
  - **pastable rerun snippet** for failures (disabled/integrated on rails 5)
  - multiple before & after blocks
+ - `before :all` blocks
  - **around** blocks `around { |t| Dir.chdir(...) { t.call } }`
  - **red-green** output  (disabled/integrated on rails 5)
  - `mtest` executable to **run by line number** and by folder  (disabled/integrated on rails 5)

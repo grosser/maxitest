@@ -57,6 +57,7 @@ Minitest::Spec::DSL.class_eval do
   # - execute test
   # - resume fiber to execute last part
   def around(*args, &block)
+    raise ArgumentError, "only :each or no argument is supported" if args != [] && args != [:each]
     fib = nil
     before do
       fib = Fiber.new do |context, resume|
