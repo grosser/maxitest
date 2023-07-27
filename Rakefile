@@ -65,6 +65,7 @@ task :update do
   end
 end
 
+desc "bundle all gemfiles/ EXTRA="
 task :bundle do
   extra = ENV["EXTRA"]
   Bundler.with_original_env do
