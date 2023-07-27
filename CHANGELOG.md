@@ -1,4 +1,5 @@
 # Next
+- support minitest 5.19
 
 # v5.1.0
 - support `before :all`

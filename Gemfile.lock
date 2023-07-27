@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     maxitest (5.1.0)
-      minitest (>= 5.14.0, < 5.19.0)
+      minitest (>= 5.14.0, < 5.20.0)
 
 GEM
   remote: https://rubygems.org/
