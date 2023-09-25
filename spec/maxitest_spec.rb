@@ -95,6 +95,10 @@ describe Maxitest do
       run_cmd("ruby spec/cases/around.rb").should include "\n2 runs, 3 assertions"
     end
 
+    it "can catch in around" do
+      run_cmd("ruby spec/cases/around_throw.rb").should include "\n1 runs, 1 assertion"
+    end
+
     it "informs user about missing around :all" do
       with_env HOOK_TYPE: "all" do
         out = run_cmd("ruby spec/cases/around.rb", fail: true)
