@@ -1,5 +1,11 @@
 # Next
 
+# v5.3.0
+- `pending "broken", if: ENV["CI"] do`
+- `with_env`
+- `capture_stderr` + `capture_stdout`
+- hide maxitest backtraces by default
+
 # v5.2.0
 - support minitest 5.19
 
