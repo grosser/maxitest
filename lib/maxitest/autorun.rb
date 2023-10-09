@@ -20,3 +20,8 @@ Minitest::Spec::DSL.send(:alias_method, :context, :describe)
 class << Minitest::Test
   alias_method :order_dependent!, :i_suck_and_my_tests_are_order_dependent!
 end
+
+# do not show maxitest as causing errors, but the last line in the users code
+old = MiniTest::BacktraceFilter::MT_RE
+MiniTest::BacktraceFilter.send(:remove_const, :MT_RE)
+MiniTest::BacktraceFilter::MT_RE = Regexp.union(old, %r%lib/maxitest%)

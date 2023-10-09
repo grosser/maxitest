@@ -57,13 +57,9 @@ describe Maxitest do
     out.gsub!(/\n.*previous definition of Timeout.*/, "")
     output_in = out.gsub!(/:in .*/, "")
 
-    output_in.should include <<-TEXT.gsub("       ", "")
-       TypeError: Timeout is not a module
-           lib/maxitest/timeout.rb:9
-           lib/maxitest/timeout.rb:4
-    TEXT
-
+    output_in.should include "TypeError: Timeout is not a module"
     output_in.should include 'spec/cases/raise.rb:11'
+    output_in.should_not include 'lib/maxitest'
   end
 
   describe "before/after/around" do
