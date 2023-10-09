@@ -22,6 +22,8 @@ Features
  - `pending { assert false }` is skip when it fails, but fails when it passes
  - implicit subject via `require 'maxitest/implicit_subject'`
  - `xit` to skip test (also does not call setup or teardown)
+ - `with_env` to change environment variables during test run
+ - `capture_stdout` and `capture_stderr` to capture stdout or stderr but not both (like `capture_io` does)
  - `require 'maxitest/timeout'` to make hanging tests fail after `Maxitest.timeout` seconds
  - `require 'maxitest/threads'` fail tests that leave extra threads running
  - `require 'maxitest/global_must'` (before autorun) disable deprecation on global `must_*` or [global_expectations](https://github.com/jeremyevans/minitest-global_expectations) gem
@@ -41,6 +43,11 @@ require "maxitest/autorun"
 
 ... normal tests ...
 ```
+
+### pending
+
+- `pending "need to fix" do` to show why something is pending 
+- `pending "need to fix", if: ENV["CI"] do` to only skip on CI (if something is supposed to work locally) 
 
 Development
 ===========
