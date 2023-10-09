@@ -62,6 +62,10 @@ describe Maxitest do
     output_in.should_not include 'lib/maxitest'
   end
 
+  it "has helpers" do
+    run_cmd("ruby spec/cases/helpers.rb")
+  end
+
   describe "before/after/around" do
     it "works" do
       out = run_cmd("ruby spec/cases/hook_all.rb")
