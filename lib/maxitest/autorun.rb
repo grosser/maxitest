@@ -23,6 +23,6 @@ class << Minitest::Test
 end
 
 # do not show maxitest as causing errors, but the last line in the users code
-old = MiniTest::BacktraceFilter::MT_RE
-MiniTest::BacktraceFilter.send(:remove_const, :MT_RE)
-MiniTest::BacktraceFilter::MT_RE = Regexp.union(old, %r%lib/maxitest%)
+old = Minitest::BacktraceFilter::MT_RE
+Minitest::BacktraceFilter.send(:remove_const, :MT_RE)
+Minitest::BacktraceFilter::MT_RE = Regexp.union(old, %r%lib/maxitest%)
