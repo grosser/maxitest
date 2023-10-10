@@ -1,5 +1,8 @@
 # Next
 
+# v5.3.1
+- remove MiniTest usage to make Zeitwerk happy
+
 # v5.3.0
 - `pending "broken", if: ENV["CI"] do`
 - `with_env`
