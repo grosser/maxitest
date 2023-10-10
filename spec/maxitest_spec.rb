@@ -66,6 +66,12 @@ describe Maxitest do
     run_cmd("ruby spec/cases/helpers.rb")
   end
 
+  it "does not use old MiniTest constant" do
+    Dir["lib/**/*.rb"].each do |p|
+      File.read(p).should_not include "MiniTest"
+    end
+  end
+
   describe "before/after/around" do
     it "works" do
       out = run_cmd("ruby spec/cases/hook_all.rb")
