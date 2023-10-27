@@ -25,7 +25,7 @@ GEM
     rspec-support (3.12.1)
 
 PLATFORMS
-  arm64-darwin-22
+  ruby
 
 DEPENDENCIES
   maxitest!
@@ -34,4 +34,4 @@ DEPENDENCIES
   rspec
 
 BUNDLED WITH
-   2.4.12
+   2.4.21

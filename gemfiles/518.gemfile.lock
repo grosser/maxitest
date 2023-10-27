@@ -8,7 +8,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.5.0)
-    minitest (5.18.0)
+    minitest (5.18.1)
     rake (13.0.6)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
@@ -19,15 +19,13 @@ GEM
     rspec-expectations (3.12.3)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
-    rspec-mocks (3.12.5)
+    rspec-mocks (3.12.6)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
-    rspec-support (3.12.0)
+    rspec-support (3.12.1)
 
 PLATFORMS
-  arm64-darwin
-  arm64-darwin-22
-  x86_64-linux
+  ruby
 
 DEPENDENCIES
   maxitest!
@@ -36,4 +34,4 @@ DEPENDENCIES
   rspec
 
 BUNDLED WITH
-   2.4.12
+   2.4.21
