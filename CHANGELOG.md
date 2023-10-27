@@ -1,4 +1,6 @@
 # Next
+
+# v5.4.0
 - support minitest 5.20
 
 # v5.3.1
