@@ -41,13 +41,45 @@ Usage
 ```Ruby
 require "maxitest/autorun"
 
-... normal tests ...
+# ... normal minitest tests ...
+describe MyClass do
+  describe "#my_method" do
+    it "passes" do
+      _(MyClass.new.my_method).must_equal 1
+    end
+  end
+end
 ```
 
 ### pending
 
 - `pending "need to fix" do` to show why something is pending 
 - `pending "need to fix", if: ENV["CI"] do` to only skip on CI (if something is supposed to work locally) 
+
+### with_env
+
+Use during test: `with_env FOO: "bar do ...`
+Use as `around` block: `with_env FOO: "bar"`
+
+### context
+
+Use as alias for `describe`
+
+```ruby
+describe "#my_method" do
+  context "with bad state" do
+    before { errors += 1 }
+    it "fails" # ...
+  end
+end
+```
+
+### capture_stdout / capture_stderr
+
+```ruby
+output = capture_stdout { puts 1 }
+_(output).must_equal "1\n"
+```
 
 Development
 ===========
