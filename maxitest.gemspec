@@ -9,7 +9,7 @@ Gem::Specification.new "maxitest", Maxitest::VERSION do |s|
   s.license = "MIT"
   s.executables = ["mtest"]
 
-  s.add_runtime_dependency "minitest", [">= 5.14.0", "< 5.20.0"]
+  s.add_runtime_dependency "minitest", [">= 5.14.0", "< 5.21.0"]
   s.required_ruby_version = '>= 3', '< 4' # mirroring minitest
 
   s.add_development_dependency "rake"

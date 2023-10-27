@@ -161,10 +161,8 @@ describe Maxitest do
   describe "global_must" do
     let(:deprecated) { "DEPRECATED" }
 
-    if Gem::Version.new(Minitest::VERSION) >= Gem::Version.new("5.12.0")
-      it "complain when not used" do
-        run_cmd("ruby spec/cases/plain.rb").should include deprecated
-      end
+    it "complain when not used" do
+      run_cmd("ruby spec/cases/plain.rb").should include deprecated
     end
 
     it "does not complain when used" do
@@ -181,22 +179,16 @@ describe Maxitest do
   end
 
   describe "extra threads" do
-    if  Minitest::VERSION.start_with?("5.0")
-      it "complains" do
-        run_cmd("ruby spec/cases/threads.rb -v", fail: true).should include "Upgrade above minitest 5.0"
+    it "fails on extra and passes on regular" do
+      result = with_global_must do
+        run_cmd("ruby spec/cases/threads.rb -v", fail: true)
       end
-    else
-      it "fails on extra and passes on regular" do
-        result = with_global_must do
-          run_cmd("ruby spec/cases/threads.rb -v", fail: true)
-        end
-        result.gsub(/\d\.\d+/, "0.0").should include <<-OUT.gsub(/^\s+/, "")
-          threads#test_0001_is fine without extra threads = 0.0 s = .
-          threads#test_0002_fails on extra threads = 0.0 s = F
-          threads#test_0003_can kill extra threads = 0.0 s = .
-          threads#test_0004_can wait for extra threads = 0.0 s = .
-        OUT
-      end
+      result.gsub(/\d\.\d+/, "0.0").should include <<-OUT.gsub(/^\s+/, "")
+        threads#test_0001_is fine without extra threads = 0.0 s = .
+        threads#test_0002_fails on extra threads = 0.0 s = F
+        threads#test_0003_can kill extra threads = 0.0 s = .
+        threads#test_0004_can wait for extra threads = 0.0 s = .
+      OUT
     end
   end
 
@@ -317,11 +309,7 @@ describe Maxitest do
   end
 
   def with_global_must(&block)
-    if Gem::Version.new(Minitest::VERSION) >= Gem::Version.new("5.12.0")
-      with_env GLOBAL_MUST: 'true', &block
-    else
-      yield
-    end
+    with_env GLOBAL_MUST: 'true', &block
   end
 
   def with_env(h)

@@ -1,4 +1,5 @@
 # Next
+- support minitest 5.20
 
 # v5.3.1
 - remove MiniTest usage to make Zeitwerk happy
