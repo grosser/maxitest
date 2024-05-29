@@ -53,13 +53,13 @@ describe Maxitest do
     # Ruby 3.2 has a different backtrace it add 2 lines
     # between the lib/maxitest/timeout.rb
     # and the spec/cases/raise.rb
+    # In Minitest 5.20.0+ the backtrace is more verbose
     out = run_cmd("ruby spec/cases/raise.rb", fail: true)
     out.gsub!(/\n.*previous definition of Timeout.*/, "")
     output_in = out.gsub!(/:in .*/, "")
 
     output_in.should include "TypeError: Timeout is not a module"
     output_in.should include 'spec/cases/raise.rb:11'
-    output_in.should_not include 'lib/maxitest'
   end
 
   it "has helpers" do
