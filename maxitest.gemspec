@@ -5,7 +5,7 @@ Gem::Specification.new "maxitest", Maxitest::VERSION do |s|
   s.authors = ["Michael Grosser"]
   s.email = "michael@grosser.it"
   s.homepage = "https://github.com/grosser/maxitest"
-  s.files = Dir["{bin,lib}/**/*", "MIT-LICENSE", "README.md"]
+  s.files = Dir["{bin,lib}/**/*", "MIT-LICENSE", "README.md", "CHANGELOG.md"]
   s.license = "MIT"
   s.executables = ["mtest"]
 
