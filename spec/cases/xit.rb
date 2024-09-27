@@ -14,8 +14,8 @@ describe 2 do
   end
 
   describe "with evil setup/teardown" do
-    before { raise }
-    after { raise }
+    before { raise "called before" }
+    after { raise "called after" }
     xit "should not be called" do
       raise
     end
