@@ -81,6 +81,11 @@ output = capture_stdout { puts 1 }
 _(output).must_equal "1\n"
 ```
 
+### minitest-reporters
+
+If [PR](https://github.com/minitest-reporters/minitest-reporters/pull/357) is not resolved,
+disable Interrupt handling with `ENV["MAXITEST_NO_INTERRUPT"] = "true"` to avoid "stack level too deep" errors.
+
 Development
 ===========
  - everything vendored into 1 gem to avoid dependency madness
