@@ -1,5 +1,14 @@
 # Next
 
+# v5.7.1
+- support disabling interrupt handling to avoid minitest-reporters bug with MAXITEST_NO_INTERRUPT=true
+
+# v5.7.0
+- support minitest 5.25
+
+# v5.6.0
+- support minitest 5.24
+
 # v5.5.0
 - support minitest 5.23
 
