@@ -1,7 +1,7 @@
 require "minitest"
 require "minitest/autorun"
 require "maxitest/vendor/around"
-require "maxitest/trap"
+require "maxitest/interrupt"
 require "maxitest/let_bang"
 require "maxitest/let_all"
 require "maxitest/hook_all"
