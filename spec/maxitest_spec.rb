@@ -234,15 +234,18 @@ describe Maxitest do
   describe "Interrupts" do
     it "stops on ctrl+c and prints errors" do
       t = Thread.new { run_cmd("ruby spec/cases/cltr_c.rb", fail: true) }
-      sleep 2 # let thread start
+      sleep 1 # let thread start
       kill_process_with_name("spec/cases/cltr_c.rb")
       output = t.value
       output.should include "4 runs, 1 assertions, 1 failures, 1 errors, 2 skips" # failed, error from interrupt (so you see a backtrace), rest skipped
+      output.gsub(/:\d+:in/, ":D:in").should include "cltr_c.rb:D:in `sleep'" # let you know where it happened
       output.should include "Interrupt:" # let you know what happened
       output.should include "Expected: true\n  Actual: false" # not hide other errors
+      output.scan(/BEFORE/).size.should == 2 # before calls avoided when skipping
+      output.scan(/AFTER/).size.should == 2 # after calls avoided when skipping
     end
 
-    it "allows Interrupts to be catched normally" do
+    it "allows Interrupts to be caught normally" do
       output = run_cmd("ruby spec/cases/catch_interrupt.rb")
       output.should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
     end
@@ -251,6 +254,14 @@ describe Maxitest do
       output = run_cmd("ruby spec/cases/raise_interrupt.rb", fail: true)
       output.should include "runs, "
       output.should include "Interrupt: Interrupt"
+    end
+
+    it "shows backtraces when in verbose mode" do
+      t = Thread.new { run_cmd("ruby spec/cases/cltr_c.rb -v", fail: true) }
+      sleep 1 # let thread start
+      kill_process_with_name("spec/cases/cltr_c.rb")
+      output = t.value
+      output.gsub(/:\d+:in/, ":D:in").should include "cltr_c.rb:D:in `sleep'" # let you know where it happened
     end
   end
 
