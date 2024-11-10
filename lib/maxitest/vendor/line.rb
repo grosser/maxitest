@@ -102,6 +102,7 @@ module Minitest
       io.puts
       io.puts "Focus on failing tests:"
       pwd = Pathname.new(Dir.pwd)
+      bin_rails = File.exist?("bin/rails")
       @failures.each do |res|
         result = (res.respond_to?(:source_location) ? res : res.method(res.name))
         file, line = result.source_location
@@ -109,7 +110,7 @@ module Minitest
         if file
           file = Pathname.new(file)
           file = file.relative_path_from(pwd) if file.absolute?
-          output = "mtest #{file}:#{line}"
+          output = "#{bin_rails ? "bin/rails test" : "mtest"} #{file}:#{line}"
           output = "\e[31m#{output}\e[0m" if $stdout.tty?
           io.puts output
         end
