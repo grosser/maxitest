@@ -238,7 +238,7 @@ describe Maxitest do
       kill_process_with_name("spec/cases/cltr_c.rb")
       output = t.value
       output.should include "4 runs, 1 assertions, 1 failures, 1 errors, 2 skips" # failed, error from interrupt (so you see a backtrace), rest skipped
-      output.gsub(/:\d+:in/, ":D:in").should include "cltr_c.rb:D:in `sleep'" # let you know where it happened
+      output.gsub(/:\d+:in/, ":D:in").should match /cltr_c\.rb:D:in (`|'Kernel#)sleep'/ # let you know where it happened
       output.should include "Interrupt:" # let you know what happened
       output.should include "Expected: true\n  Actual: false" # not hide other errors
       output.scan(/BEFORE/).size.should == 2 # before calls avoided when skipping
@@ -261,7 +261,7 @@ describe Maxitest do
       sleep 1 # let thread start
       kill_process_with_name("spec/cases/cltr_c.rb")
       output = t.value
-      output.gsub(/:\d+:in/, ":D:in").should include "cltr_c.rb:D:in `sleep'" # let you know where it happened
+      output.gsub(/:\d+:in/, ":D:in").should match /cltr_c.rb:D:in (`|'Kernel#)sleep'/ # let you know where it happened
     end
   end
 
