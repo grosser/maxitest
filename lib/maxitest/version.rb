@@ -1,3 +1,3 @@
 module Maxitest
-  VERSION = "5.8.0"
+  VERSION = "6.0.0"
 end

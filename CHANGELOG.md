@@ -1,5 +1,11 @@
 # Next
 
+# v6.0.0
+- drop support for Ruby <=3.1 and minitest <5.20, test on ruby 3.4
+
+# v5.8.0
+- bin/rails test line bug
+
 # v5.7.1
 - support disabling interrupt handling to avoid minitest-reporters bug with MAXITEST_NO_INTERRUPT=true
 
