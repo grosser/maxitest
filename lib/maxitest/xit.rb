@@ -2,7 +2,7 @@
 
 module Maxitest
   module XitMethod
-    def xit(*args)
+    def xit(*args, &_block)
       describe 'skip' do
         define_method(:setup) {}
         define_method(:teardown) {}
