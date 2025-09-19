@@ -7,7 +7,7 @@ describe "threads" do
   order_dependent!
 
   def assert_correct_threads
-    Thread.list.count.must_equal 3, Thread.list
+    _(Thread.list.count).must_equal 3, Thread.list
   end
 
   def create_thread
@@ -21,7 +21,7 @@ describe "threads" do
   it "fails on extra threads" do
     assert_correct_threads
     create_thread
-    Thread.list.must_equal 4
+    _(Thread.list).must_equal 4
   end
 
   it "can kill extra threads" do

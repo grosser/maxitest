@@ -7,6 +7,6 @@ describe 2 do
   before { calls << 2 }
 
   it "is called before" do
-    calls.must_equal [1, 2]
+    _(calls).must_equal [1, 2]
   end
 end

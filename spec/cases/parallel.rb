@@ -1,4 +1,4 @@
-ENV["N"] = ENV["MT_CPU"] = "3" # make this test hardware independent, need N for old minitest versions
+ENV["MT_CPU"] = "3" # make this test hardware independent, need N for old minitest versions
 require "./spec/cases/helper"
 
 describe String do
