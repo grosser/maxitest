@@ -6,11 +6,11 @@ describe 2 do
   end
 
   xit "is even" do
-    2.even?.must_equal true
+    _(2.even?).must_equal true
   end
 
   it "is odd" do
-    2.odd?.must_equal false
+    _(2.odd?).must_equal false
   end
 
   describe "with evil setup/teardown" do

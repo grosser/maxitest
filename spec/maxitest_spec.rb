@@ -168,13 +168,17 @@ describe Maxitest do
   describe "global_must" do
     let(:deprecated) { "DEPRECATED" }
 
-    it "complain when not used" do
-      run_cmd("ruby spec/cases/plain.rb").should include deprecated
+    it "complain when used and not loaded" do
+      with_env USE_GLOBAL_MUST: 'true' do
+        run_cmd("ruby spec/cases/plain.rb", deprecated: :ignore).should include deprecated
+      end
     end
 
-    it "does not complain when used" do
+    it "does not complain when used and loaded" do
       with_global_must do
-        run_cmd("ruby spec/cases/plain.rb").should_not include deprecated
+        with_env USE_GLOBAL_MUST: 'true' do
+          run_cmd("ruby spec/cases/plain.rb").should_not include deprecated
+        end
       end
     end
 
@@ -314,7 +318,7 @@ describe Maxitest do
 
   describe "parallel" do
     it "can run in parallel" do
-      result = run_cmd("MT_CPU=3 ruby spec/cases/parallel.rb -v")
+      result = run_cmd("ruby spec/cases/parallel.rb -v")
       result.should include "\n3 runs"
       result.should include "Finished in 0.1"
     end
@@ -338,14 +342,16 @@ describe Maxitest do
     ENV.replace old
   end
 
-  def run_cmd(command, options = {})
+  def run_cmd(command, deprecated: :fail, keep_output: false, fail: false)
     stdout, stderr, status = Open3.capture3(command)
 
-    unless options[:keep_output]
-      stdout += "\n" + stderr
-    end
+    stderr.should_not include("DEPRECATED") unless deprecated == :ignore
 
-    raise "#{options[:fail] ? "SUCCESS" : "FAIL"} #{command}\n#{stdout}" if status.success? == !!options[:fail]
+    stdout += "\n" + stderr unless keep_output
+
+    if status.success? == fail
+      raise "#{fail ? "SUCCESS" : "FAIL"} #{command}\n#{stdout}"
+    end
 
     stdout.strip
   end

@@ -9,7 +9,7 @@ end
 
 describe String do
   it "has implicit subject" do
-    subject.must_equal ""
+    _(subject).must_equal ""
   end
 
   describe Array do
@@ -18,25 +18,25 @@ describe String do
     end
 
     it "has nested implicit subject" do
-      subject.must_equal []
-      other_method.must_equal true
+      _(subject).must_equal []
+      _(other_method).must_equal true
     end
   end
 
   describe Hash do
     it "has other nested implicit subject" do
-      subject.must_equal({})
+      _(subject).must_equal({})
     end
 
     describe "strings" do
       it "does not overwrite subject" do
-        subject.must_equal({})
+        _(subject).must_equal({})
       end
     end
 
     describe :symbols do
       it "does not overwrite subject" do
-        subject.must_equal({})
+        _(subject).must_equal({})
       end
     end
   end

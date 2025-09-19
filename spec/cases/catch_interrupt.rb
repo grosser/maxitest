@@ -10,6 +10,6 @@ describe 2 do
     else
       x = 3
     end
-    x.must_equal 1
+    _(x).must_equal 1
   end
 end

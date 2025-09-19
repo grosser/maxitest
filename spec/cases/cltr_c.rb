@@ -8,7 +8,7 @@ describe 2 do
   after { puts "AFTER" }
 
   it "is even" do
-    false.must_equal true
+    _(false).must_equal true
   end
 
   it "is not odd" do
