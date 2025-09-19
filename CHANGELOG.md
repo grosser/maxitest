@@ -1,4 +1,5 @@
 # Next
+- fix unused block warning for `xit` on ruby 3.4
 
 # v6.0.0
 - drop support for Ruby <=3.1 and minitest <5.20, test on ruby 3.4
