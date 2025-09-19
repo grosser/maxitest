@@ -1,4 +1,6 @@
 # Next
+
+# v6.0.1
 - fix unused block warning for `xit` on ruby 3.4
 
 # v6.0.0
