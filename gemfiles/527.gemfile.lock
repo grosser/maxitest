@@ -7,32 +7,32 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    diff-lcs (1.6.1)
-    minitest (5.21.2)
-    rake (13.2.1)
-    rspec (3.13.0)
+    diff-lcs (1.6.2)
+    minitest (5.27.0)
+    rake (13.3.1)
+    rspec (3.13.2)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
       rspec-mocks (~> 3.13.0)
-    rspec-core (3.13.3)
+    rspec-core (3.13.6)
       rspec-support (~> 3.13.0)
-    rspec-expectations (3.13.3)
+    rspec-expectations (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-mocks (3.13.2)
+    rspec-mocks (3.13.7)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-support (3.13.2)
+    rspec-support (3.13.6)
 
 PLATFORMS
-  arm64-darwin-23
+  arm64-darwin-24
   ruby
 
 DEPENDENCIES
   maxitest!
-  minitest (~> 5.21.0)
+  minitest (~> 5.27.0)
   rake
   rspec
 
 BUNDLED WITH
-   2.6.6
+   2.6.9
