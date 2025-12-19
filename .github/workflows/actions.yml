@@ -12,7 +12,7 @@ jobs:
       matrix:
         # keep in sync with maxitest.gemspec
         ruby: [ '3.2', '3.3', '3.4']
-        gemfile: [ '520', '523', '524', '525', '526', '527']
+        gemfile: [ '520', '523', '524', '525', '526', '527', '600']
         exclude:
         - ruby: '3.4' # object_id warning breaks stuff
           gemfile: '520'

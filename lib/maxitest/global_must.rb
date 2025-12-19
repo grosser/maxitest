@@ -1,18 +1,66 @@
 # Allow global must_* assertion style without deprecations
 #
 # Must be required before maxitest/autorun
-Module.prepend(Module.new do
-  def infect_an_assertion(_, new_name, *)
-    super # define with deprecation
+#
+# MT5: Redefines methods added by infect_an_assertion without deprecation warnings
+# MT6: Global expectations were removed entirely, so we define them ourselves
 
-    # remove old to avoid warnings from re-defining
-    remove_method new_name
+require "minitest"
 
-    # re-define without deprecation
-    class_eval <<-EOM, __FILE__, __LINE__ + 1
-      def #{new_name} *args
-        Minitest::Expectation.new(self, Minitest::Spec.current).#{new_name}(*args)
-      end
-    EOM
+module Maxitest
+  # Track current test instance for global must_* support
+  def self.current_test
+    Thread.current[:maxitest_current_test]
   end
-end)
+
+  def self.current_test=(test)
+    Thread.current[:maxitest_current_test] = test
+  end
+end
+
+if Minitest::VERSION >= "6"
+  # MT6: Global expectations removed - define them on Object ourselves
+  require "minitest/spec"
+
+  # Track the current test instance
+  Minitest::Test.prepend(Module.new do
+    def setup
+      Maxitest.current_test = self
+      super
+    end
+
+    def teardown
+      super
+    ensure
+      Maxitest.current_test = nil
+    end
+  end)
+
+  # Define global must_* methods on Object
+  # This mimics what MT5's infect_an_assertion used to do
+  expectation_methods = Minitest::Expectation.instance_methods - Object.instance_methods
+  expectation_methods.grep(/^must_|^wont_/).each do |meth|
+    Object.define_method(meth) do |*args, &block|
+      ctx = Maxitest.current_test
+      raise "Global must_*/wont_* called outside of test context" unless ctx
+      Minitest::Expectation.new(self, ctx).public_send(meth, *args, &block)
+    end
+  end
+else
+  # MT5: Override infect_an_assertion to remove deprecation warnings
+  Module.prepend(Module.new do
+    def infect_an_assertion(_, new_name, *)
+      super # define with deprecation
+
+      # remove old to avoid warnings from re-defining
+      remove_method new_name
+
+      # re-define without deprecation
+      class_eval <<-EOM, __FILE__, __LINE__ + 1
+        def #{new_name} *args
+          Minitest::Expectation.new(self, Minitest::Spec.current).#{new_name}(*args)
+        end
+      EOM
+    end
+  end)
+end

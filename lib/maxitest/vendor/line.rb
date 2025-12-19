@@ -80,7 +80,12 @@ module Minitest
 
     raise "Could not find test method before line #{exp_line}" unless filter
 
-    options[:filter] = filter
+    # MT6 uses :include instead of :filter
+    if Minitest::VERSION >= "6"
+      options[:include] = filter
+    else
+      options[:filter] = filter
+    end
   end
 
   class LineReporter < Reporter

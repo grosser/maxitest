@@ -170,7 +170,13 @@ describe Maxitest do
 
     it "complain when used and not loaded" do
       with_env USE_GLOBAL_MUST: 'true' do
-        run_cmd("ruby spec/cases/plain.rb", deprecated: :ignore).should include deprecated
+        # MT6 removed global expectations entirely, so there's no deprecation - just an error
+        if Minitest::VERSION >= "6"
+          result = run_cmd("ruby spec/cases/plain.rb", deprecated: :ignore, fail: true)
+          result.should include "NoMethodError"
+        else
+          run_cmd("ruby spec/cases/plain.rb", deprecated: :ignore).should include deprecated
+        end
       end
     end
 

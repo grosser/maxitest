@@ -1,4 +1,15 @@
 require "minitest"
+
+# Set ENABLE_PLUGINS before minitest/autorun so our plugin can check it
+module Maxitest
+  ENABLE_PLUGINS = true
+end
+
+# MT6 doesn't auto-load plugins, so we need to load them manually
+if Minitest::VERSION >= "6"
+  Minitest.load_plugins
+end
+
 require "minitest/autorun"
 require "maxitest/vendor/around"
 require "maxitest/interrupt" unless ENV["MAXITEST_NO_INTERRUPT"]
@@ -11,10 +22,6 @@ require "maxitest/xit"
 require "maxitest/static_class_order"
 require "maxitest/shorted_backtrace"
 require "maxitest/vendor/line_describe" # not a plugin
-
-module Maxitest
-  ENABLE_PLUGINS = true
-end
 
 Minitest::Spec::DSL.send(:alias_method, :context, :describe)
 
