@@ -15,6 +15,9 @@ module Maxitest
   ENABLE_PLUGINS = true
 end
 
+# MT6 doesn't auto-load plugins, require explicitly
+require "minitest/maxitest_plugin"
+
 Minitest::Spec::DSL.send(:alias_method, :context, :describe)
 
 class << Minitest::Test

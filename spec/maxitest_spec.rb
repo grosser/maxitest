@@ -113,6 +113,22 @@ describe Maxitest do
     it "is color-less without tty" do
       run_cmd("ruby spec/cases/plain.rb").should include "\n2 runs, 2 assertions"
     end
+
+    it "is colorful on tty" do
+      simulate_tty do
+        run_cmd("ruby spec/cases/plain.rb").should include "\n\e[32m2 runs, 2 assertions"
+      end
+    end
+
+    it "is colorful without tty but --rg" do
+      run_cmd("ruby spec/cases/plain.rb --rg").should include "\n\e[32m2 runs, 2 assertions"
+    end
+
+    it "is color-less with --no-rg and tty" do
+      simulate_tty do
+        run_cmd("ruby spec/cases/plain.rb --no-rg").should include "\n2 runs, 2 assertions"
+      end
+    end
   end
 
   describe "timeout" do

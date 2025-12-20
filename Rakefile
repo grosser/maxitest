@@ -50,6 +50,25 @@ module VendorUpdate
 
         # make `after :all` blow up to avoid confusion
         raise unless code.sub!(%{fib = nil}, %{raise ArgumentError, "only :each or no argument is supported" if args != [] && args != [:each]\n    fib = nil})
+      elsif url.end_with?('/rg_plugin.rb')
+        # support disabling/enabling colors
+        # https://github.com/blowmage/minitest-rg/pull/15
+        raise unless code.sub!(
+          %(opts.on "--rg", "Add red/green to test output." do\n      RG.rg!),
+          %(opts.on "--[no-]rg", "Add red/green to test output." do |bool|\n      RG.rg! bool),
+        )
+        raise unless code.sub!(
+          %(    def self.rg!\n      @rg = true),
+          %(    def self.rg!(bool = true)\n      @rg = bool),
+        )
+        raise unless code.sub!(
+          "reporter.reporters.grep(Minitest::Reporter).each do |rep|\n        rep.io = io if rep.io.tty?",
+          "reporter.reporters.grep(Minitest::Reporter).each do |rep|\n        rep.io = io"
+        )
+        raise unless code.sub!(
+          "MiniTest",
+          "Minitest",
+        )
       end
       code
     end
