@@ -7,8 +7,4 @@ if ENV['SIMULATE_TTY']
   end
 end
 
-if ENV['GLOBAL_MUST']
-  require 'maxitest/global_must'
-end
-
 require 'maxitest/autorun'

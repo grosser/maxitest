@@ -12,18 +12,7 @@ jobs:
       matrix:
         # keep in sync with maxitest.gemspec
         ruby: [ '3.2', '3.3', '3.4']
-        gemfile: [ '520', '523', '524', '525', '526', '527']
-        exclude:
-        - ruby: '3.4' # object_id warning breaks stuff
-          gemfile: '520'
-        - ruby: '3.4' # object_id warning breaks stuff
-          gemfile: '521'
-        - ruby: '3.4' # object_id warning breaks stuff
-          gemfile: '522'
-        - ruby: '3.4' # object_id warning breaks stuff
-          gemfile: '523'
-        - ruby: '3.4' # object_id warning breaks stuff
-          gemfile: '524'
+        gemfile: [ '60' ]
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
     steps:

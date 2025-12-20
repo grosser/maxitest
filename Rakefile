@@ -43,12 +43,6 @@ module VendorUpdate
       if url.end_with?("/testrbl.rb")
         # nest under Maxitest to avoid collision, more modifications are done in bin/mtest
         code = "module Maxitest\n#{code.gsub(/^/, "  ").gsub(/^\s+$/, "")}\nend"
-      elsif url.end_with?("/line_plugin.rb")
-        # add rails detector
-        raise unless code.sub!(%{pwd = Pathname.new(Dir.pwd)}, %{pwd = Pathname.new(Dir.pwd)\n      bin_rails = File.exist?("bin/rails")})
-        # replace ruby with `mtest` or `bin/rails test`
-        # to work around https://github.com/minitest/minitest-rails/issues/256
-        raise unless code.sub!(%{output = "ruby \#{file} -l \#{line}"}, %{output = "\#{bin_rails ? "bin/rails test" : "mtest"} \#{file}:\#{line}"})
       elsif url.end_with?('/around/spec.rb')
         # do not fail with resume for nil class when before was never called
         # for example when putting <% raise %> into a fixture file
@@ -56,25 +50,6 @@ module VendorUpdate
 
         # make `after :all` blow up to avoid confusion
         raise unless code.sub!(%{fib = nil}, %{raise ArgumentError, "only :each or no argument is supported" if args != [] && args != [:each]\n    fib = nil})
-      elsif url.end_with?('/rg_plugin.rb')
-        # support disabling/enabling colors
-        # https://github.com/blowmage/minitest-rg/pull/15
-        raise unless code.sub!(
-          %(opts.on "--rg", "Add red/green to test output." do\n      RG.rg!),
-          %(opts.on "--[no-]rg", "Add red/green to test output." do |bool|\n      RG.rg! bool),
-        )
-        raise unless code.sub!(
-          %(    def self.rg!\n      @rg = true),
-          %(    def self.rg!(bool = true)\n      @rg = bool),
-        )
-        raise unless code.sub!(
-          "reporter.reporters.grep(Minitest::Reporter).each do |rep|\n        rep.io = io if rep.io.tty?",
-          "reporter.reporters.grep(Minitest::Reporter).each do |rep|\n        rep.io = io"
-        )
-        raise unless code.sub!(
-          "MiniTest",
-          "Minitest",
-        )
       end
       code
     end

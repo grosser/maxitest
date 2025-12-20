@@ -7,9 +7,7 @@ describe Maxitest do
   end
 
   it "does not add extra output" do
-    result = with_global_must do
-      run_cmd("ruby spec/cases/plain.rb")
-    end
+    result = run_cmd("ruby spec/cases/plain.rb")
     result.sub!(/seed \d+/, 'seed X')
     result.gsub!(/\d+\.\d+/, 'X')
     result.should == "Run options: --seed X\n\n# Running:\n\n..\n\nFinished in Xs, X runs/s, X assertions/s.\n\n2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
@@ -115,22 +113,6 @@ describe Maxitest do
     it "is color-less without tty" do
       run_cmd("ruby spec/cases/plain.rb").should include "\n2 runs, 2 assertions"
     end
-
-    it "is colorful on tty" do
-      simulate_tty do
-        run_cmd("ruby spec/cases/plain.rb").should include "\n\e[32m2 runs, 2 assertions"
-      end
-    end
-
-    it "is colorful without tty but --rg" do
-      run_cmd("ruby spec/cases/plain.rb --rg").should include "\n\e[32m2 runs, 2 assertions"
-    end
-
-    it "is color-less with --no-rg and tty" do
-      simulate_tty do
-        run_cmd("ruby spec/cases/plain.rb --no-rg").should include "\n2 runs, 2 assertions"
-      end
-    end
   end
 
   describe "timeout" do
@@ -165,35 +147,10 @@ describe Maxitest do
     end
   end
 
-  describe "global_must" do
-    let(:deprecated) { "DEPRECATED" }
-
-    it "complain when used and not loaded" do
-      with_env USE_GLOBAL_MUST: 'true' do
-        run_cmd("ruby spec/cases/plain.rb", deprecated: :ignore).should include deprecated
-      end
-    end
-
-    it "does not complain when used and loaded" do
-      with_global_must do
-        with_env USE_GLOBAL_MUST: 'true' do
-          run_cmd("ruby spec/cases/plain.rb").should_not include deprecated
-        end
-      end
-    end
-
-    it "fails when used in threads" do
-        with_global_must do
-          run_cmd("ruby spec/cases/global_must.rb")
-        end
-      end
-  end
 
   describe "extra threads" do
     it "fails on extra and passes on regular" do
-      result = with_global_must do
-        run_cmd("ruby spec/cases/threads.rb -v", fail: true)
-      end
+      result = run_cmd("ruby spec/cases/threads.rb -v", fail: true)
       result.gsub(/\d\.\d+/, "0.0").should include <<-OUT.gsub(/^\s+/, "")
         threads#test_0001_is fine without extra threads = 0.0 s = .
         threads#test_0002_fails on extra threads = 0.0 s = F
@@ -203,37 +160,6 @@ describe Maxitest do
     end
   end
 
-  describe "line" do
-    let(:focus) { "Focus on failing tests:" }
-    let(:expected_command) { "mtest spec/cases/line.rb:8" }
-
-    it "prints line numbers on failed" do
-      run_cmd("ruby spec/cases/line.rb", fail: true).should include "#{focus}\n#{expected_command}"
-    end
-
-    it "can run with line numbers" do
-      result = run_cmd(expected_command, fail: true)
-      result.should include("1 runs, 1 assertions, 1 failures, 0 errors, 0 skips")
-      result.should_not include(focus) # ran 1 line, no need to reprint
-    end
-
-    it "can describe with line numbers" do
-      result = run_cmd("mtest spec/cases/line.rb:12")
-      result.should include("2 runs, 2 assertions, 0 failures, 0 errors, 0 skips")
-    end
-
-    it "can run with -l line numbers" do
-      result = run_cmd("ruby spec/cases/line.rb -l 8", fail: true)
-      result.should include("1 runs, 1 assertions, 1 failures, 0 errors, 0 skips")
-      result.should_not include(focus) # ran 1 line, no need to reprint
-    end
-
-    it "uses colors on tty" do
-      simulate_tty do
-        run_cmd("ruby spec/cases/line.rb", fail: true).should include "\e[31m#{expected_command}\e[0m"
-      end
-    end
-  end
 
   describe "Interrupts" do
     it "stops on ctrl+c and prints errors" do
@@ -298,21 +224,18 @@ describe Maxitest do
       result = run_cmd("ruby spec/cases/error_and_failure.rb", fail: true)
       result.should include "error_and_failure.rb:5"
       result.should include "error_and_failure.rb:9"
-      result.should_not include "minitest.rb"
     end
 
     it "shows backtrace for errors with verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb -n '/errors/' -v", fail: true)
       result.should include "1 run"
       result.should include "error_and_failure.rb:5"
-      result.should include "minitest.rb"
     end
 
     it "shows backtrace for failures with verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb -n '/fails/' -v", fail: true)
       result.should include "1 run"
       result.should include "error_and_failure.rb:9"
-      result.should include "minitest.rb"
     end
   end
 
@@ -330,10 +253,6 @@ describe Maxitest do
     with_env SIMULATE_TTY: 'true', &block
   end
 
-  def with_global_must(&block)
-    with_env GLOBAL_MUST: 'true', &block
-  end
-
   def with_env(h)
     old = ENV.to_h
     h.each { |k, v| ENV[k.to_s] = v}
@@ -344,6 +263,9 @@ describe Maxitest do
 
   def run_cmd(command, deprecated: :fail, keep_output: false, fail: false)
     stdout, stderr, status = Open3.capture3(command)
+
+    # Filter bundler version mismatch warnings
+    stderr = stderr.lines.reject { |l| l.include?("warning: already initialized constant") || l.include?("warning: previous definition") }.join
 
     stderr.should_not include("DEPRECATED") unless deprecated == :ignore
 

@@ -1,5 +1,4 @@
 ENV["MT_CPU"] = "2" # so we get 3 threads total and not variation based on machines cpus
-require "maxitest/global_must"
 require "./spec/cases/helper"
 require "maxitest/threads"
 

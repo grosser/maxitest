@@ -10,7 +10,7 @@ Gem::Specification.new "maxitest", Maxitest::VERSION do |s|
   s.executables = ["mtest"]
 
   # keep in sync with .github/workflows/actions.yml
-  s.add_runtime_dependency "minitest", [">= 5.20.0", "< 5.28.0"]
+  s.add_runtime_dependency "minitest", [">= 6.0.0", "< 6.1.0"]
   s.required_ruby_version = '>= 3.2', '< 3.5'
 
   s.add_development_dependency "rake"

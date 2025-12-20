@@ -10,7 +10,6 @@ require "maxitest/helpers"
 require "maxitest/xit"
 require "maxitest/static_class_order"
 require "maxitest/shorted_backtrace"
-require "maxitest/vendor/line_describe" # not a plugin
 
 module Maxitest
   ENABLE_PLUGINS = true

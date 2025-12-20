@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     maxitest (6.1.0)
-      minitest (>= 5.20.0, < 5.28.0)
+      minitest (>= 6.0.0, < 6.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -18,10 +18,12 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    minitest (5.25.5)
+    minitest (6.0.0)
+      prism (~> 1.5)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
+    prism (1.7.0)
     psych (5.2.3)
       date
       stringio
