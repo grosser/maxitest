@@ -26,6 +26,7 @@ Features
  - `capture_stdout` and `capture_stderr` to capture stdout or stderr but not both (like `capture_io` does)
  - `require 'maxitest/timeout'` to make hanging tests fail after `Maxitest.timeout` seconds
  - `require 'maxitest/threads'` fail tests that leave extra threads running
+ - `require 'maxitest/global_must'` (before autorun) enable global `must_*` methods on all objects
 
 Install
 =======

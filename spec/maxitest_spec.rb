@@ -176,6 +176,21 @@ describe Maxitest do
     end
   end
 
+  describe "global_must" do
+    it "does not complain when used and loaded" do
+      with_global_must do
+        with_env USE_GLOBAL_MUST: 'true' do
+          run_cmd("ruby spec/cases/plain.rb").should_not include "DEPRECATED"
+        end
+      end
+    end
+
+    it "works in tests" do
+      with_global_must do
+        run_cmd("ruby spec/cases/global_must.rb")
+      end
+    end
+  end
 
   describe "Interrupts" do
     it "stops on ctrl+c and prints errors" do
@@ -267,6 +282,10 @@ describe Maxitest do
 
   def simulate_tty(&block)
     with_env SIMULATE_TTY: 'true', &block
+  end
+
+  def with_global_must(&block)
+    with_env GLOBAL_MUST: 'true', &block
   end
 
   def with_env(h)
