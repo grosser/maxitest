@@ -43,12 +43,6 @@ module VendorUpdate
       if url.end_with?("/testrbl.rb")
         # nest under Maxitest to avoid collision, more modifications are done in bin/mtest
         code = "module Maxitest\n#{code.gsub(/^/, "  ").gsub(/^\s+$/, "")}\nend"
-      elsif url.end_with?("/line_plugin.rb")
-        # add rails detector
-        raise unless code.sub!(%{pwd = Pathname.new(Dir.pwd)}, %{pwd = Pathname.new(Dir.pwd)\n      bin_rails = File.exist?("bin/rails")})
-        # replace ruby with `mtest` or `bin/rails test`
-        # to work around https://github.com/minitest/minitest-rails/issues/256
-        raise unless code.sub!(%{output = "ruby \#{file} -l \#{line}"}, %{output = "\#{bin_rails ? "bin/rails test" : "mtest"} \#{file}:\#{line}"})
       elsif url.end_with?('/around/spec.rb')
         # do not fail with resume for nil class when before was never called
         # for example when putting <% raise %> into a fixture file

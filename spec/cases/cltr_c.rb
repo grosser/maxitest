@@ -1,4 +1,3 @@
-ENV["GLOBAL_MUST"] = "true"
 require "./spec/cases/helper"
 
 describe 2 do

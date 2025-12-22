@@ -14,13 +14,7 @@ if defined?(Maxitest::ENABLE_PLUGINS) && Maxitest::ENABLE_PLUGINS
 
   unless disabled_for_rails # rails 5 adds default red/green output
     require "maxitest/vendor/rg"
-    Minitest.extensions << "rg"
+    Minitest.register_plugin "rg"
     Minitest::RG.rg! $stdout.tty?
   end
-
-  # rails 5.2+ has it's own line support
-  # - it breaks `mtest file:line` format
-  # - we still want our format with the nice summary at the end, even if the `bin/rails test` output is already inline
-  require "maxitest/vendor/line"
-  Minitest.extensions << "line"
 end

@@ -1,4 +1,0 @@
-source "https://rubygems.org"
-gemspec path: "../"
-gem "minitest", "~> 5.20.0"
-gem "mutex_m" # for ruby 3.4

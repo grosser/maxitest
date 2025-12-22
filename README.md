@@ -26,7 +26,7 @@ Features
  - `capture_stdout` and `capture_stderr` to capture stdout or stderr but not both (like `capture_io` does)
  - `require 'maxitest/timeout'` to make hanging tests fail after `Maxitest.timeout` seconds
  - `require 'maxitest/threads'` fail tests that leave extra threads running
- - `require 'maxitest/global_must'` (before autorun) disable deprecation on global `must_*` or [global_expectations](https://github.com/jeremyevans/minitest-global_expectations) gem
+ - `require 'maxitest/global_must'` (before autorun) enable global `must_*` methods on all objects
 
 Install
 =======
@@ -53,8 +53,8 @@ end
 
 ### pending
 
-- `pending "need to fix" do` to show why something is pending 
-- `pending "need to fix", if: ENV["CI"] do` to only skip on CI (if something is supposed to work locally) 
+- `pending "need to fix" do` to show why something is pending
+- `pending "need to fix", if: ENV["CI"] do` to only skip on CI (if something is supposed to work locally)
 
 ### with_env
 
