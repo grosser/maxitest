@@ -7,7 +7,6 @@ Gem::Specification.new "maxitest", Maxitest::VERSION do |s|
   s.homepage = "https://github.com/grosser/maxitest"
   s.files = Dir["{bin,lib}/**/*", "MIT-LICENSE", "README.md", "CHANGELOG.md"]
   s.license = "MIT"
-  s.executables = ["mtest"]
 
   # keep in sync with .github/workflows/actions.yml
   s.add_runtime_dependency "minitest", [">= 6.0.0", "< 6.1.0"]

@@ -222,27 +222,26 @@ describe Maxitest do
     end
   end
 
-  describe "mtest" do
+  describe "minitest executable" do
     it "shows version" do
-      run_cmd("mtest -v").should == Maxitest::VERSION
-      run_cmd("mtest --version").should == Maxitest::VERSION
+      run_cmd("minitest --version", fail: true).should include "minitest"
     end
 
     it "shows help" do
-      run_cmd("mtest -h").should include "Usage:"
-      run_cmd("mtest --help").should include "Usage:"
+      run_cmd("minitest -h", fail: true).should include "Usage:"
+      run_cmd("minitest --help", fail: true).should include "Usage:"
     end
 
     it "runs a single file" do
-      run_cmd("mtest spec/cases/mtest/a_test.rb").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
+      run_cmd("minitest spec/cases/mtest/a_test.rb").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
     end
 
     it "runs a folder" do
-      run_cmd("mtest spec/cases/mtest").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+      run_cmd("minitest spec/cases/mtest").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
     end
 
     it "runs multiple files" do
-      run_cmd("mtest spec/cases/mtest/a_test.rb spec/cases/mtest/c.rb").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+      run_cmd("minitest spec/cases/mtest/a_test.rb spec/cases/mtest/c.rb").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
     end
   end
 
