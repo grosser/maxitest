@@ -315,9 +315,6 @@ describe Maxitest do
   def run_cmd(command, deprecated: :fail, keep_output: false, fail: false)
     stdout, stderr, status = Open3.capture3(command)
 
-    # Filter bundler version mismatch warnings
-    stderr = stderr.lines.reject { |l| l.include?("warning: already initialized constant") || l.include?("warning: previous definition") }.join
-
     stderr.should_not include("DEPRECATED") unless deprecated == :ignore
 
     stdout += "\n" + stderr unless keep_output
