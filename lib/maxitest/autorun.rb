@@ -10,13 +10,16 @@ require "maxitest/helpers"
 require "maxitest/xit"
 require "maxitest/static_class_order"
 require "maxitest/shorted_backtrace"
+require "maxitest/verbose_backtrace"
 
 module Maxitest
-  ENABLE_PLUGINS = true
 end
 
-# MT6 doesn't auto-load plugins, require explicitly
-require "minitest/maxitest_plugin"
+unless Gem::Specification.find_all_by_name("rails").any? # rails adds default red/green output
+  require "maxitest/vendor/rg"
+  Minitest.extensions << "rg"
+  Minitest::RG.rg! $stdout.tty?
+end
 
 Minitest::Spec::DSL.send(:alias_method, :context, :describe)
 

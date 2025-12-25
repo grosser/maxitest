@@ -6,30 +6,33 @@ module Maxitest
       end
     end
 
+    # when printing messages print more if verbose was enabled
+    module Assertion
+      def message
+        if Maxitest::VerboseBacktrace.enabled
+          "#{self.class}: #{super}\n    #{backtrace.join "\n    "}"
+        else
+          super
+        end
+      end
+    end
+
+    module MinitestPlugin
+      def self.minitest_plugin_init(options)
+        return unless options[:verbose]
+        Maxitest::VerboseBacktrace.enabled = true
+        Minitest.backtrace_filter = Maxitest::VerboseBacktrace::NullFilter
+        # rails has --backtrace which disables rails own backtrace cleaner, but not minitests
+        Rails.backtrace_cleaner.remove_silencers! if defined?(Rails) && Rails.respond_to?(:backtrace_cleaner)
+      end
+    end
+
     class << self
-      attr_accessor :verbose
-    end
-
-    def plugin_maxitest_verbose_backtrace_init(options)
-      return unless options[:verbose]
-      Maxitest::VerboseBacktrace.verbose = true
-      Minitest.backtrace_filter = Maxitest::VerboseBacktrace::NullFilter
-      Rails.backtrace_cleaner.remove_silencers! if defined?(Rails) && Rails.respond_to?(:backtrace_cleaner)
+      attr_accessor :enabled
     end
   end
 end
 
-Minitest.extensions << 'maxitest_verbose_backtrace'
-Minitest.extend Maxitest::VerboseBacktrace
+Minitest::Assertion.include Maxitest::VerboseBacktrace::Assertion
 
-module Maxitest::VerboseAssertion
-  def message
-    if Maxitest::VerboseBacktrace.verbose
-      "#{self.class}: #{super}\n    #{backtrace.join "\n    "}"
-    else
-      super
-    end
-  end
-end
-
-Minitest::Assertion.send(:include, Maxitest::VerboseAssertion)
+Minitest.extensions << Maxitest::VerboseBacktrace::MinitestPlugin
