@@ -163,7 +163,6 @@ describe Maxitest do
     end
   end
 
-
   describe "extra threads" do
     it "fails on extra and passes on regular" do
       result = run_cmd("ruby spec/cases/threads.rb -v", fail: true)
@@ -178,17 +177,14 @@ describe Maxitest do
 
   describe "global_must" do
     it "does not complain when used and loaded" do
-      with_global_must do
-        with_env USE_GLOBAL_MUST: 'true' do
-          run_cmd("ruby spec/cases/plain.rb").should_not include "DEPRECATED"
-        end
+      with_env GLOBAL_MUST: 'true' do
+        run_cmd("ruby spec/cases/global_must.rb")
       end
     end
 
-    it "works in tests" do
-      with_global_must do
-        run_cmd("ruby spec/cases/global_must.rb")
-      end
+    it "complains when used and not loaded" do
+      out = run_cmd("ruby spec/cases/global_must.rb", fail: true)
+      out.should include "undefined method 'must_equal'"
     end
   end
 
@@ -282,10 +278,6 @@ describe Maxitest do
 
   def simulate_tty(&block)
     with_env SIMULATE_TTY: 'true', &block
-  end
-
-  def with_global_must(&block)
-    with_env GLOBAL_MUST: 'true', &block
   end
 
   def with_env(h)

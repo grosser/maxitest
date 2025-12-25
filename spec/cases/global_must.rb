@@ -1,4 +1,7 @@
-ENV["GLOBAL_MUST"] = "true"
+if ENV['GLOBAL_MUST']
+  require 'maxitest/global_must'
+end
+
 require "./spec/cases/helper"
 
 describe "threads" do
@@ -15,7 +18,7 @@ describe "threads" do
     Thread.new do
       begin
         assert_it
-      rescue NoMethodError, RuntimeError, NameError # different errors depending on minitest and ruby version
+      rescue NotImplementedError
         result = "error"
       end
     end.join
