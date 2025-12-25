@@ -1,5 +1,4 @@
 require "maxitest/version"
-require "maxitest"
 require "minitest"
 
 RSpec.configure do |config|

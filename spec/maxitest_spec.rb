@@ -184,6 +184,7 @@ describe Maxitest do
 
     it "complains when used and not loaded" do
       out = run_cmd("ruby spec/cases/global_must.rb", fail: true)
+      out.gsub!('`', "'") # for ruby <3.4 had
       out.should include "undefined method 'must_equal'"
     end
   end
@@ -233,7 +234,11 @@ describe Maxitest do
     end
 
     it "runs a single file" do
-      run_cmd("minitest spec/cases/mtest/a_test.rb").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
+      run_cmd("minitest spec/cases/plain.rb").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+    end
+
+    it "runs a single line" do
+      run_cmd("minitest spec/cases/plain.rb:4").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
     end
 
     it "runs a folder" do
@@ -242,6 +247,23 @@ describe Maxitest do
 
     it "runs multiple files" do
       run_cmd("minitest spec/cases/mtest/a_test.rb spec/cases/mtest/c.rb").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+    end
+  end
+
+  describe "line" do
+    let(:separator) { "Focus on failing tests:\n" }
+
+    it "prints rerun commands" do
+      result = run_cmd("ruby spec/cases/line.rb", fail: true)
+      result.should include "4 runs, 4 assertions"
+      foucs = result.split(separator, 2)[1]
+      foucs.should == "minitest spec/cases/line.rb:8"
+    end
+
+    it "does not print rerun commands when already filtered" do
+      result = run_cmd("minitest spec/cases/line.rb:8", fail: true)
+      result.should include "1 runs, 1 assertions"
+      result.should_not include separator
     end
   end
 

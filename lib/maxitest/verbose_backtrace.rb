@@ -34,5 +34,3 @@ module Maxitest
 end
 
 Minitest::Assertion.include Maxitest::VerboseBacktrace::Assertion
-
-Minitest.extensions << Maxitest::VerboseBacktrace::MinitestPlugin
