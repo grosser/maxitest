@@ -40,10 +40,7 @@ module VendorUpdate
       code.strip!
       code = "=begin\n#{code}\n=end" if url.include?("LICENSE")
 
-      if url.end_with?("/testrbl.rb")
-        # nest under Maxitest to avoid collision, more modifications are done in bin/mtest
-        code = "module Maxitest\n#{code.gsub(/^/, "  ").gsub(/^\s+$/, "")}\nend"
-      elsif url.end_with?('/around/spec.rb')
+      if url.end_with?('/around/spec.rb')
         # do not fail with resume for nil class when before was never called
         # for example when putting <% raise %> into a fixture file
         raise unless code.sub!(%{fib.resume unless fib == :failed}, %{fib.resume if fib && fib != :failed})

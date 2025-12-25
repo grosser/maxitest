@@ -1,8 +1,7 @@
-# Allow global must_* assertion style without deprecations
+# Allow .must_* and .wont_* assertions on all objects
+# this was removed from minitest v6
 #
 # Must be required before maxitest/autorun
-#
-# MT6: Global expectations were removed entirely, so we define them ourselves
 
 require "minitest"
 require "minitest/spec"
@@ -18,7 +17,7 @@ module Maxitest
   end
 end
 
-# Track the current test instance using prepend on run (grosser's MT6 fix)
+# Track the current test instance using prepend on run
 Minitest::Test.prepend(Module.new do
   def run
     Maxitest.current_test = self
@@ -29,12 +28,12 @@ Minitest::Test.prepend(Module.new do
 end)
 
 # Define global must_* methods on Object
-# This mimics what MT5's infect_an_assertion used to do
+# This mimics what mintest 5 infect_an_assertion used to do
 expectation_methods = Minitest::Expectation.instance_methods - Object.instance_methods
 expectation_methods.grep(/^must_|^wont_/).each do |meth|
   Object.define_method(meth) do |*args, &block|
-    ctx = Maxitest.current_test
-    raise "Global must_*/wont_* called outside of test context" unless ctx
+    ctx = Maxitest.current_test ||
+      raise(NotImplementedError, "Global #{meth} called outside of test context")
     Minitest::Expectation.new(self, ctx).public_send(meth, *args, &block)
   end
 end

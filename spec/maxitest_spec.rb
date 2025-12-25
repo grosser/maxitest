@@ -163,7 +163,6 @@ describe Maxitest do
     end
   end
 
-
   describe "extra threads" do
     it "fails on extra and passes on regular" do
       result = run_cmd("ruby spec/cases/threads.rb -v", fail: true)
@@ -178,17 +177,15 @@ describe Maxitest do
 
   describe "global_must" do
     it "does not complain when used and loaded" do
-      with_global_must do
-        with_env USE_GLOBAL_MUST: 'true' do
-          run_cmd("ruby spec/cases/plain.rb").should_not include "DEPRECATED"
-        end
+      with_env GLOBAL_MUST: 'true' do
+        run_cmd("ruby spec/cases/global_must.rb")
       end
     end
 
-    it "works in tests" do
-      with_global_must do
-        run_cmd("ruby spec/cases/global_must.rb")
-      end
+    it "complains when used and not loaded" do
+      out = run_cmd("ruby spec/cases/global_must.rb", fail: true)
+      out.gsub!('`', "'") # for ruby <3.4 had
+      out.should include "undefined method 'must_equal'"
     end
   end
 
@@ -226,27 +223,47 @@ describe Maxitest do
     end
   end
 
-  describe "mtest" do
+  describe "minitest executable" do
     it "shows version" do
-      run_cmd("mtest -v").should == Maxitest::VERSION
-      run_cmd("mtest --version").should == Maxitest::VERSION
+      run_cmd("minitest --version", fail: true).should include "minitest"
     end
 
     it "shows help" do
-      run_cmd("mtest -h").should include "Usage:"
-      run_cmd("mtest --help").should include "Usage:"
+      run_cmd("minitest -h", fail: true).should include "Usage:"
+      run_cmd("minitest --help", fail: true).should include "Usage:"
     end
 
     it "runs a single file" do
-      run_cmd("mtest spec/cases/mtest/a_test.rb").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
+      run_cmd("minitest spec/cases/plain.rb").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+    end
+
+    it "runs a single line" do
+      run_cmd("minitest spec/cases/plain.rb:4").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
     end
 
     it "runs a folder" do
-      run_cmd("mtest spec/cases/mtest").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+      run_cmd("minitest spec/cases/mtest").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
     end
 
     it "runs multiple files" do
-      run_cmd("mtest spec/cases/mtest/a_test.rb spec/cases/mtest/c.rb").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+      run_cmd("minitest spec/cases/mtest/a_test.rb spec/cases/mtest/c.rb").should include "2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
+    end
+  end
+
+  describe "line" do
+    let(:separator) { "Focus on failing tests:\n" }
+
+    it "prints rerun commands" do
+      result = run_cmd("ruby spec/cases/line.rb", fail: true)
+      result.should include "4 runs, 4 assertions"
+      foucs = result.split(separator, 2)[1]
+      foucs.should == "minitest spec/cases/line.rb:8"
+    end
+
+    it "does not print rerun commands when already filtered" do
+      result = run_cmd("minitest spec/cases/line.rb:8", fail: true)
+      result.should include "1 runs, 1 assertions"
+      result.should_not include separator
     end
   end
 
@@ -255,18 +272,21 @@ describe Maxitest do
       result = run_cmd("ruby spec/cases/error_and_failure.rb", fail: true)
       result.should include "error_and_failure.rb:5"
       result.should include "error_and_failure.rb:9"
+      result.should_not include "minitest.rb"
     end
 
     it "shows backtrace for errors with verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb -n '/errors/' -v", fail: true)
       result.should include "1 run"
       result.should include "error_and_failure.rb:5"
+      result.should include "minitest.rb"
     end
 
     it "shows backtrace for failures with verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb -n '/fails/' -v", fail: true)
       result.should include "1 run"
       result.should include "error_and_failure.rb:9"
+      result.should include "minitest.rb"
     end
   end
 
@@ -284,10 +304,6 @@ describe Maxitest do
     with_env SIMULATE_TTY: 'true', &block
   end
 
-  def with_global_must(&block)
-    with_env GLOBAL_MUST: 'true', &block
-  end
-
   def with_env(h)
     old = ENV.to_h
     h.each { |k, v| ENV[k.to_s] = v}
@@ -298,9 +314,6 @@ describe Maxitest do
 
   def run_cmd(command, deprecated: :fail, keep_output: false, fail: false)
     stdout, stderr, status = Open3.capture3(command)
-
-    # Filter bundler version mismatch warnings
-    stderr = stderr.lines.reject { |l| l.include?("warning: already initialized constant") || l.include?("warning: previous definition") }.join
 
     stderr.should_not include("DEPRECATED") unless deprecated == :ignore
 

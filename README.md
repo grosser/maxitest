@@ -12,7 +12,6 @@ Features
  - `before :all` blocks
  - **around** blocks `around { |t| Dir.chdir(...) { t.call } }`
  - **red-green** output  (disabled/integrated on rails 5)
- - `mtest` executable to **run by line number** and by folder  (disabled/integrated on rails 5)
  - full backtrace for errors and assertions with verbose (`-v`)
  - `let!`
  - `let_all` execute once for all tests in a class and it's subclasses
@@ -97,9 +96,7 @@ Development
 
 Author
 ======
- - running by line number from [minitest-line](https://github.com/judofyr/minitest-line)
  - around from [minitest-around](https://github.com/splattael/minitest-around)
- - mtest from [testrbl](https://github.com/grosser/testrbl)
  - red-green from [minitest-rg](https://github.com/blowmage/minitest-rg)
 
 [Michael Grosser](http://grosser.it)<br>
