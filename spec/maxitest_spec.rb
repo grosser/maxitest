@@ -272,18 +272,21 @@ describe Maxitest do
       result = run_cmd("ruby spec/cases/error_and_failure.rb", fail: true)
       result.should include "error_and_failure.rb:5"
       result.should include "error_and_failure.rb:9"
+      result.should_not include "minitest.rb"
     end
 
     it "shows backtrace for errors with verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb -n '/errors/' -v", fail: true)
       result.should include "1 run"
       result.should include "error_and_failure.rb:5"
+      result.should include "minitest.rb"
     end
 
     it "shows backtrace for failures with verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb -n '/fails/' -v", fail: true)
       result.should include "1 run"
       result.should include "error_and_failure.rb:9"
+      result.should include "minitest.rb"
     end
   end
 
