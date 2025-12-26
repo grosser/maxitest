@@ -29,6 +29,4 @@ module Maxitest
   end
 end
 
-Minitest::Test.send :prepend, Maxitest::Timeout
-
-
+Minitest::Test.prepend Maxitest::Timeout

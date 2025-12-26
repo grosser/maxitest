@@ -3,3 +3,5 @@ gemspec
 
 gem "debug"
 gem "bump"
+gem "rubocop", "~> 1.82.1" # locked to prevent random failures from new cops
+gem "rubocop-rake"

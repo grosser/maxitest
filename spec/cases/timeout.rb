@@ -23,6 +23,7 @@ describe 2 do
 
   describe "sum" do
     before { sleep 0.04 }
+
     after do
       sleep 0.04
       puts "DID NOT TIME OUT"

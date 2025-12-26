@@ -1,18 +1,19 @@
 require "bundler/setup"
 require "bundler/gem_tasks"
-require 'rspec/core/rake_task'
+require "net/http"
+require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:spec)
 
 begin
   require "bump/tasks"
   Bump.replace_in_default = Dir["gemfiles/**.lock"]
-rescue LoadError # not available in gemfiles/
+rescue LoadError
+  # not available in gemfiles/
 end
 
 module VendorUpdate
   class << self
     def all
-      require "open-uri"
       Dir["lib/maxitest/vendor/*"].each { |f| update_file f }
     end
 
@@ -26,7 +27,7 @@ module VendorUpdate
       urls = File.read(file).scan(/#{Regexp.escape start}# (\S+)\n.*?#{Regexp.escape(finish)}/m).flatten(1)
 
       urls.map! do |url|
-        code = URI.open(url).read
+        code = Net::HTTP.get(URI(url))
         code = modify_code code, url
         "#{start}# #{url}\n#{code}\n#{finish}"
       end
@@ -43,20 +44,24 @@ module VendorUpdate
       if url.end_with?('/around/spec.rb')
         # do not fail with resume for nil class when before was never called
         # for example when putting <% raise %> into a fixture file
-        raise unless code.sub!(%{fib.resume unless fib == :failed}, %{fib.resume if fib && fib != :failed})
+        raise unless code.sub!(%(fib.resume unless fib == :failed), %(fib.resume if fib && fib != :failed))
 
         # make `after :all` blow up to avoid confusion
-        raise unless code.sub!(%{fib = nil}, %{raise ArgumentError, "only :each or no argument is supported" if args != [] && args != [:each]\n    fib = nil})
+        raise unless code.sub!(
+          %(fib = nil),
+          %(raise ArgumentError, "only :each or no argument is supported" if args != [] && args != [:each]\n) \
+          "fib = nil"
+        )
       elsif url.end_with?('/rg_plugin.rb')
         # support disabling/enabling colors
         # https://github.com/blowmage/minitest-rg/pull/15
         raise unless code.sub!(
           %(opts.on "--rg", "Add red/green to test output." do\n      RG.rg!),
-          %(opts.on "--[no-]rg", "Add red/green to test output." do |bool|\n      RG.rg! bool),
+          %(opts.on "--[no-]rg", "Add red/green to test output." do |bool|\n      RG.rg! bool)
         )
         raise unless code.sub!(
           %(    def self.rg!\n      @rg = true),
-          %(    def self.rg!(bool = true)\n      @rg = bool),
+          %(    def self.rg!(bool = true)\n      @rg = bool)
         )
         raise unless code.sub!(
           "reporter.reporters.grep(Minitest::Reporter).each do |rep|\n        rep.io = io if rep.io.tty?",
@@ -64,7 +69,7 @@ module VendorUpdate
         )
         raise unless code.sub!(
           "MiniTest",
-          "Minitest",
+          "Minitest"
         )
       end
       code
@@ -86,4 +91,9 @@ task :bundle do
   Bundler.with_original_env do
     Dir["gemfiles/*.gemfile"].reverse.each { |gemfile| sh "BUNDLE_GEMFILE=#{gemfile} bundle #{extra}" }
   end
+end
+
+desc "Run rubocop"
+task :rubocop do
+  sh "rubocop --autocorrect-all"
 end

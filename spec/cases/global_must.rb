@@ -16,11 +16,9 @@ describe "threads" do
   it "can assert in threads" do
     result = "not called"
     Thread.new do
-      begin
-        assert_it
-      rescue NotImplementedError
-        result = "error"
-      end
+      assert_it
+    rescue NotImplementedError
+      result = "error"
     end.join
     result.must_equal "error"
   end

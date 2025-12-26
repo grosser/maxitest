@@ -22,6 +22,6 @@ describe 2 do
   end
 
   it "z" do
-    _($ordered_calls).must_equal [1,2,3,4]
+    _($ordered_calls).must_equal [1, 2, 3, 4]
   end
 end

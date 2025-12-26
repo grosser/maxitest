@@ -14,30 +14,26 @@ module Maxitest
       # stripped down version of capture_io
       def capture_stdout
         _synchronize do
-          begin
-            captured_stdout = StringIO.new
-            orig_stdout = $stdout
-            $stdout = captured_stdout
-            yield
-            return captured_stdout.string
-          ensure
-            $stdout = orig_stdout
-          end
+          captured_stdout = StringIO.new
+          orig_stdout = $stdout
+          $stdout = captured_stdout
+          yield
+          return captured_stdout.string
+        ensure
+          $stdout = orig_stdout
         end
       end
 
       # stripped down version of capture_io
       def capture_stderr
         _synchronize do
-          begin
-            captured_stderr = StringIO.new
-            orig_stderr = $stderr
-            $stderr = captured_stderr
-            yield
-            return captured_stderr.string
-          ensure
-            $stderr = orig_stderr
-          end
+          captured_stderr = StringIO.new
+          orig_stderr = $stderr
+          $stderr = captured_stderr
+          yield
+          return captured_stderr.string
+        ensure
+          $stderr = orig_stderr
         end
       end
     end
@@ -50,5 +46,5 @@ module Maxitest
   end
 end
 
-Minitest::Test.send(:include, Maxitest::Helpers::InstanceMethods)
-Minitest::Test.send(:extend, Maxitest::Helpers::ClassMethods)
+Minitest::Test.include Maxitest::Helpers::InstanceMethods
+Minitest::Test.extend Maxitest::Helpers::ClassMethods

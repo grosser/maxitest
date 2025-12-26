@@ -51,4 +51,3 @@ describe "B" do
     _(foo).must_equal :foo
   end
 end
-

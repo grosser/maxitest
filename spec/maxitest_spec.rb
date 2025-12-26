@@ -3,7 +3,7 @@ require 'open3'
 
 describe Maxitest do
   it "has a VERSION" do
-    Maxitest::VERSION.should =~ /^[\.\da-z]+$/
+    Maxitest::VERSION.should =~ /^[.\da-z]+$/
   end
 
   it "does not add extra output" do
@@ -196,11 +196,11 @@ describe Maxitest do
       kill_process_with_name("spec/cases/cltr_c.rb")
       output = t.value
       output.should include "4 runs, 1 assertions, 1 failures, 1 errors, 2 skips" # failed, error from interrupt (so you see a backtrace), rest skipped
-      output.gsub(/:\d+:in/, ":D:in").should match /cltr_c\.rb:D:in (`|'Kernel#)sleep'/ # let you know where it happened
+      output.gsub(/:\d+:in/, ":D:in").should match(/cltr_c\.rb:D:in (`|'Kernel#)sleep'/) # let you know where it happened
       output.should include "Interrupt:" # let you know what happened
       output.should include "Expected: true\n  Actual: false" # not hide other errors
-      output.scan(/BEFORE/).size.should == 2 # before calls avoided when skipping
-      output.scan(/AFTER/).size.should == 2 # after calls avoided when skipping
+      output.scan('BEFORE').size.should == 2 # before calls avoided when skipping
+      output.scan('AFTER').size.should == 2 # after calls avoided when skipping
     end
 
     it "allows Interrupts to be caught normally" do
@@ -219,7 +219,7 @@ describe Maxitest do
       sleep 1 # let thread start
       kill_process_with_name("spec/cases/cltr_c.rb")
       output = t.value
-      output.gsub(/:\d+:in/, ":D:in").should match /cltr_c.rb:D:in (`|'Kernel#)sleep'/ # let you know where it happened
+      output.gsub(/:\d+:in/, ":D:in").should match(/cltr_c.rb:D:in (`|'Kernel#)sleep'/) # let you know where it happened
     end
   end
 
@@ -306,7 +306,7 @@ describe Maxitest do
 
   def with_env(h)
     old = ENV.to_h
-    h.each { |k, v| ENV[k.to_s] = v}
+    h.each { |k, v| ENV[k.to_s] = v }
     yield
   ensure
     ENV.replace old
@@ -317,7 +317,7 @@ describe Maxitest do
 
     stderr.should_not include("DEPRECATED") unless deprecated == :ignore
 
-    stdout += "\n" + stderr unless keep_output
+    stdout += "\n#{stderr}" unless keep_output
 
     if status.success? == fail
       raise "#{fail ? "SUCCESS" : "FAIL"} #{command}\n#{stdout}"
@@ -327,10 +327,10 @@ describe Maxitest do
   end
 
   # copied from https://github.com/grosser/parallel/blob/master/spec/parallel_spec.rb#L10-L15
-  def kill_process_with_name(file, signal='INT')
-    running_processes = `ps -f`.split("\n").map{ |line| line.split(/\s+/) }
+  def kill_process_with_name(file, signal = 'INT')
+    running_processes = `ps -f`.split("\n").map { |line| line.split(/\s+/) }
     pid_index = running_processes.detect { |p| p.include?("UID") }.index("UID") + 1
-    parent = running_processes.detect { |p| p.include?(file) and not p.include?("sh") }
+    parent = running_processes.detect { |p| p.include?(file) and !p.include?("sh") }
     raise "Unable to find parent in #{running_processes} with #{file}" unless parent
     `kill -s #{signal} #{parent.fetch(pid_index)}`
   end

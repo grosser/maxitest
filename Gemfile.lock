@@ -7,6 +7,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    ast (2.4.3)
     bump (0.10.0)
     date (3.4.1)
     debug (1.10.0)
@@ -18,8 +19,15 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
+    json (2.18.0)
+    language_server-protocol (3.17.0.5)
+    lint_roller (1.1.0)
     minitest (6.0.0)
       prism (~> 1.5)
+    parallel (1.27.0)
+    parser (3.3.10.0)
+      ast (~> 2.4.1)
+      racc
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -27,9 +35,12 @@ GEM
     psych (5.2.3)
       date
       stringio
+    racc (1.8.1)
+    rainbow (3.1.1)
     rake (13.2.1)
     rdoc (6.13.1)
       psych (>= 4.0.0)
+    regexp_parser (2.11.3)
     reline (0.6.0)
       io-console (~> 0.5)
     rspec (3.13.0)
@@ -45,7 +56,28 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.2)
+    rubocop (1.82.1)
+      json (~> 2.3)
+      language_server-protocol (~> 3.17.0.2)
+      lint_roller (~> 1.1.0)
+      parallel (~> 1.10)
+      parser (>= 3.3.0.2)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 2.9.3, < 3.0)
+      rubocop-ast (>= 1.48.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 4.0)
+    rubocop-ast (1.48.0)
+      parser (>= 3.3.7.2)
+      prism (~> 1.4)
+    rubocop-rake (0.7.1)
+      lint_roller (~> 1.1)
+      rubocop (>= 1.72.1)
+    ruby-progressbar (1.13.0)
     stringio (3.1.6)
+    unicode-display_width (3.2.0)
+      unicode-emoji (~> 4.1)
+    unicode-emoji (4.2.0)
 
 PLATFORMS
   arm64-darwin-23
@@ -57,6 +89,8 @@ DEPENDENCIES
   maxitest!
   rake
   rspec
+  rubocop (~> 1.82.1)
+  rubocop-rake
 
 BUNDLED WITH
    2.6.6

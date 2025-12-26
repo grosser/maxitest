@@ -3,7 +3,7 @@ module Maxitest
   module ImplicitSubject
     def describe(*args, &block)
       klass = super
-      if args.first.is_a?(Class) && !klass.instance_methods(false).include?(:subject)
+      if args.first.is_a?(Class) && !klass.method_defined?(:subject, false)
         klass.let(:subject) { args.first.new }
       end
       klass
@@ -11,4 +11,4 @@ module Maxitest
   end
 end
 
-Object.send(:include, Maxitest::ImplicitSubject) # Minitest hacks Kernel -> we need to use alias method or go into Object
+Object.include Maxitest::ImplicitSubject # Minitest hacks Kernel -> we need to use alias method or go into Object

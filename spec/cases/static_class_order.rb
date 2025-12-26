@@ -4,7 +4,7 @@ $calls = []
 
 5.times do |i|
   describe rand do
-    it { puts "#{i}" }
+    it { puts i }
 
     describe rand do
       it { puts "#{i}n" }

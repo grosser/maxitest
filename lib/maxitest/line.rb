@@ -53,14 +53,13 @@ module Maxitest
         @failures.each do |res|
           result = (res.respond_to?(:source_location) ? res : res.method(res.name))
           file, line = result.source_location
+          next unless file
 
-          if file
-            file = Pathname.new(file)
-            file = file.relative_path_from(pwd) if file.absolute?
-            output = "#{bin_rails ? "bin/rails test" : "minitest"} #{file}:#{line}"
-            output = "\e[31m#{output}\e[0m" if $stdout.tty?
-            io.puts output
-          end
+          file = Pathname.new(file)
+          file = file.relative_path_from(pwd) if file.absolute?
+          output = "#{bin_rails ? "bin/rails test" : "minitest"} #{file}:#{line}"
+          output = "\e[31m#{output}\e[0m" if $stdout.tty?
+          io.puts output
         end
       end
     end

@@ -34,4 +34,4 @@ end
 
 # not using prepend since that would clash with webmock
 # include works because original setup lives in also included Minitest::LifecycleHooks
-Minitest::Test.send :include, Maxitest::Threads
+Minitest::Test.include Maxitest::Threads
