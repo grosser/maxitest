@@ -1,5 +1,14 @@
 # Next
 
+# v7.0.0
+- only support minitest 6 (which does not work with any released rails version)
+- removed `mtest` binary, use `minitest` instead
+- stoped using alias method chaining, so things might break if you have other minitest extensions
+- use frozen strings everywhere
+
+# v6.1.0
+- test with minitest 5.26 and 5.27
+
 # v6.0.1
 - fix unused block warning for `xit` on ruby 3.4
 
