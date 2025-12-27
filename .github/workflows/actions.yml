@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         # keep in sync with maxitest.gemspec
-        ruby: [ '3.2', '3.3', '3.4']
+        ruby: [ '3.2', '3.3', '3.4', '4.0' ]
         gemfile: [ '60' ]
         task: [ 'default' ]
         include:
