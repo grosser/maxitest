@@ -1,0 +1,126 @@
+plugins:
+- rubocop-rake
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2 # keep in sync with gemspec and .github/workflows/actions.yml
+  SuggestExtensions: false
+  Exclude:
+  - vendor/**/*
+  - gemfiles/vendor/bundle/**/*
+  - lib/maxitest/vendor/**/*.rb
+
+Style/StringLiterals:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Metrics:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: false
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+Layout/MultilineOperationIndentation:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Style/NumericPredicate:
+  EnforcedStyle: comparison
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/FirstHashElementLineBreak:
+  Enabled: true # Opt-in
+
+# Opt-in
+Layout/FirstMethodArgumentLineBreak:
+  Enabled: true # Opt-in
+
+Layout/FirstMethodParameterLineBreak:
+  Enabled: true # Opt-in
+
+# https://github.com/rubocop-hq/rubocop/issues/5891
+Style/SpecialGlobalVars:
+  Enabled: false
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/GuardClause:
+  Enabled: false
+
+Style/EmptyElse:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/CombinableLoops:
+  Enabled: false
+
+Lint/Void:
+  Enabled: false
+
+Security/MarshalLoad:
+  Enabled: false
+
+Lint/EmptyBlock:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Exclude:
+  - spec/**/*.rb
+
+Style/GlobalVars:
+  Exclude: [spec/**/*.rb]
+
+Style/Semicolon:
+  Exclude:
+  - spec/**/*.rb
+
+Style/FetchEnvVar:
+  Enabled: false
+
+# we use the for multiple gemfiles
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+Lint/EmptyClass:
+  Exclude:
+  - spec/**/*.rb
+
+Naming/BlockForwarding:
+  EnforcedStyle: explicit
+
+Naming/PredicateMethod:
+  Enabled: false
+
+Style/ArgumentsForwarding:
+  Enabled: false
+
+Style/BlockComments:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+Layout/LineLength:
+  Exclude:
+  - spec/**/*.rb

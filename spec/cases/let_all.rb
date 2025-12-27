@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "./spec/cases/helper"
 
 # executing sub-classes first makes the tests fail
@@ -51,4 +52,3 @@ describe "B" do
     _(foo).must_equal :foo
   end
 end
-

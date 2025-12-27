@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 require "./spec/cases/helper"
 
 describe 2 do
-  it 'should include the xit module' do
+  it 'includes the xit module' do
     assert_includes Minitest::Spec::DSL.included_modules, Maxitest::XitMethod
   end
 
@@ -16,6 +17,7 @@ describe 2 do
   describe "with evil setup/teardown" do
     before { raise "called before" }
     after { raise "called after" }
+
     xit "should not be called" do
       raise
     end

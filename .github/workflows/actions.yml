@@ -13,12 +13,16 @@ jobs:
         # keep in sync with maxitest.gemspec
         ruby: [ '3.2', '3.3', '3.4']
         gemfile: [ '60' ]
+        task: [ 'default' ]
+        include:
+        - ruby: 3.2 # keep in sync with the lowest version
+          task: rubocop
     env:
-      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
+      BUNDLE_GEMFILE: ${{ matrix.gemfile && format('{0}/gemfiles/{1}.gemfile', github.workspace, matrix.gemfile) || 'Gemfile' }}
     steps:
     - uses: actions/checkout@v4
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - run: bundle exec rake
+    - run: bundle exec rake ${{ matrix.task }}

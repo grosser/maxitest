@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "./spec/cases/helper"
 
 describe "2" do
@@ -6,11 +7,11 @@ describe "2" do
   before { calls << 1 }
   around((ENV["HOOK_TYPE"] || "each").to_sym) { |test| calls << 2; test.call }
   around { |test| calls << 3; test.call }
-  after  { _(calls).must_equal [1,2,3,4] }
+  after  { _(calls).must_equal [1, 2, 3, 4] }
   after  { calls << 4 }
 
   it "is ordered" do
-    _(calls).must_equal [1,2,3]
+    _(calls).must_equal [1, 2, 3]
   end
 end
 

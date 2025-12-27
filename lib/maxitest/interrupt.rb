@@ -12,7 +12,7 @@ module Maxitest
   module InterruptHandler
     # capture interrupt and treat it as a regular error so we get a backtrace
     def capture_exceptions(&block)
-      super(&block)
+      super
     rescue Interrupt => e
       Maxitest.interrupted = true
       failures << Minitest::UnexpectedError.new(e)
@@ -32,7 +32,7 @@ module Maxitest
         result.time = 0
         result
       else
-        super()
+        super
       end
     end
   end

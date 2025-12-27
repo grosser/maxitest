@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # tests sometimes hang locally or on ci and with this we can actually debug the cause instead of just hanging forever
 require 'timeout'
 
@@ -29,6 +30,4 @@ module Maxitest
   end
 end
 
-Minitest::Test.send :prepend, Maxitest::Timeout
-
-
+Minitest::Test.prepend Maxitest::Timeout

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Allow .must_* and .wont_* assertions on all objects
 # this was removed from minitest v6
 #
@@ -18,14 +19,16 @@ module Maxitest
 end
 
 # Track the current test instance using prepend on run
-Minitest::Test.prepend(Module.new do
-  def run
-    Maxitest.current_test = self
-    super
-  ensure
-    Maxitest.current_test = nil
+Minitest::Test.prepend(
+  Module.new do
+    def run
+      Maxitest.current_test = self
+      super
+    ensure
+      Maxitest.current_test = nil
+    end
   end
-end)
+)
 
 # Define global must_* methods on Object
 # This mimics what mintest 5 infect_an_assertion used to do

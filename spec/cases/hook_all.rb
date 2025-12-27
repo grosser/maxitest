@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "./spec/cases/helper"
 
 hook_method = (ENV["HOOK_METHOD"] || "before").to_sym

@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 require "spec_helper"
 require 'open3'
 
 describe Maxitest do
   it "has a VERSION" do
-    Maxitest::VERSION.should =~ /^[\.\da-z]+$/
+    Maxitest::VERSION.should =~ /^[.\da-z]+$/
   end
 
   it "does not add extra output" do
@@ -58,7 +59,7 @@ describe Maxitest do
     output_in = out.gsub!(/:in .*/, "")
 
     output_in.should include "TypeError: Timeout is not a module"
-    output_in.should include 'spec/cases/raise.rb:11'
+    output_in.should include 'spec/cases/raise.rb:12'
 
     # Minitest 5.21.0+ backtrace is more verbose and the short backtrace feature seems to be gone
     # re-test by running spec/cases/raise.rb and only loading minitest/autorun and not maxitest
@@ -196,11 +197,11 @@ describe Maxitest do
       kill_process_with_name("spec/cases/cltr_c.rb")
       output = t.value
       output.should include "4 runs, 1 assertions, 1 failures, 1 errors, 2 skips" # failed, error from interrupt (so you see a backtrace), rest skipped
-      output.gsub(/:\d+:in/, ":D:in").should match /cltr_c\.rb:D:in (`|'Kernel#)sleep'/ # let you know where it happened
+      output.gsub(/:\d+:in/, ":D:in").should match(/cltr_c\.rb:D:in (`|'Kernel#)sleep'/) # let you know where it happened
       output.should include "Interrupt:" # let you know what happened
       output.should include "Expected: true\n  Actual: false" # not hide other errors
-      output.scan(/BEFORE/).size.should == 2 # before calls avoided when skipping
-      output.scan(/AFTER/).size.should == 2 # after calls avoided when skipping
+      output.scan('BEFORE').size.should == 2 # before calls avoided when skipping
+      output.scan('AFTER').size.should == 2 # after calls avoided when skipping
     end
 
     it "allows Interrupts to be caught normally" do
@@ -219,7 +220,7 @@ describe Maxitest do
       sleep 1 # let thread start
       kill_process_with_name("spec/cases/cltr_c.rb")
       output = t.value
-      output.gsub(/:\d+:in/, ":D:in").should match /cltr_c.rb:D:in (`|'Kernel#)sleep'/ # let you know where it happened
+      output.gsub(/:\d+:in/, ":D:in").should match(/cltr_c.rb:D:in (`|'Kernel#)sleep'/) # let you know where it happened
     end
   end
 
@@ -238,7 +239,7 @@ describe Maxitest do
     end
 
     it "runs a single line" do
-      run_cmd("minitest spec/cases/plain.rb:4").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
+      run_cmd("minitest spec/cases/plain.rb:6").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
     end
 
     it "runs a folder" do
@@ -257,11 +258,11 @@ describe Maxitest do
       result = run_cmd("ruby spec/cases/line.rb", fail: true)
       result.should include "4 runs, 4 assertions"
       foucs = result.split(separator, 2)[1]
-      foucs.should == "minitest spec/cases/line.rb:8"
+      foucs.should == "minitest spec/cases/line.rb:9"
     end
 
     it "does not print rerun commands when already filtered" do
-      result = run_cmd("minitest spec/cases/line.rb:8", fail: true)
+      result = run_cmd("minitest spec/cases/line.rb:9", fail: true)
       result.should include "1 runs, 1 assertions"
       result.should_not include separator
     end
@@ -270,22 +271,22 @@ describe Maxitest do
   describe "backtraces" do
     it "shows no backtrace without verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb", fail: true)
-      result.should include "error_and_failure.rb:5"
-      result.should include "error_and_failure.rb:9"
+      result.should include "error_and_failure.rb:6"
+      result.should include "error_and_failure.rb:10"
       result.should_not include "minitest.rb"
     end
 
     it "shows backtrace for errors with verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb -n '/errors/' -v", fail: true)
       result.should include "1 run"
-      result.should include "error_and_failure.rb:5"
+      result.should include "error_and_failure.rb:6"
       result.should include "minitest.rb"
     end
 
     it "shows backtrace for failures with verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb -n '/fails/' -v", fail: true)
       result.should include "1 run"
-      result.should include "error_and_failure.rb:9"
+      result.should include "error_and_failure.rb:10"
       result.should include "minitest.rb"
     end
   end
@@ -306,7 +307,7 @@ describe Maxitest do
 
   def with_env(h)
     old = ENV.to_h
-    h.each { |k, v| ENV[k.to_s] = v}
+    h.each { |k, v| ENV[k.to_s] = v }
     yield
   ensure
     ENV.replace old
@@ -317,7 +318,7 @@ describe Maxitest do
 
     stderr.should_not include("DEPRECATED") unless deprecated == :ignore
 
-    stdout += "\n" + stderr unless keep_output
+    stdout += "\n#{stderr}" unless keep_output
 
     if status.success? == fail
       raise "#{fail ? "SUCCESS" : "FAIL"} #{command}\n#{stdout}"
@@ -327,10 +328,10 @@ describe Maxitest do
   end
 
   # copied from https://github.com/grosser/parallel/blob/master/spec/parallel_spec.rb#L10-L15
-  def kill_process_with_name(file, signal='INT')
-    running_processes = `ps -f`.split("\n").map{ |line| line.split(/\s+/) }
+  def kill_process_with_name(file, signal = 'INT')
+    running_processes = `ps -f`.split("\n").map { |line| line.split(/\s+/) }
     pid_index = running_processes.detect { |p| p.include?("UID") }.index("UID") + 1
-    parent = running_processes.detect { |p| p.include?(file) and not p.include?("sh") }
+    parent = running_processes.detect { |p| p.include?(file) and !p.include?("sh") }
     raise "Unable to find parent in #{running_processes} with #{file}" unless parent
     `kill -s #{signal} #{parent.fetch(pid_index)}`
   end

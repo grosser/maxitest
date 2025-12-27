@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 if ENV['GLOBAL_MUST']
   require 'maxitest/global_must'
 end
@@ -16,11 +17,9 @@ describe "threads" do
   it "can assert in threads" do
     result = "not called"
     Thread.new do
-      begin
-        assert_it
-      rescue NotImplementedError
-        result = "error"
-      end
+      assert_it
+    rescue NotImplementedError
+      result = "error"
     end.join
     result.must_equal "error"
   end
