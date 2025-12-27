@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require_relative "lib/maxitest/version"
 
 Gem::Specification.new "maxitest", Maxitest::VERSION do |s|

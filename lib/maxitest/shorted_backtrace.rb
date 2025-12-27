@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Minitest::BacktraceFilter.prepend(
   Module.new do
     def filter(*)

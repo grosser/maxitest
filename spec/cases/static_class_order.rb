@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "./spec/cases/helper"
 Maxitest.static_class_order = true
 $calls = []

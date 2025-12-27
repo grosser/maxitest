@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 if ENV['GLOBAL_MUST']
   require 'maxitest/global_must'
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Maxitest
   module Pending
     def pending(reason = nil, **kwargs)

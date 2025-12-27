@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # tests that leave extra threads running can break other tests in weird ways ... prevent that from happening
 
 module Maxitest

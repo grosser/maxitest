@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Allow .must_* and .wont_* assertions on all objects
 # this was removed from minitest v6
 #

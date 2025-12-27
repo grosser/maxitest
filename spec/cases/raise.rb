@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "./spec/cases/helper"
 
 # cause a raise in a required file

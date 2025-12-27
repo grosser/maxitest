@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # https://raw.githubusercontent.com/judofyr/minitest-line/master/MIT-LICENSE.txt
 =begin
 Copyright (c) 2014 Magnus Holm

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Maxitest
   class << self
     attr_accessor :hook_all_counter

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ENV["MT_CPU"] = "3" # make this test hardware independent, need N for old minitest versions
 require "./spec/cases/helper"
 

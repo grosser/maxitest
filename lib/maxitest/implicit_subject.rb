@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # this is a bit hacky / overwrites describe, so not included by default ...
 module Maxitest
   module ImplicitSubject

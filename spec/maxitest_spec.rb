@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "spec_helper"
 require 'open3'
 
@@ -58,7 +59,7 @@ describe Maxitest do
     output_in = out.gsub!(/:in .*/, "")
 
     output_in.should include "TypeError: Timeout is not a module"
-    output_in.should include 'spec/cases/raise.rb:11'
+    output_in.should include 'spec/cases/raise.rb:12'
 
     # Minitest 5.21.0+ backtrace is more verbose and the short backtrace feature seems to be gone
     # re-test by running spec/cases/raise.rb and only loading minitest/autorun and not maxitest
@@ -238,7 +239,7 @@ describe Maxitest do
     end
 
     it "runs a single line" do
-      run_cmd("minitest spec/cases/plain.rb:4").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
+      run_cmd("minitest spec/cases/plain.rb:6").should include "1 runs, 1 assertions, 0 failures, 0 errors, 0 skips"
     end
 
     it "runs a folder" do
@@ -257,11 +258,11 @@ describe Maxitest do
       result = run_cmd("ruby spec/cases/line.rb", fail: true)
       result.should include "4 runs, 4 assertions"
       foucs = result.split(separator, 2)[1]
-      foucs.should == "minitest spec/cases/line.rb:8"
+      foucs.should == "minitest spec/cases/line.rb:9"
     end
 
     it "does not print rerun commands when already filtered" do
-      result = run_cmd("minitest spec/cases/line.rb:8", fail: true)
+      result = run_cmd("minitest spec/cases/line.rb:9", fail: true)
       result.should include "1 runs, 1 assertions"
       result.should_not include separator
     end
@@ -270,22 +271,22 @@ describe Maxitest do
   describe "backtraces" do
     it "shows no backtrace without verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb", fail: true)
-      result.should include "error_and_failure.rb:5"
-      result.should include "error_and_failure.rb:9"
+      result.should include "error_and_failure.rb:6"
+      result.should include "error_and_failure.rb:10"
       result.should_not include "minitest.rb"
     end
 
     it "shows backtrace for errors with verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb -n '/errors/' -v", fail: true)
       result.should include "1 run"
-      result.should include "error_and_failure.rb:5"
+      result.should include "error_and_failure.rb:6"
       result.should include "minitest.rb"
     end
 
     it "shows backtrace for failures with verbose" do
       result = run_cmd("ruby spec/cases/error_and_failure.rb -n '/fails/' -v", fail: true)
       result.should include "1 run"
-      result.should include "error_and_failure.rb:9"
+      result.should include "error_and_failure.rb:10"
       result.should include "minitest.rb"
     end
   end

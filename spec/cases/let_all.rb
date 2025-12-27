@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "./spec/cases/helper"
 
 # executing sub-classes first makes the tests fail

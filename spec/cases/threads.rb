@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ENV["MT_CPU"] = "2" # so we get 3 threads total and not variation based on machines cpus
 require "./spec/cases/helper"
 require "maxitest/threads"
