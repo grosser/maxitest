@@ -1,5 +1,8 @@
 # Next
 
+# v7.1.0
+- update vendored gems
+
 # v7.0.0
 - only support minitest 6 (which does not work with any released rails version)
 - removed `mtest` binary, use `minitest` instead
