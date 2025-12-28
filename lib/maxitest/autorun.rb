@@ -16,7 +16,7 @@ require "maxitest/shorted_backtrace"
 unless Gem::Specification.find_all_by_name("rails").any? # rails adds default red/green output
   require "maxitest/vendor/rg"
   Minitest.extensions << "rg"
-  Minitest::RG.rg! $stdout.tty?
+  Minitest::RG.rg! if $stdout.tty?
 end
 
 require "maxitest/verbose_backtrace"

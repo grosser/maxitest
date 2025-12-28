@@ -105,7 +105,7 @@ describe Maxitest do
     it "informs user about missing around :all" do
       with_env HOOK_TYPE: "all" do
         out = run_cmd("ruby spec/cases/around.rb", fail: true)
-        out.should include "only :each or no argument is supported (ArgumentError)"
+        out.should include "only :each"
       end
     end
   end

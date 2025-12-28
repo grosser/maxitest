@@ -41,38 +41,6 @@ module VendorUpdate
       code.gsub!(/require .*?\n/, "") # we inline everything
       code.strip!
       code = "=begin\n#{code}\n=end" if url.include?("LICENSE")
-
-      if url.end_with?('/around/spec.rb')
-        # do not fail with resume for nil class when before was never called
-        # for example when putting <% raise %> into a fixture file
-        raise unless code.sub!(%(fib.resume unless fib == :failed), %(fib.resume if fib && fib != :failed))
-
-        # make `after :all` blow up to avoid confusion
-        raise unless code.sub!(
-          %(fib = nil),
-          %(raise ArgumentError, "only :each or no argument is supported" if args != [] && args != [:each]\n) \
-          "fib = nil"
-        )
-      elsif url.end_with?('/rg_plugin.rb')
-        # support disabling/enabling colors
-        # https://github.com/blowmage/minitest-rg/pull/15
-        raise unless code.sub!(
-          %(opts.on "--rg", "Add red/green to test output." do\n      RG.rg!),
-          %(opts.on "--[no-]rg", "Add red/green to test output." do |bool|\n      RG.rg! bool)
-        )
-        raise unless code.sub!(
-          %(    def self.rg!\n      @rg = true),
-          %(    def self.rg!(bool = true)\n      @rg = bool)
-        )
-        raise unless code.sub!(
-          "reporter.reporters.grep(Minitest::Reporter).each do |rep|\n        rep.io = io if rep.io.tty?",
-          "reporter.reporters.grep(Minitest::Reporter).each do |rep|\n        rep.io = io"
-        )
-        raise unless code.sub!(
-          "MiniTest",
-          "Minitest"
-        )
-      end
       code
     end
   end
