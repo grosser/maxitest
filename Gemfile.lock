@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    maxitest (7.0.0)
+    maxitest (7.1.0)
       minitest (>= 6.0.0, < 6.1.0)
 
 GEM
@@ -93,4 +93,4 @@ DEPENDENCIES
   rubocop-rake
 
 BUNDLED WITH
-   4.0.3
+  4.0.3
