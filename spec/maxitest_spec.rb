@@ -7,9 +7,9 @@ describe Maxitest do
   end
 
   it "does not add extra output" do
-    result = with_global_must do
+    result = ignore_ruby4_warnings(with_global_must do
       run_cmd("ruby spec/cases/plain.rb")
-    end
+    end)
     result.sub!(/seed \d+/, 'seed X')
     result.gsub!(/\d+\.\d+/, 'X')
     result.should == "Run options: --seed X\n\n# Running:\n\n..\n\nFinished in Xs, X runs/s, X assertions/s.\n\n2 runs, 2 assertions, 0 failures, 0 errors, 0 skips"
@@ -271,8 +271,8 @@ describe Maxitest do
 
   describe "mtest" do
     it "shows version" do
-      run_cmd("mtest -v").should == Maxitest::VERSION
-      run_cmd("mtest --version").should == Maxitest::VERSION
+      ignore_ruby4_warnings(run_cmd("mtest -v")).should == Maxitest::VERSION
+      ignore_ruby4_warnings(run_cmd("mtest --version")).should == Maxitest::VERSION
     end
 
     it "shows help" do
@@ -363,5 +363,10 @@ describe Maxitest do
     parent = running_processes.detect { |p| p.include?(file) and not p.include?("sh") }
     raise "Unable to find parent in #{running_processes} with #{file}" unless parent
     `kill -s #{signal} #{parent.fetch(pid_index)}`
+  end
+
+  def ignore_ruby4_warnings(output)
+    return output if RUBY_VERSION < "4.0.0"
+    output.split("\n").grep_v(/warning/).join("\n").rstrip
   end
 end
