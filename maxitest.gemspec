@@ -11,7 +11,7 @@ Gem::Specification.new "maxitest", Maxitest::VERSION do |s|
 
   # keep in sync with .github/workflows/actions.yml
   s.add_runtime_dependency "minitest", [">= 5.20.0", "< 5.28.0"]
-  s.required_ruby_version = '>= 3.2', '< 3.5'
+  s.required_ruby_version = '>= 3.2'
 
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
