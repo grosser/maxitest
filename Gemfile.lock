@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    maxitest (6.1.0)
+    maxitest (6.2.0)
       minitest (>= 5.20.0, < 5.28.0)
 
 GEM
@@ -61,4 +61,4 @@ DEPENDENCIES
   rspec
 
 BUNDLED WITH
-   2.6.6
+  4.0.3
