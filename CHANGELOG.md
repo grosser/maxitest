@@ -9,6 +9,9 @@
 - stoped using alias method chaining, so things might break if you have other minitest extensions
 - use frozen strings everywhere
 
+# v6.2.0
+- test and unblock ruby 4
+
 # v6.1.0
 - test with minitest 5.26 and 5.27
 
