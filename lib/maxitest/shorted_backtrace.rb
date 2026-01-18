@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+#
+# convert absolute paths in backtrace to relative paths
 Minitest::BacktraceFilter.prepend(
   Module.new do
     def filter(*)

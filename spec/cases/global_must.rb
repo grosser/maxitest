@@ -14,6 +14,10 @@ describe "threads" do
     assert_it
   end
 
+  it "fails" do
+    ENV["FAIL"].must_be_nil
+  end
+
   it "can assert in threads" do
     result = "not called"
     Thread.new do

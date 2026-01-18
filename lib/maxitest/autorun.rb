@@ -35,3 +35,7 @@ end
 old = Minitest::BacktraceFilter::MT_RE
 Minitest::BacktraceFilter.send(:remove_const, :MT_RE)
 Minitest::BacktraceFilter::MT_RE = Regexp.union(old, %r{lib/maxitest})
+# if already initialized the override
+if Minitest.backtrace_filter.class == Minitest::BacktraceFilter
+  Minitest.backtrace_filter.regexp = Minitest::BacktraceFilter::MT_RE
+end

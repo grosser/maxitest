@@ -188,6 +188,13 @@ describe Maxitest do
       out.gsub!('`', "'") # for ruby <3.4 had
       out.should include "undefined method 'must_equal'"
     end
+
+    it "does not obfuscate test origin" do
+      with_env GLOBAL_MUST: 'true', FAIL: 'true' do
+        out = run_cmd("ruby spec/cases/global_must.rb", fail: true)
+        out.should include "_fails [spec/cases/global_must.rb:18]:"
+      end
+    end
   end
 
   describe "Interrupts" do
