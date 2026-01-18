@@ -1,5 +1,8 @@
 # Next
 
+# v7.1.1
+- fix backtrace cleaner not ignoring maxitest traces
+
 # v7.1.0
 - update vendored gems
 
