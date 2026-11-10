@@ -232,11 +232,15 @@ describe Maxitest do
   end
 
   describe "minitest executable" do
+    # minitest 6.0.1+ ends --version and --help with exit!, which drops output written to a pipe,
+    # and 6.1.0 raises a LoadError when there is no test/ folder
     it "shows version" do
+      skip "not testable with minitest #{Minitest::VERSION}" if Minitest::VERSION > "6.0.0"
       run_cmd("minitest --version", fail: true).should include "minitest"
     end
 
     it "shows help" do
+      skip "not testable with minitest #{Minitest::VERSION}" if Minitest::VERSION > "6.0.0"
       run_cmd("minitest -h", fail: true).should include "Usage:"
       run_cmd("minitest --help", fail: true).should include "Usage:"
     end
