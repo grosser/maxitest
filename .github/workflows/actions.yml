@@ -12,7 +12,7 @@ jobs:
       matrix:
         # keep in sync with maxitest.gemspec
         ruby: [ '3.2', '3.3', '3.4', '4.0' ]
-        gemfile: [ '60' ]
+        gemfile: [ '60', '61' ]
         task: [ 'default' ]
         include:
         - ruby: 3.2 # keep in sync with the lowest version
