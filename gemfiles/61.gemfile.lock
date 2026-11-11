@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    maxitest (7.1.1)
+    maxitest (7.2.0)
       minitest (>= 6.0.0, < 6.2.0)
 
 GEM
@@ -56,7 +56,7 @@ DEPENDENCIES
 CHECKSUMS
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
-  maxitest (7.1.1)
+  maxitest (7.2.0)
   minitest (6.1.0) sha256=ff373595aa8888631e8a5463986a76b3845346ae6d7fa46e139c1633d418076e
   prism (2.1.0) sha256=1c0a7c6dea0e93183390fb123f007564dbe663198e2f86ad87204151147601f3
   prism (2.1.0-aarch64-linux-gnu) sha256=808dddc72def68e1a0463689414c97e0ba211938eddbab05387a4844aa2b3ec2

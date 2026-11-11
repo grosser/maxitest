@@ -7,7 +7,9 @@ RSpec::Core::RakeTask.new(:spec)
 
 begin
   require "bump/tasks"
-  Bump.replace_in_default = Dir["gemfiles/**.lock"]
+  # twice because bump only replaces the first match, but lockfiles have the version in specs and CHECKSUMS
+  # next gem update should fix it
+  Bump.replace_in_default = Dir["gemfiles/**.lock"] * 2
 rescue LoadError
   # not available in gemfiles/
 end
