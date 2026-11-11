@@ -1,4 +1,5 @@
 # Next
+- support minitest 6.1
 
 # v7.1.1
 - fix backtrace cleaner not ignoring maxitest traces
