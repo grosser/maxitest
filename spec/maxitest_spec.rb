@@ -232,17 +232,20 @@ describe Maxitest do
   end
 
   describe "minitest executable" do
-    # minitest 6.0.1+ ends --version and --help with exit!, which drops output written to a pipe,
-    # and 6.1.0 raises a LoadError when there is no test/ folder
+    # run minitest with options that print and exit
+    # - minitest 6.0.1+ uses exit!, which drops unflushed output to a pipe, so force stdout sync
+    # - minitest 6.1.0+ raises a LoadError without a path because there is no test/ folder, so pass a file
+    def run_option(option)
+      run_cmd("RUBYOPT='-r./spec/sync_stdout' minitest spec/cases/plain.rb #{option}")
+    end
+
     it "shows version" do
-      skip "not testable with minitest #{Minitest::VERSION}" if Minitest::VERSION > "6.0.0"
-      run_cmd("minitest --version", fail: true).should include "minitest"
+      run_option("--version").should include "minitest"
     end
 
     it "shows help" do
-      skip "not testable with minitest #{Minitest::VERSION}" if Minitest::VERSION > "6.0.0"
-      run_cmd("minitest -h", fail: true).should include "Usage:"
-      run_cmd("minitest --help", fail: true).should include "Usage:"
+      run_option("-h").should include "Usage:"
+      run_option("--help").should include "Usage:"
     end
 
     it "runs a single file" do
